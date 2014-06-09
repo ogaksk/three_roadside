@@ -187,7 +187,7 @@
 
     // 床
     var pGeometry = new THREE.PlaneGeometry(BLOCK_SIZE, BLOCK_SIZE);
-    var pTexture = new THREE.ImageUtils.loadTexture("asfalt.jpg");
+    var pTexture = new THREE.ImageUtils.loadTexture("asfalt7.jpg");
     var pMaterial = new THREE.MeshPhongMaterial({map: pTexture, side: THREE.DoubleSide, bumpMap: pTexture, bumpScale: 0.2});
     for (i = 0, max = MAP.length; i < max; i = i + 1) {
       for (j = 0, max2 = MAP[i].length; j < max2; j = j + 1) {
