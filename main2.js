@@ -4,26 +4,40 @@
   var STAGE_WIDTH = 1200;
   var STAGE_HEIGHT = 600;
   var MAP = [
-    [1, 1, 1, 1],
-    [0, 0, 0, 0],
-    [0, 0, 0, 0],
-    [0, 0, 0, 0],
-    [0, 0, 0, 0],
-    [0, 0, 2, 0],
-    [0, 0, 0, 0],
-    [0, 0, 0, 0],
-    [0, 0, 0, 0],
-    [0, 0, 0, 0],
-    [0, 0, 0, 0],
-    [0, 0, 0, 0],
-    [0, 0, 0, 0],
-    [0, 0, 0, 0],
-    [0, 0, 0, 0],
-    [0, 0, 0, 0],
-    [0, 0, 0, 0],
-    [0, 0, 0, 0],
-    [0, 0, 0, 0],
-    [1, 1, 1, 1]
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
   ];
   var BLOCK_SIZE = 100;
   var COL_MAX_LENGTH = 0;
@@ -45,7 +59,7 @@
   enchant();
   var game = new Core(STAGE_WIDTH, STAGE_HEIGHT);
   game.preload([
-    "map01.png", "player01.png", "wall01.jpg", "land01.jpg"
+    "map01.png", "player01.png", "wall01.jpg", "land01.jpg", "roadside1.png", "roadside2.png"
   ]);
   game.fps = 60;
   game.onload = function() {
@@ -118,9 +132,9 @@
     game.rootScene.addChild(mapGroup);
     // マップ
     var field = new Field(game.assets["map01.png"], MAP, MAP);
-    mapGroup.addChild(field);
+    //mapGroup.addChild(field);
     // プレーヤー
-    var player = new Player(game.assets["player01.png"], ((MAP_BLOCK_SIZE * COL_MAX_LENGTH) / 2) - (MAP_BLOCK_SIZE / 2), ((MAP_BLOCK_SIZE * ROW_MAX_LENGTH) / 2) - (MAP_BLOCK_SIZE / 2));
+    var player = new Player("", ((MAP_BLOCK_SIZE * COL_MAX_LENGTH) / 2) - (MAP_BLOCK_SIZE / 2), ((MAP_BLOCK_SIZE * ROW_MAX_LENGTH) / 2) - (MAP_BLOCK_SIZE / 2));
     mapGroup.addChild(player);
 
     /* ---------- 3Dアクション ---------- */
@@ -128,9 +142,10 @@
     // シーン
     var scene = new THREE.Scene();
     // 壁
-    var geometry = new THREE.CubeGeometry(BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
-    var texture = new THREE.ImageUtils.loadTexture("wall01.jpg");
-    var material = new THREE.MeshPhongMaterial({map: texture, bumpMap: texture, bumpScale: 0.2});
+    var geometry = new THREE.PlaneGeometry(BLOCK_SIZE, BLOCK_SIZE);
+    // var texture = new THREE.ImageUtils.loadTexture("wall01.jpg");
+    // var material = new THREE.MeshPhongMaterial({map: texture, bumpMap: texture, bumpScale: 0.2});
+    var material = new THREE.MeshBasicMaterial( { color: 0x000000, opacity: 0.0, transparent: true } );
     for (i = 0, max = MAP.length; i < max; i = i + 1) {
       for (j = 0, max2 = MAP[i].length; j < max2; j = j + 1) {
         if (MAP[i][j] == 1) {
@@ -141,15 +156,30 @@
       }
     }
 
-    // ロードサイドオブジェクト
-    var geometry = new THREE.CubeGeometry(BLOCK_SIZE, BLOCK_SIZE * 2, BLOCK_SIZE);
-    var texture = new THREE.ImageUtils.loadTexture("roadside2.png");
-    var material = new THREE.MeshPhongMaterial({map: texture, bumpMap: texture, bumpScale: 0.2});
+
+    // ロードサイドオブジェクト1
+    var geometry = new THREE.PlaneGeometry(BLOCK_SIZE, BLOCK_SIZE * 2);
+    var texture = new THREE.ImageUtils.loadTexture("roadside1.png");
+    var material = new THREE.MeshPhongMaterial({map: texture, bumpMap: texture, side: THREE.DoubleSide, bumpScale: 0.2, transparent: true });
     for (i = 0, max = MAP.length; i < max; i = i + 1) {
       for (j = 0, max2 = MAP[i].length; j < max2; j = j + 1) {
         if (MAP[i][j] == 2) {
           var cube = new THREE.Mesh(geometry, material);
-          cube.position.set(BLOCK_SIZE * j, BLOCK_SIZE / 2, BLOCK_SIZE * i);
+          cube.position.set(BLOCK_SIZE * j, BLOCK_SIZE -20, BLOCK_SIZE * i);
+          scene.add(cube);
+        }
+      }
+    }
+
+    // ロードサイドオブジェクト2
+    var geometry = new THREE.PlaneGeometry(BLOCK_SIZE, BLOCK_SIZE * 2);
+    var texture = new THREE.ImageUtils.loadTexture("roadside2.png");
+    var material = new THREE.MeshPhongMaterial({map: texture, bumpMap: texture, side: THREE.DoubleSide, bumpScale: 0.2, transparent: true });
+    for (i = 0, max = MAP.length; i < max; i = i + 1) {
+      for (j = 0, max2 = MAP[i].length; j < max2; j = j + 1) {
+        if (MAP[i][j] == 3) {
+          var cube = new THREE.Mesh(geometry, material);
+          cube.position.set(BLOCK_SIZE * j, BLOCK_SIZE - 20, BLOCK_SIZE * i);
           scene.add(cube);
         }
       }
@@ -157,11 +187,11 @@
 
     // 床
     var pGeometry = new THREE.PlaneGeometry(BLOCK_SIZE, BLOCK_SIZE);
-    var pTexture = new THREE.ImageUtils.loadTexture("land01.jpg");
+    var pTexture = new THREE.ImageUtils.loadTexture("asfalt.jpg");
     var pMaterial = new THREE.MeshPhongMaterial({map: pTexture, side: THREE.DoubleSide, bumpMap: pTexture, bumpScale: 0.2});
     for (i = 0, max = MAP.length; i < max; i = i + 1) {
       for (j = 0, max2 = MAP[i].length; j < max2; j = j + 1) {
-        if (MAP[i][j] == 0) {
+        if (MAP[i][j] == 0 || MAP[i][j] == 2 || MAP[i][j] == 3) {
           var plane = new THREE.Mesh(pGeometry, pMaterial);
           plane.position.set(BLOCK_SIZE * j, 0, BLOCK_SIZE * i);
           plane.rotation.x = 90 * Math.PI / 180;
@@ -185,7 +215,7 @@
     // }
 
     // 背景
-    var geometry = new THREE.SphereGeometry(3000, 60, 40);
+    var geometry = new THREE.SphereGeometry(4000, 60, 40);
     var bgImg = new THREE.ImageUtils.loadTexture('dome.jpg')
     var uniforms = {
       texture: { type: 't', value:  bgImg }
