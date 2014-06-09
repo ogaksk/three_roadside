@@ -1,8 +1,8 @@
 (function () {
 
   // 定数
-  var STAGE_WIDTH = 1200;
-  var STAGE_HEIGHT = 600;
+  var STAGE_WIDTH = screen.width;
+  var STAGE_HEIGHT = screen.height;
   var MAP = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
@@ -218,10 +218,10 @@
     scene.add(skyBox);
 
     // light
-    var light = new THREE.PointLight(0xFFFFFF, 1.5, 300);
+    var light = new THREE.PointLight(0x0000F0, 1.5, 300);
     light.position.set(0, BLOCK_SIZE / 2, 0);
     scene.add(light);
-    var ambient = new THREE.AmbientLight(0xFFFFFF);
+    var ambient = new THREE.AmbientLight(0xFFFFF0);
     scene.add(ambient);
     // camera
     var camera = new THREE.PerspectiveCamera(45, STAGE_WIDTH / STAGE_HEIGHT, 1, 10000);
