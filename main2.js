@@ -45,7 +45,7 @@
   enchant();
   var game = new Core(STAGE_WIDTH, STAGE_HEIGHT);
   game.preload([
-    "map01.png", "player01.png", "wall01.jpg", "land01.jpg", "sky.jpg"
+    "map01.png", "player01.png", "wall01.jpg", "land01.jpg"
   ]);
   game.fps = 60;
   game.onload = function() {
@@ -185,26 +185,21 @@
     // }
 
     // 背景
-    (function init2D() {
-      camera2d = new THREE.OrthographicCamera(0, STAGE_WIDTH, 0, STAGE_HEIGHT, 0.001, 10000);
-      scene2d = new THREE.Scene();
-    
-      THREE.ImageUtils.loadTexture("sky.jpg", undefined, function(texture) {
-        var material = new THREE.SpriteMaterial({map: texture, color: 0xFFFFFF});
-        var sprite;
-        var w = texture.image.width, h = texture.image.height;
-
-        sprite = new THREE.Sprite(material);
-        sprite.position.set(w*0.5, h*0.5, -9999);
-        sprite.scale.set(w, -h, 1);
-        scene2d.add(sprite);
-    
-        sprite = new THREE.Sprite(material);
-        sprite.position.set(w, h, -1);
-        sprite.scale.set(w, -h, 1);
-        scene2d.add(sprite);
-      });
-    })();
+    var geometry = new THREE.SphereGeometry(3000, 60, 40);
+    var bgImg = new THREE.ImageUtils.loadTexture('dome.jpg')
+    var uniforms = {
+      texture: { type: 't', value:  bgImg }
+    };
+    var material = new THREE.ShaderMaterial( {
+      uniforms:       uniforms,
+      vertexShader:   document.getElementById('sky-vertex').textContent,
+      fragmentShader: document.getElementById('sky-fragment').textContent
+    });
+    skyBox = new THREE.Mesh(geometry, material);
+    skyBox.scale.set(-1, 1, 1);
+    skyBox.eulerOrder = 'XZY';
+    skyBox.renderDepth = 1000.0;
+    scene.add(skyBox);
 
     // light
     var light = new THREE.PointLight(0xFFFFFF, 1.5, 300);
@@ -234,7 +229,6 @@
       light.rotation.y = -((player.rotation + 90) * Math.PI / 180);
       light.position.z = player.y * (BLOCK_SIZE / MAP_BLOCK_SIZE);
       light.position.x = player.x * (BLOCK_SIZE / MAP_BLOCK_SIZE);
-      renderer.render(scene2d, camera2d);
       renderer.render(scene, camera);
     });
   };
