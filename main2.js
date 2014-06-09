@@ -199,20 +199,6 @@
         }
       }
     }
-    // 天井
-    // var uGeometry = new THREE.PlaneGeometry(BLOCK_SIZE, BLOCK_SIZE);
-    // var uTexture = new THREE.ImageUtils.loadTexture("wall01.jpg");
-    // var uMaterial = new THREE.MeshPhongMaterial({map: uTexture, side: THREE.DoubleSide, bumpMap: pTexture, bumpScale: 0.2});
-    // for (i = 0, max = MAP.length; i < max; i = i + 1) {
-    //   for (j = 0, max2 = MAP[i].length; j < max2; j = j + 1) {
-    //     if (MAP[i][j] == 0) {
-    //       var plane = new THREE.Mesh(uGeometry, uMaterial);
-    //       plane.position.set(BLOCK_SIZE * j, BLOCK_SIZE, BLOCK_SIZE * i);
-    //       plane.rotation.x = 90 * Math.PI / 180;
-    //       scene.add(plane);
-    //     }
-    //   }
-    // }
 
     // 背景
     var geometry = new THREE.SphereGeometry(4000, 60, 40);
@@ -249,6 +235,10 @@
     document.getElementById("enchant-stage").appendChild(renderer.domElement);
 
 
+    function update() {
+    skyBox.rotation.y += 0.0002;
+    // mesh.rotation.y += 0.02;
+    }
 
     /* ---------- ゲームイベント ---------- */
 
@@ -259,6 +249,7 @@
       light.rotation.y = -((player.rotation + 90) * Math.PI / 180);
       light.position.z = player.y * (BLOCK_SIZE / MAP_BLOCK_SIZE);
       light.position.x = player.x * (BLOCK_SIZE / MAP_BLOCK_SIZE);
+      update();
       renderer.render(scene, camera);
     });
   };
