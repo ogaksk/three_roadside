@@ -59,7 +59,7 @@
   enchant();
   var game = new Core(STAGE_WIDTH, STAGE_HEIGHT);
   game.preload([
-    "map01.png", "player01.png", "wall01.jpg", "land01.jpg"
+    "/assets/images/map01.png", "/assets/images/player01.png", "/assets/images/wall01.jpg", "/assets/images/land01.jpg"
   ]);
   game.fps = 60;
   game.onload = function() {
@@ -131,7 +131,7 @@
     mapGroup.y = 10;
     game.rootScene.addChild(mapGroup);
     // マップ
-    var field = new Field(game.assets["map01.png"], MAP, MAP);
+    var field = new Field(game.assets["/assets/images/map01.png"], MAP, MAP);
     //mapGroup.addChild(field);
     // プレーヤー
     var player = new Player("", ((MAP_BLOCK_SIZE * COL_MAX_LENGTH) / 2) - (MAP_BLOCK_SIZE / 2), ((MAP_BLOCK_SIZE * ROW_MAX_LENGTH) / 2) - (MAP_BLOCK_SIZE / 2));
@@ -159,7 +159,7 @@
 
     // ロードサイドオブジェクト1
     var geometry = new THREE.PlaneGeometry(BLOCK_SIZE, BLOCK_SIZE * 2);
-    var texture = new THREE.ImageUtils.loadTexture("roadside1.png");
+    var texture = new THREE.ImageUtils.loadTexture("/assets/images/roadside1.png");
     var material = new THREE.MeshPhongMaterial({map: texture, bumpMap: texture, side: THREE.DoubleSide, bumpScale: 0.2, transparent: true });
     for (i = 0, max = MAP.length; i < max; i = i + 1) {
       for (j = 0, max2 = MAP[i].length; j < max2; j = j + 1) {
@@ -173,7 +173,7 @@
 
     // ロードサイドオブジェクト2
     var geometry = new THREE.PlaneGeometry(BLOCK_SIZE, BLOCK_SIZE * 2);
-    var texture = new THREE.ImageUtils.loadTexture("roadside2.png");
+    var texture = new THREE.ImageUtils.loadTexture("/assets/images/roadside2.png");
     var material = new THREE.MeshPhongMaterial({map: texture, bumpMap: texture, side: THREE.DoubleSide, bumpScale: 0.2, transparent: true });
     for (i = 0, max = MAP.length; i < max; i = i + 1) {
       for (j = 0, max2 = MAP[i].length; j < max2; j = j + 1) {
@@ -187,7 +187,7 @@
 
     // 床
     var pGeometry = new THREE.PlaneGeometry(BLOCK_SIZE, BLOCK_SIZE);
-    var pTexture = new THREE.ImageUtils.loadTexture("asfalt7.jpg");
+    var pTexture = new THREE.ImageUtils.loadTexture("/assets/images/asfalt7.jpg");
     var pMaterial = new THREE.MeshPhongMaterial({map: pTexture, side: THREE.DoubleSide, bumpMap: pTexture, bumpScale: 0.2});
     for (i = 0, max = MAP.length; i < max; i = i + 1) {
       for (j = 0, max2 = MAP[i].length; j < max2; j = j + 1) {
@@ -202,7 +202,7 @@
 
     // 背景
     var geometry = new THREE.SphereGeometry(4500, 60, 40);
-    var bgImg = new THREE.ImageUtils.loadTexture('sky2.jpg')
+    var bgImg = new THREE.ImageUtils.loadTexture('/assets/images/sky2.jpg')
     var uniforms = {
       texture: { type: 't', value:  bgImg }
     };
