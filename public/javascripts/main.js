@@ -1,5 +1,23 @@
 (function () {
 
+  name = prompt("Input name:");
+
+  var port = 3000;
+  var socket = io();
+  var socket = io.connect("/", { port: port });
+
+  socket.on("connect", function() {
+    socket.emit("name", name);
+    // socket.emit("position", (6 * 16 - 8) + "," + (10 * 16) + "," + 0); // 初期位置
+    socket.emit("message", "…"); // 初期メッセージ
+  });
+
+  // var socket = io('http://localhost');
+  // socket.on('connect', function() {
+  //   // connect後にemitする
+  //   socket.emit('foo', 1);
+  // });
+
   // 定数
   var STAGE_WIDTH = screen.width;
   var STAGE_HEIGHT = screen.height;

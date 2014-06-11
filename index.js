@@ -7,25 +7,24 @@ var app = express();
 var io = require("socket.io").listen(http);
 // io.set("log level", 1);
 
-// expressの設定と起動
-app.use(express.static(__dirname + "/public"));
 
+app.use(express.static(__dirname + "/public"));
 app.listen(port);
 console.log("Server started.");
 
 var player_list = new Array(); // ログイン中プレイヤー情報を名前から得る関数へのハッシュ
 
 // 通信プロトコル
-// io.sockets.on("connection", function(socket) {
+io.sockets.on("connection", function(socket) {
 
-//   var player = {
-//     login_name : "",
-//     x : 0,
-//     y : 0,
-//     message : "…", // フキダシの中身
-//   };
+  var player = {
+    login_name : "",
+    x : 0,
+    y : 0,
+    message : "…", // フキダシの中身
+  };
 
-//   console.log("connect new client.");
+console.log("connect new client.");
 
 // // ログイン名を送ってきた時は新規ログインの処理
 // socket.on("name", function(text) {
