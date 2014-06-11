@@ -5,12 +5,17 @@ var express = require("express");
 var http = require('http').Server(app);
 var app = express();
 var io = require("socket.io").listen(http);
+
 // io.set("log level", 1);
 
 
 app.use(express.static(__dirname + "/public"));
-app.listen(port);
-console.log("Server started.");
+
+
+app.get('/', function(req, res){
+  res.sendfile('public/index.html');
+});
+
 
 var player_list = new Array(); // ログイン中プレイヤー情報を名前から得る関数へのハッシュ
 
@@ -68,3 +73,7 @@ console.log("connect new client.");
 // });
 
 });
+
+
+app.listen(port);
+console.log("Server started.");
