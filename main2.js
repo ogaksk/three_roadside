@@ -59,7 +59,7 @@
   enchant();
   var game = new Core(STAGE_WIDTH, STAGE_HEIGHT);
   game.preload([
-    "map01.png", "player01.png", "wall01.jpg", "land01.jpg", "roadside1.png", "roadside2.png"
+    "map01.png", "player01.png", "wall01.jpg", "land01.jpg"
   ]);
   game.fps = 60;
   game.onload = function() {
@@ -201,8 +201,8 @@
     }
 
     // 背景
-    var geometry = new THREE.SphereGeometry(4000, 60, 40);
-    var bgImg = new THREE.ImageUtils.loadTexture('dome.jpg')
+    var geometry = new THREE.SphereGeometry(4500, 60, 40);
+    var bgImg = new THREE.ImageUtils.loadTexture('sky2.jpg')
     var uniforms = {
       texture: { type: 't', value:  bgImg }
     };
@@ -215,6 +215,7 @@
     skyBox.scale.set(-1, 1, 1);
     skyBox.eulerOrder = 'XZY';
     skyBox.renderDepth = 1000.0;
+    //skyBox.position.setY(300);
     scene.add(skyBox);
 
     // light
