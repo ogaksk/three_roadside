@@ -12,7 +12,7 @@ var app = express();
 // all environments
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
-app.set('view engine', 'jade');
+app.set('view engine', 'ejs');
 app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.bodyParser());
@@ -31,7 +31,7 @@ var socketio = require('socket.io');
 var io = socketio.listen(server);
 
 server.listen(app.get('port'), function(){
-  console.log("server listening on port " + app.get('port'));
+  console.log("server listening on port.... " + app.get('port'));
 });
 
 

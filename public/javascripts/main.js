@@ -3,7 +3,6 @@
   name = prompt("Input name:");
 
   var port = 3000;
-  var socket = io();
   var socket = io.connect("/", { port: port });
 
   socket.on("connect", function() {
@@ -173,7 +172,6 @@
         }
       }
     }
-
 
     // ロードサイドオブジェクト1
     var geometry = new THREE.PlaneGeometry(BLOCK_SIZE, BLOCK_SIZE * 2);
