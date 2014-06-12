@@ -178,36 +178,38 @@
     socket.on("name", function(text) {
       var loginName = text;
 
-      var otherPlayer = new OtherPlayer(game.assets["/images/player01.png"], 0, 0, loginName);
+      var otherPlayer = new OtherPlayer(game.assets["/images/player01.png"]);
+      otherPlayer.loginName = loginName
       // キャラクタ表示レイヤーとメッセージ表示レイヤーに追加
       charaGroup.addChild(otherPlayer);
       mapGroup.addChild(otherPlayer);
-      // charaGroup.addChild(otherPlayer.loginName);
+ 
+      // 他キャラレンダー
+      var geometry = new THREE.CubeGeometry(BLOCK_SIZE * 0.5, BLOCK_SIZE * 0.5, BLOCK_SIZE * 0.5);
+      var texture = new THREE.ImageUtils.loadTexture("/images/wall01.jpg");
+      var material = new THREE.MeshPhongMaterial({map: texture, bumpMap: texture, bumpScale: 0.2});
+
+      var otherChara = new THREE.Mesh(geometry, material);
+      scene.add(otherChara);    
 
       // サーバからこのユーザの移動が来たら移動させる
       socket.on("position:" + loginName, function(pos) {
-      
         otherPlayer.x = pos.x;
         otherPlayer.y = pos.y;
-        otherPlayer.isMove = false;
+    
         var moveX = 0;
         var moveY = 0;
         // otherPlayer.lotation = pos.lotation;
-      
+        otherPlayer.x += moveX;
+        otherPlayer.y += moveY;
+
+        otherChara.position.set(otherPlayer.x, otherPlayer.y, BLOCK_SIZE);
         
-        if (field.hitTest(otherPlayer.x + moveX + 4, otherPlayer.y + moveY + 4)) {
-          otherPlayer.isMove = false;
-        } else if (field.hitTest(otherPlayer.x + moveX + 6, otherPlayer.y + moveY + 4)) {
-          otherPlayer.isMove = false;
-        } else if (field.hitTest(otherPlayer.x + moveX + 6, otherPlayer.y + moveY + 6)) {
-          otherPlayer.isMove = false;
-        } else if (field.hitTest(otherPlayer.x + moveX + 4, otherPlayer.y + moveY + 6)) {
-          otherPlayer.isMove = false;
-        }
-        if (otherPlayer.isMove) {
-          otherPlayer.x += moveX;
-          otherPlayer.y += moveY;
-        }
+        // console.log(otherChara.position.x)
+        
+        // otherChara.position.x = otherPlayer.x * (BLOCK_SIZE / MAP_BLOCK_SIZE);
+        // otherChara.position.x = otherPlayer.y * (BLOCK_SIZE / MAP_BLOCK_SIZE);
+        
       });
 
       // 切断が送られてきたら表示とオブジェクトの消去
@@ -299,6 +301,7 @@
     //skyBox.position.setY(300);
     scene.add(skyBox);
 
+
     // light
     var light = new THREE.PointLight(0x0000F0, 1.5, 300);
     light.position.set(0, BLOCK_SIZE / 2, 0);
@@ -317,7 +320,7 @@
     document.getElementById("enchant-stage").appendChild(renderer.domElement);
 
 
-    function update() {
+    function bgUpdate() {
     skyBox.rotation.y += 0.0002;
     }
 
@@ -330,7 +333,7 @@
       light.rotation.y = -((player.rotation + 90) * Math.PI / 180);
       light.position.z = player.y * (BLOCK_SIZE / MAP_BLOCK_SIZE);
       light.position.x = player.x * (BLOCK_SIZE / MAP_BLOCK_SIZE);
-      update();
+      bgUpdate();
       renderer.render(scene, camera);
     });
   };
