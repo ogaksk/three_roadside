@@ -1,6 +1,6 @@
 (function () {
 
-  name = prompt("Input name:");
+  var name = prompt("Input name:");
 
   var port = 3000;
   var socket = io.connect("/", { port: port });
@@ -100,6 +100,7 @@
         Sprite.call(this, MAP_BLOCK_SIZE, MAP_BLOCK_SIZE);
         this.x = x;
         this.y = y;
+        this.loginName = name;
         this.image = image;
         this.rotation = 90;
         this.addEventListener(enchant.Event.ENTER_FRAME, this.onEnterFrame);
@@ -137,6 +138,7 @@
           this.x += moveX;
           this.y += moveY;
         }
+        socket.emit("position", { x : this.x, y : this.y , direction: this.direction });
       }
     });
 
@@ -153,6 +155,9 @@
     // プレーヤー
     var player = new Player("", ((MAP_BLOCK_SIZE * COL_MAX_LENGTH) / 2) - (MAP_BLOCK_SIZE / 2), ((MAP_BLOCK_SIZE * ROW_MAX_LENGTH) / 2) - (MAP_BLOCK_SIZE / 2));
     mapGroup.addChild(player);
+
+    // キャラクター
+    var charaGroup = new Group();
 
     /* ---------- 3Dアクション ---------- */
 
