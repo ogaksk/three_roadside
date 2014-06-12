@@ -185,7 +185,7 @@
       mapGroup.addChild(otherPlayer);
  
       // 他キャラレンダー
-      var geometry = new THREE.CubeGeometry(BLOCK_SIZE * 0.5, BLOCK_SIZE * 0.5, BLOCK_SIZE * 0.5);
+      var geometry = new THREE.CubeGeometry(BLOCK_SIZE, BLOCK_SIZE + 60, BLOCK_SIZE);
       var texture = new THREE.ImageUtils.loadTexture("/images/wall01.jpg");
       var material = new THREE.MeshPhongMaterial({map: texture, bumpMap: texture, bumpScale: 0.2});
 
@@ -203,12 +203,14 @@
         otherPlayer.x += moveX;
         otherPlayer.y += moveY;
 
-        otherChara.position.set(otherPlayer.x, otherPlayer.y, BLOCK_SIZE);
+        // otherChara.position.set(otherPlayer.y, otherPlayer.x, BLOCK_SIZE);
         
-        // console.log(otherChara.position.x)
+        otherChara.rotation.y = -((otherPlayer.rotation + 90) * Math.PI / 180);
+        otherChara.position.z = otherPlayer.y * (BLOCK_SIZE / MAP_BLOCK_SIZE);
+        otherChara.position.x = otherPlayer.x * (BLOCK_SIZE / MAP_BLOCK_SIZE);
         
-        // otherChara.position.x = otherPlayer.x * (BLOCK_SIZE / MAP_BLOCK_SIZE);
-        // otherChara.position.x = otherPlayer.y * (BLOCK_SIZE / MAP_BLOCK_SIZE);
+        // otherChara.position.x = otherPlayer.x;
+        // otherChara.position.y = otherPlayer.y;
         
       });
 
