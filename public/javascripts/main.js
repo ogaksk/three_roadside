@@ -146,9 +146,9 @@
     socket.on("name", function(text) {
       var loginName = text;
 
-      var otherPlayer = new Sprite(32, 32);
-      otherPlayer.x = Math.floor( Math.random() * 100 );
-      otherPlayer.y = Math.floor( Math.random() * 100 );
+      var otherPlayer = new Sprite();
+      // otherPlayer.x = Math.floor( Math.random() * 100 );
+      // otherPlayer.y = Math.floor( Math.random() * 100 );
 
       // キャラクタ表示レイヤーとメッセージ表示レイヤーに追加
       chara_group.addChild(other_player);
@@ -164,12 +164,12 @@
 
       // 切断が送られてきたら表示とオブジェクトの消去
         socket.on("disconnect:" + login_name, function() {
-          // レイヤーから削除
-          chara_group.removeChild(other_player);
-          chara_group.removeChild(other_player.login_name);
-          delete other_player;
-        });
+        // レイヤーから削除
+        chara_group.removeChild(other_player);
+        chara_group.removeChild(other_player.login_name);
+        delete other_player;
       });
+    });
 
 
     /* ---------- ゲームアクション ---------- */
@@ -183,7 +183,9 @@
     var field = new Field(game.assets["/images/map01.png"], MAP, MAP);
     //mapGroup.addChild(field);
     // プレーヤー
-    var player = new Player("", ((MAP_BLOCK_SIZE * COL_MAX_LENGTH) / 2) - (MAP_BLOCK_SIZE / 2), ((MAP_BLOCK_SIZE * ROW_MAX_LENGTH) / 2) - (MAP_BLOCK_SIZE / 2));
+    console.log(Math.floor( Math.random() * COL_MAX_LENGTH* BLOCK_SIZE))
+    console.log(ROW_MAX_LENGTH)
+    var player = new Player("", Math.floor( Math.random() * COL_MAX_LENGTH * MAP_BLOCK_SIZE), Math.floor( Math.random() * ROW_MAX_LENGTH * MAP_BLOCK_SIZE));
     mapGroup.addChild(player);
 
     // キャラクターのグループ
