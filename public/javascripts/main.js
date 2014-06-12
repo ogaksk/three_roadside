@@ -142,35 +142,19 @@
       }
     });
 
-    // 他のユーザのログイン
-    socket.on("name", function(text) {
-      var loginName = text;
 
-      var otherPlayer = new Sprite();
-      // otherPlayer.x = Math.floor( Math.random() * 100 );
-      // otherPlayer.y = Math.floor( Math.random() * 100 );
-
-      // キャラクタ表示レイヤーとメッセージ表示レイヤーに追加
-      chara_group.addChild(other_player);
-      chara_group.addChild(other_player.login_name);
-
-      // サーバからこのユーザの移動が来たら移動させる
-      socket.on("position:" + login_name, function(pos) {
-        other_player.x = pos.x;
-        other_player.y = pos.y;
-        other_player.lotation = pos.lotation;
-        // other_player.frame = other_player.direction * 3;
-      });
-
-      // 切断が送られてきたら表示とオブジェクトの消去
-        socket.on("disconnect:" + login_name, function() {
-        // レイヤーから削除
-        chara_group.removeChild(other_player);
-        chara_group.removeChild(other_player.login_name);
-        delete other_player;
-      });
-    });
-
+    var OtherPlayer = Class.create(Sprite, {
+      isMove: false,
+      initialize: function (image, x, y, log_name) {
+        Sprite.call(this, MAP_BLOCK_SIZE, MAP_BLOCK_SIZE);
+        this.x = x;
+        this.y = y;
+        this.image = image;
+        this.loginName = log_name;
+        this.rotation = 90;
+        // this.addEventListener(enchant.Event.ENTER_FRAME, this.onEnterFrame);
+      }
+    })
 
     /* ---------- ゲームアクション ---------- */
 
@@ -183,13 +167,57 @@
     var field = new Field(game.assets["/images/map01.png"], MAP, MAP);
     //mapGroup.addChild(field);
     // プレーヤー
-    console.log(Math.floor( Math.random() * COL_MAX_LENGTH* BLOCK_SIZE))
-    console.log(ROW_MAX_LENGTH)
-    var player = new Player("", Math.floor( Math.random() * COL_MAX_LENGTH * MAP_BLOCK_SIZE), Math.floor( Math.random() * ROW_MAX_LENGTH * MAP_BLOCK_SIZE));
+    var player = new Player(game.assets["/images/player01.png"], Math.floor( Math.random() * COL_MAX_LENGTH * MAP_BLOCK_SIZE), Math.floor( Math.random() * ROW_MAX_LENGTH * MAP_BLOCK_SIZE));
     mapGroup.addChild(player);
 
     // キャラクターのグループ
     var charaGroup = new Group();
+
+
+    // 他のユーザのログイン
+    socket.on("name", function(text) {
+      var loginName = text;
+
+      var otherPlayer = new OtherPlayer(game.assets["/images/player01.png"], 0, 0, loginName);
+      // キャラクタ表示レイヤーとメッセージ表示レイヤーに追加
+      charaGroup.addChild(otherPlayer);
+      mapGroup.addChild(otherPlayer);
+      // charaGroup.addChild(otherPlayer.loginName);
+
+      // サーバからこのユーザの移動が来たら移動させる
+      socket.on("position:" + loginName, function(pos) {
+      
+        otherPlayer.x = pos.x;
+        otherPlayer.y = pos.y;
+        otherPlayer.isMove = false;
+        var moveX = 0;
+        var moveY = 0;
+        // otherPlayer.lotation = pos.lotation;
+      
+        
+        if (field.hitTest(otherPlayer.x + moveX + 4, otherPlayer.y + moveY + 4)) {
+          otherPlayer.isMove = false;
+        } else if (field.hitTest(otherPlayer.x + moveX + 6, otherPlayer.y + moveY + 4)) {
+          otherPlayer.isMove = false;
+        } else if (field.hitTest(otherPlayer.x + moveX + 6, otherPlayer.y + moveY + 6)) {
+          otherPlayer.isMove = false;
+        } else if (field.hitTest(otherPlayer.x + moveX + 4, otherPlayer.y + moveY + 6)) {
+          otherPlayer.isMove = false;
+        }
+        if (otherPlayer.isMove) {
+          otherPlayer.x += moveX;
+          otherPlayer.y += moveY;
+        }
+      });
+
+      // 切断が送られてきたら表示とオブジェクトの消去
+        socket.on("disconnect:" + loginName, function() {
+        // レイヤーから削除
+        charaGroup.removeChild(otherPlayer);
+        // charaGroup.removeChild(otherPlayer.loginName);
+        delete otherPlayer;
+      });
+    });
 
     /* ---------- 3Dアクション ---------- */
 
