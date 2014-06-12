@@ -1,19 +1,37 @@
-var port = 3000;
+/**
+ * Module dependencies.
+ */
 
-// websocketとexpressの読み込み
-var express = require("express");
-var http = require('http').Server(app);
+var express = require('express')
+  , routes = require('./routes')
+  , http = require('http')
+  , path = require('path');
+
 var app = express();
-var io = require("socket.io").listen(http);
 
-// io.set("log level", 1);
+// all environments
+app.set('port', process.env.PORT || 3000);
+app.set('views', __dirname + '/views');
+app.set('view engine', 'jade');
+app.use(express.favicon());
+app.use(express.logger('dev'));
+app.use(express.bodyParser());
+app.use(express.methodOverride());
+app.use(app.router);
+app.use(express.static(path.join(__dirname, 'public')));
 
 
-app.use(express.static(__dirname + "/public"));
+app.get('/', routes.index);
+// app.get('/', function(req, res){
+//   res.sendfile('public/index.html');
+// });
 
+server = http.createServer(app);
+var socketio = require('socket.io');
+var io = socketio.listen(server);
 
-app.get('/', function(req, res){
-  res.sendfile('public/index.html');
+server.listen(app.get('port'), function(){
+  console.log("server listening on port " + app.get('port'));
 });
 
 
@@ -73,7 +91,3 @@ console.log("connect new client.");
 // });
 
 });
-
-
-app.listen(port);
-console.log("Server started.");
