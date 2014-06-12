@@ -29,6 +29,7 @@ app.get('/', routes.index);
 server = http.createServer(app);
 var socketio = require('socket.io');
 var io = socketio.listen(server);
+io.set('log level', 1); 
 
 server.listen(app.get('port'), function(){
   console.log("server listening on port.... " + app.get('port'));

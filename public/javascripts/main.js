@@ -142,6 +142,36 @@
       }
     });
 
+    // 他のユーザのログイン
+    socket.on("name", function(text) {
+      var loginName = text;
+
+      var otherPlayer = new Sprite(32, 32);
+      otherPlayer.x = Math.floor( Math.random() * 100 );
+      otherPlayer.y = Math.floor( Math.random() * 100 );
+
+      // キャラクタ表示レイヤーとメッセージ表示レイヤーに追加
+      chara_group.addChild(other_player);
+      chara_group.addChild(other_player.login_name);
+
+      // サーバからこのユーザの移動が来たら移動させる
+      socket.on("position:" + login_name, function(pos) {
+        other_player.x = pos.x;
+        other_player.y = pos.y;
+        other_player.lotation = pos.lotation;
+        // other_player.frame = other_player.direction * 3;
+      });
+
+      // 切断が送られてきたら表示とオブジェクトの消去
+        socket.on("disconnect:" + login_name, function() {
+          // レイヤーから削除
+          chara_group.removeChild(other_player);
+          chara_group.removeChild(other_player.login_name);
+          delete other_player;
+        });
+      });
+
+
     /* ---------- ゲームアクション ---------- */
 
     // シーン
@@ -156,7 +186,7 @@
     var player = new Player("", ((MAP_BLOCK_SIZE * COL_MAX_LENGTH) / 2) - (MAP_BLOCK_SIZE / 2), ((MAP_BLOCK_SIZE * ROW_MAX_LENGTH) / 2) - (MAP_BLOCK_SIZE / 2));
     mapGroup.addChild(player);
 
-    // キャラクター
+    // キャラクターのグループ
     var charaGroup = new Group();
 
     /* ---------- 3Dアクション ---------- */
@@ -259,7 +289,6 @@
 
     function update() {
     skyBox.rotation.y += 0.0002;
-    // mesh.rotation.y += 0.02;
     }
 
     /* ---------- ゲームイベント ---------- */
