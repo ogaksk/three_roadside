@@ -1,13 +1,11 @@
 (function () {
 
-  var name = prompt("Input name:");
+  var name = prompt("名前を入れてください:");
 
-  var port = 3000;
-  var socket = io.connect("/", { port: port });
+  var socket = io.connect();
 
   socket.on("connect", function() {
     socket.emit("name", name);
-    // socket.emit("position", (6 * 16 - 8) + "," + (10 * 16) + "," + 0); // 初期位置
     socket.emit("message", "…"); // 初期メッセージ
   });
 
