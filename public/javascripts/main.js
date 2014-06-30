@@ -261,49 +261,20 @@
     }
 
     // ロードサイドオブジェクト(obj)
-
+    loadsideObject = "";
     var loader = new THREE.OBJMTLLoader();
     loader.load( '/images/male02.obj', '/images/male02_dds.mtl', function ( object ) {
       for (i = 0, max = MAP.length; i < max; i = i + 1) {
         for (j = 0, max2 = MAP[i].length; j < max2; j = j + 1) {
           if (MAP[i][j] == 4) {
-            object.position.set(BLOCK_SIZE * j, BLOCK_SIZE - 20, BLOCK_SIZE * i);
+            object.position.set(BLOCK_SIZE * j, BLOCK_SIZE - 50, BLOCK_SIZE * i);
+            object.scale.set(2, 2, 2);
             scene.add(object);
+            loadsideObject = object;
           }
         }
       }
     });
-
-
-    // var jsonLoader = new THREE.JSONLoader();
-    // jsonLoader.load("./tuxu_logo.js", function(geometry) { 
-    //   var mesh = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial);
-    //   mesh.scale = new THREE.Vector3(0.8, 0.8, 0.8);
-    //   geometry.materials[0].ambient = geometry.materials[0].color;
-    //   scene.add(mesh);
-
-      // for (var i=0; i < geometry.materials.length; i++){
-      //   geometry.materials[i].shading = THREE.SmoothShading;
-      //   geometry.materials[i].morphTargets = true;
-      // };
-      // var material = new THREE.MeshFaceMaterial();
-      // var mesh = new THREE.Mesh(geometry, material);
-      // mesh.position.y = -container.clientHeight;
-      // mesh.scale.x = mesh.scale.y = mesh.scale.z = 250;
-      // scene.add(mesh);
-    // });
-    
-    
-    // var material = new THREE.MeshPhongMaterial({map: texture, bumpMap: texture, side: THREE.DoubleSide, bumpScale: 0.2, transparent: true });
-    // for (i = 0, max = MAP.length; i < max; i = i + 1) {
-    //   for (j = 0, max2 = MAP[i].length; j < max2; j = j + 1) {
-    //     if (MAP[i][j] == 2) {
-    //       var cube = new THREE.Mesh(geometry, material);
-    //       cube.position.set(BLOCK_SIZE * j, BLOCK_SIZE -20, BLOCK_SIZE * i);
-    //       scene.add(cube);
-    //     }
-    //   }
-    // }
 
 
     // 床
@@ -360,6 +331,7 @@
 
     function bgUpdate() {
     skyBox.rotation.y += 0.0002;
+    // loadsideObject.rotation.y += 0.0003;
     }
 
     /* ---------- ゲームイベント ---------- */
