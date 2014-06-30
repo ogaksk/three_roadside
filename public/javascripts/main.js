@@ -201,15 +201,9 @@
         otherPlayer.x += moveX;
         otherPlayer.y += moveY;
 
-        // otherChara.position.set(otherPlayer.y, otherPlayer.x, BLOCK_SIZE);
-        
         otherChara.rotation.y = -((otherPlayer.rotation + 90) * Math.PI / 180);
         otherChara.position.z = otherPlayer.y * (BLOCK_SIZE / MAP_BLOCK_SIZE);
         otherChara.position.x = otherPlayer.x * (BLOCK_SIZE / MAP_BLOCK_SIZE);
-        
-        // otherChara.position.x = otherPlayer.x;
-        // otherChara.position.y = otherPlayer.y;
-        
       });
 
       // 切断が送られてきたら表示とオブジェクトの消去
@@ -227,8 +221,6 @@
     var scene = new THREE.Scene();
     // 壁
     var geometry = new THREE.PlaneGeometry(BLOCK_SIZE, BLOCK_SIZE);
-    // var texture = new THREE.ImageUtils.loadTexture("wall01.jpg");
-    // var material = new THREE.MeshPhongMaterial({map: texture, bumpMap: texture, bumpScale: 0.2});
     var material = new THREE.MeshBasicMaterial( { color: 0x000000, opacity: 0.0, transparent: true } );
     for (i = 0, max = MAP.length; i < max; i = i + 1) {
       for (j = 0, max2 = MAP[i].length; j < max2; j = j + 1) {
@@ -240,7 +232,7 @@
       }
     }
 
-    // ロードサイドオブジェクト1
+    // ロードサイドオブジェクト1(plane)
     var geometry = new THREE.PlaneGeometry(BLOCK_SIZE, BLOCK_SIZE * 2);
     var texture = new THREE.ImageUtils.loadTexture("/images/roadside1.png");
     var material = new THREE.MeshPhongMaterial({map: texture, bumpMap: texture, side: THREE.DoubleSide, bumpScale: 0.2, transparent: true });
@@ -254,7 +246,7 @@
       }
     }
 
-    // ロードサイドオブジェクト2
+    // ロードサイドオブジェクト2(plane)
     var geometry = new THREE.PlaneGeometry(BLOCK_SIZE, BLOCK_SIZE * 2);
     var texture = new THREE.ImageUtils.loadTexture("/images/roadside2.png");
     var material = new THREE.MeshPhongMaterial({map: texture, bumpMap: texture, side: THREE.DoubleSide, bumpScale: 0.2, transparent: true });
@@ -267,6 +259,38 @@
         }
       }
     }
+
+    // ロードサイドオブジェクト(obj)
+    var jsonLoader = new THREE.JSONLoader();
+    jsonLoader.load("./tuxu_logo.js", function(geometry) { 
+      var mesh = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial);
+      mesh.scale = new THREE.Vector3(0.8, 0.8, 0.8);
+      geometry.materials[0].ambient = geometry.materials[0].color;
+      scene.add(mesh);
+
+      // for (var i=0; i < geometry.materials.length; i++){
+      //   geometry.materials[i].shading = THREE.SmoothShading;
+      //   geometry.materials[i].morphTargets = true;
+      // };
+      // var material = new THREE.MeshFaceMaterial();
+      // var mesh = new THREE.Mesh(geometry, material);
+      // mesh.position.y = -container.clientHeight;
+      // mesh.scale.x = mesh.scale.y = mesh.scale.z = 250;
+      // scene.add(mesh);
+    });
+    
+    
+    // var material = new THREE.MeshPhongMaterial({map: texture, bumpMap: texture, side: THREE.DoubleSide, bumpScale: 0.2, transparent: true });
+    // for (i = 0, max = MAP.length; i < max; i = i + 1) {
+    //   for (j = 0, max2 = MAP[i].length; j < max2; j = j + 1) {
+    //     if (MAP[i][j] == 2) {
+    //       var cube = new THREE.Mesh(geometry, material);
+    //       cube.position.set(BLOCK_SIZE * j, BLOCK_SIZE -20, BLOCK_SIZE * i);
+    //       scene.add(cube);
+    //     }
+    //   }
+    // }
+
 
     // 床
     var pGeometry = new THREE.PlaneGeometry(BLOCK_SIZE, BLOCK_SIZE);
