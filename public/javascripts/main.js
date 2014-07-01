@@ -35,7 +35,7 @@
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
@@ -264,18 +264,11 @@
     loadsideObject = null;
     var loader = new THREE.OBJMTLLoader();
     loader.load( '/images/male02.obj', '/images/male02_dds.mtl', function ( object ) {
-      for (i = 0, max = MAP.length; i < max; i = i + 1) {
-        for (j = 0, max2 = MAP[i].length; j < max2; j = j + 1) {
-          if (MAP[i][j] == 4) {
-            object.position.set(BLOCK_SIZE * j, BLOCK_SIZE - 50, BLOCK_SIZE * i);
-            object.scale.set(2, 2, 2);
-            scene.add(object);
-            loadsideObject = object;
-          }
-        }
-      }
+      object.position.set(1900, 50, 1600); // 決めうち! mapには反映してないオブジェクト
+      object.scale.set(2, 2, 2);
+      scene.add(object);
+      loadsideObject = object;
     });
-
 
     // 床
     var pGeometry = new THREE.PlaneGeometry(BLOCK_SIZE, BLOCK_SIZE);
