@@ -181,6 +181,16 @@
       // キャラクタ表示レイヤーとメッセージ表示レイヤーに追加
       charaGroup.addChild(otherPlayer);
       mapGroup.addChild(otherPlayer);
+
+      // 他キャラ衝突判定
+      otherPlayer.addEventListener('enterframe', function() {
+        if (player.intersect(this)) {
+          // player.x -= 1;
+          player.y -= 1;
+          
+          console.log("hit");
+        }
+      });
  
       // 他キャラレンダー
       var geometry = new THREE.CubeGeometry(BLOCK_SIZE, BLOCK_SIZE + 60, BLOCK_SIZE);
@@ -188,7 +198,7 @@
       var material = new THREE.MeshPhongMaterial({map: texture, bumpMap: texture, bumpScale: 0.2});
 
       var otherChara = new THREE.Mesh(geometry, material);
-      scene.add(otherChara);    
+      scene.add(otherChara);
 
       // サーバからこのユーザの移動が来たら移動させる
       socket.on("position:" + loginName, function(pos) {
