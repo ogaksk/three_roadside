@@ -6,8 +6,7 @@ var express = require('express')
   , routes = require('./routes')
   , http = require('http')
   , path = require('path')
-  , fs = require('fs')
-  , dl  = require('delivery');
+  , fs = require('fs');
 
 var app = express();
 
@@ -84,23 +83,7 @@ io.sockets.on("connection", function(socket) {
   //   player.message = text;
   //   socket.broadcast.emit("message:" + player.login_name, text);
   // });
-  
-  // コンテンツをデリバリー
-  var delivery = dl.listen(socket);
-  
     
-    delivery.on('delivery.connect',function(delivery){
-      console.log("connect deliver")
-      delivery.send({
-        name: 'sample.zip',
-        path : './contents/a.zip'
-      });
-
-      delivery.on('send.success',function(file){
-        console.log('File successfully sent to client!');
-      });
-    });
-  
 
   // 切断した時の処理
   socket.on("disconnect", function() {

@@ -362,20 +362,6 @@
     });
   };
 
-  /* ファイルデリバリー */
-
-  var delivery = new Delivery(socket);
-
-  delivery.on('receive.start',function(fileUID){
-    console.log('receiving a file!');
-  });
-
-  delivery.on('receive.success',function(file){
-    console.log(file)
-    // if (file.isImage()) {
-    //   $('img').attr('src', file.dataURL());
-    // };
-  });
 
   game.start();
 
