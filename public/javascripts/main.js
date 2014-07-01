@@ -155,6 +155,14 @@
       }
     })
 
+    var Item = Class.create(Sprite, {
+      isMove: false,
+      initialize: function (image, x, y, log_name) {
+        Sprite.call(this, MAP_BLOCK_SIZE, MAP_BLOCK_SIZE);
+        // this.addEventListener(enchant.Event.ENTER_FRAME, this.onEnterFrame);
+      }
+    })
+
     /* ---------- ゲームアクション ---------- */
 
     // シーン
@@ -188,6 +196,7 @@
         if (player.intersect(this)) {
           // player.x -= 1;
           player.y -= 1;
+          socket.emit("itemget");
         }
       });
  
@@ -352,6 +361,21 @@
       renderer.render(scene, camera);
     });
   };
+
+  /* ファイルデリバリー */
+
+  var delivery = new Delivery(socket);
+
+  delivery.on('receive.start',function(fileUID){
+    console.log('receiving a file!');
+  });
+
+  delivery.on('receive.success',function(file){
+    console.log(file)
+    // if (file.isImage()) {
+    //   $('img').attr('src', file.dataURL());
+    // };
+  });
 
   game.start();
 
