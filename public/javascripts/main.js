@@ -136,7 +136,8 @@
           this.x += moveX;
           this.y += moveY;
         }
-        socket.emit("position", { x : this.x, y : this.y , direction: this.direction });
+
+        socket.emit("position", { x : this.x, y : this.y , rotation: this.rotation });
       }
     });
 
@@ -187,8 +188,6 @@
         if (player.intersect(this)) {
           // player.x -= 1;
           player.y -= 1;
-          
-          console.log("hit");
         }
       });
  
@@ -204,6 +203,7 @@
       socket.on("position:" + loginName, function(pos) {
         otherPlayer.x = pos.x;
         otherPlayer.y = pos.y;
+        otherPlayer.rotation = pos.rotation;
     
         var moveX = 0;
         var moveY = 0;
