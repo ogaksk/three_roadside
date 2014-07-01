@@ -135,6 +135,7 @@
         if (this.isMove) {
           this.x += moveX;
           this.y += moveY;
+          console.log("x=="+ player.x + "Y===" + player.y)
         }
 
         socket.emit("position", { x : this.x, y : this.y , rotation: this.rotation });
@@ -159,6 +160,8 @@
       isMove: false,
       initialize: function (image, x, y, log_name) {
         Sprite.call(this, MAP_BLOCK_SIZE, MAP_BLOCK_SIZE);
+        this.x = 100;
+        this.y = 100;
         // this.addEventListener(enchant.Event.ENTER_FRAME, this.onEnterFrame);
       }
     })
@@ -180,6 +183,15 @@
     // キャラクターのグループ
     var charaGroup = new Group();
 
+    // アイテム
+    var item = new Item(game.assets["/images/player01.png"]);
+    item.addEventListener('enterframe', function() { 
+      if (player.intersect(this)) {
+        alert("a")
+        player.y -= 3;
+        socket.emit("itemget");
+      }
+    })
 
     // 他のユーザのログイン
     socket.on("name", function(text) {
@@ -196,7 +208,6 @@
         if (player.intersect(this)) {
           // player.x -= 1;
           player.y -= 1;
-          socket.emit("itemget");
         }
       });
  
@@ -289,6 +300,14 @@
       loadsideObject = object;
     });
 
+    // アイテムオブジェクト
+    var geometry = new THREE.CubeGeometry(BLOCK_SIZE, BLOCK_SIZE + 60, BLOCK_SIZE);
+    var material = new THREE.MeshPhongMaterial({bumpMap: texture, bumpScale: 0.2});
+    var itemObject = new THREE.Mesh(geometry, material);
+    itemObject.position.set(item.y, 100, item.x);
+    scene.add(itemObject);
+
+
     // 床
     var pGeometry = new THREE.PlaneGeometry(BLOCK_SIZE, BLOCK_SIZE);
     var pTexture = new THREE.ImageUtils.loadTexture("/images/asfalt7.jpg");
@@ -361,7 +380,6 @@
       renderer.render(scene, camera);
     });
   };
-
 
   game.start();
 
