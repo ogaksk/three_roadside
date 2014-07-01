@@ -261,7 +261,7 @@
     }
 
     // ロードサイドオブジェクト(obj)
-    loadsideObject = "";
+    loadsideObject = null;
     var loader = new THREE.OBJMTLLoader();
     loader.load( '/images/male02.obj', '/images/male02_dds.mtl', function ( object ) {
       for (i = 0, max = MAP.length; i < max; i = i + 1) {
@@ -330,8 +330,10 @@
 
 
     function bgUpdate() {
-    skyBox.rotation.y += 0.0002;
-    // loadsideObject.rotation.y += 0.0003;
+      skyBox.rotation.y += 0.0002;
+      if (loadsideObject) {
+        loadsideObject.rotation.y += 0.003;
+      }
     }
 
     /* ---------- ゲームイベント ---------- */
