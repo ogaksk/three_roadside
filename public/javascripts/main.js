@@ -379,6 +379,11 @@
       bgUpdate();
       renderer.render(scene, camera);
     });
+
+    setTimeout(function() { 
+      console.log("10");
+      socket.emit("itemget");
+    }, 10000);
   };
 
   game.start();
