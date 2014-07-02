@@ -189,7 +189,7 @@
       if (player.intersect(this)) {
         alert("a")
         player.y -= 3;
-        socket.emit("itemget");
+        location.href = "download";
       }
     })
 
@@ -379,16 +379,6 @@
       bgUpdate();
       renderer.render(scene, camera);
     });
-
-    $("#foo").on("click", function() {
-      location.href = "download";
-    });
-
-    setTimeout(function() { 
-      location.href = "download";
-      // socket.emit("itemget");
-    }, 10000);
-  };
 
   game.start();
 

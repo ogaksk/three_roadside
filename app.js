@@ -79,18 +79,6 @@ io.sockets.on("connection", function(socket) {
     socket.broadcast.emit("position:" + player.login_name, pos);
   });
 
-  // // こちらがメッセージを受けた時の処理
-  // socket.on("message", function(text) {
-  //   console.log("message:" + player.login_name + " " + text);
-  //   player.message = text;
-  //   socket.broadcast.emit("message:" + player.login_name, text);
-  // });
-  
-  socket.on("itemget", function() {
-    console.log("item___get!");
-    res.redirect("itemget")
-  });  
-
   // 切断した時の処理
   socket.on("disconnect", function() {
     console.log("disconnect:" + player.login_name);
