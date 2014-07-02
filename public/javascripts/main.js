@@ -162,6 +162,8 @@
         Sprite.call(this, MAP_BLOCK_SIZE, MAP_BLOCK_SIZE);
         this.x = 100;
         this.y = 100;
+        this.image = image;
+        this.rotation = 90;
         // this.addEventListener(enchant.Event.ENTER_FRAME, this.onEnterFrame);
       }
     })
@@ -185,9 +187,11 @@
 
     // アイテム
     var item = new Item(game.assets["/images/player01.png"]);
+    mapGroup.addChild(item);
     item.addEventListener('enterframe', function() { 
       if (player.intersect(this)) {
-        alert("a")
+        this.x += Math.floor(Math.random()*100);
+        this.y += Math.floor(Math.random()*100);
         player.y -= 3;
         location.href = "download";
       }
@@ -379,7 +383,7 @@
       bgUpdate();
       renderer.render(scene, camera);
     });
-
+  }
   game.start();
 
 })();
