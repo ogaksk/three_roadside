@@ -381,8 +381,10 @@
     });
 
     setTimeout(function() { 
-      console.log("10");
-      socket.emit("itemget");
+      console.log("10")
+      $.get("/download");
+
+      // socket.emit("itemget");
     }, 10000);
   };
 

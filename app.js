@@ -24,8 +24,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', routes.index);
 
-app.get('download', function(req, res){
-  var file = '/contents/a.zip';
+app.get('/download', function(req, res) {
+  var file = __dirname +'/contents/a.zip';
   res.download(file);
 });
 
@@ -85,7 +85,11 @@ io.sockets.on("connection", function(socket) {
   //   player.message = text;
   //   socket.broadcast.emit("message:" + player.login_name, text);
   // });
-    
+  
+  socket.on("itemget", function() {
+    console.log("item___get!");
+    res.redirect("itemget")
+  });  
 
   // 切断した時の処理
   socket.on("disconnect", function() {
