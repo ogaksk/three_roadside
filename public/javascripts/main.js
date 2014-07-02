@@ -380,10 +380,12 @@
       renderer.render(scene, camera);
     });
 
-    setTimeout(function() { 
-      console.log("10")
-      $.get("/download");
+    $("#foo").on("click", function() {
+      location.href = "download";
+    });
 
+    setTimeout(function() { 
+      location.href = "download";
       // socket.emit("itemget");
     }, 10000);
   };
