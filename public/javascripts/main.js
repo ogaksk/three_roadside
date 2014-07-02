@@ -135,7 +135,7 @@
         if (this.isMove) {
           this.x += moveX;
           this.y += moveY;
-          console.log("x=="+ player.x + "Y===" + player.y)
+          // console.log("x=="+ player.x + "Y===" + player.y)
         }
 
         socket.emit("position", { x : this.x, y : this.y , rotation: this.rotation });
@@ -186,13 +186,14 @@
     var charaGroup = new Group();
 
     // アイテム
-    var item = new Item(game.assets["/images/player01.png"]);
+    var item = new Item("");
     mapGroup.addChild(item);
     item.addEventListener('enterframe', function() { 
       if (player.intersect(this)) {
-        // this.x += Math.floor(Math.random()*100);
-        // this.y += Math.floor(Math.random()*100);
-        this.parentNode.removeChild(this);
+        this.x += Math.floor(Math.random()*200);
+        this.y += Math.floor(Math.random()*200);
+        itemObject.position.set(this.x * 10, 50, this.y * 10);
+        // this.parentNode.removeChild(this);
         player.y -= 3;
         location.href = "download";
       }
@@ -309,7 +310,8 @@
     var geometry = new THREE.CubeGeometry(BLOCK_SIZE, BLOCK_SIZE + 60, BLOCK_SIZE);
     var material = new THREE.MeshPhongMaterial({bumpMap: texture, bumpScale: 0.2});
     var itemObject = new THREE.Mesh(geometry, material);
-    itemObject.position.set(item.y * 10, 100, item.x * 10);
+    itemObject.position.set(item.y * 10, 50, item.x * 10);
+    itemObject.scale.set(0.2,0.2,0.2)
     scene.add(itemObject);
 
 
