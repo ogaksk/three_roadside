@@ -23,9 +23,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.get('/', routes.index);
-// app.get('/', function(req, res){
-//   res.sendfile('public/index.html');
-// });
+
+app.get('download', function(req, res){
+  var file = '/contents/a.zip';
+  res.download(file);
+});
 
 server = http.createServer(app);
 var socketio = require('socket.io');
