@@ -369,6 +369,7 @@
 
     function bgUpdate() {
       skyBox.rotation.y += 0.0002;
+      itemObject.rotation.y += 0.01;
       if (loadsideObject) {
         loadsideObject.rotation.y += 0.003;
       }
