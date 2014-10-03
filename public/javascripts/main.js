@@ -299,9 +299,9 @@
     // ロードサイドオブジェクト(obj)
     loadsideObject = null;
     var loader = new THREE.OBJMTLLoader();
-    loader.load( '/images/male02.obj', '/images/male02_dds.mtl', function ( object ) {
+    loader.load( '/images/atomproject/Atom.obj', '/images/atomproject/Atom.mtl', function ( object ) {
       object.position.set(1900, 50, 1600); // 決めうち! mapには反映してないオブジェクト
-      object.scale.set(2, 2, 2);
+      object.scale.set(100, 100, 100);
       scene.add(object);
       loadsideObject = object;
     });
