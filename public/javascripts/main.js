@@ -299,12 +299,15 @@
     // ロードサイドオブジェクト(obj)
     loadsideObject = null;
     var jsonLoader = new THREE.JSONLoader();
-    jsonLoader.load("./javascripts/enchu.js", function(geometry) { 
-      var mesh = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial);
-      mesh.scale = new THREE.Vector3(0.8, 0.8, 0.8);
-      geometry.materials[0].ambient = geometry.materials[0].color;
+    jsonLoader.load("./javascripts/enchu.js", function(geometry, materials) { 
+      var faceMaterial = new THREE.MeshFaceMaterial( materials );
+      var mesh = new THREE.Mesh( geometry, faceMaterial );
+      mesh.position.set(1900, 100, 1600); // 決めうち! mapには反映してないオブジェクト
+      mesh.scale.set( 100, 100, 100 );
+      mesh.material.materials[0].ambient = mesh.material.materials[0].color;
+
       scene.add(mesh);
-      loadsideObject = mesh
+      loadsideObject = mesh;
     });
 
 
