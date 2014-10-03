@@ -299,11 +299,11 @@
     // ロードサイドオブジェクト(obj)
     loadsideObject = null;
     var jsonLoader = new THREE.JSONLoader();
-    jsonLoader.load("./javascripts/enchu.js", function(geometry, materials) { 
+    jsonLoader.load("./javascripts/TUXU_logo.js", function(geometry, materials) { 
       var faceMaterial = new THREE.MeshFaceMaterial( materials );
       var mesh = new THREE.Mesh( geometry, faceMaterial );
       mesh.position.set(1900, 100, 1600); // 決めうち! mapには反映してないオブジェクト
-      mesh.scale.set( 100, 100, 100 );
+      mesh.scale.set( 500, 500, 500 );
       mesh.material.materials[0].ambient = mesh.material.materials[0].color;
 
       scene.add(mesh);
