@@ -298,13 +298,15 @@
 
     // ロードサイドオブジェクト(obj)
     loadsideObject = null;
-    var loader = new THREE.OBJMTLLoader();
-    loader.load( '/images/atomproject/Atom.obj', '/images/atomproject/Atom.mtl', function ( object ) {
-      object.position.set(1900, 50, 1600); // 決めうち! mapには反映してないオブジェクト
-      object.scale.set(100, 100, 100);
-      scene.add(object);
-      loadsideObject = object;
+    var jsonLoader = new THREE.JSONLoader();
+    jsonLoader.load("./javascripts/enchu.js", function(geometry) { 
+      var mesh = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial);
+      mesh.scale = new THREE.Vector3(0.8, 0.8, 0.8);
+      geometry.materials[0].ambient = geometry.materials[0].color;
+      scene.add(mesh);
+      loadsideObject = mesh
     });
+
 
     // アイテムオブジェクト
     var geometry = new THREE.CubeGeometry(BLOCK_SIZE, BLOCK_SIZE + 60, BLOCK_SIZE);
