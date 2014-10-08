@@ -296,20 +296,69 @@
       }
     }
 
-    // ロードサイドオブジェクト(obj)
-    loadsideObject = null;
+    // // ロードサイドオブジェクト(obj)
+    // loadsideObject = null;
     var jsonLoader = new THREE.JSONLoader();
-    jsonLoader.load("./javascripts/TUXU_logo.js", function(geometry, materials) { 
+    jsonLoader.load("./javascripts/AEON.js", function(geometry, materials) { 
       var faceMaterial = new THREE.MeshFaceMaterial( materials );
       var mesh = new THREE.Mesh( geometry, faceMaterial );
-      mesh.position.set(1900, 100, 1600); // 決めうち! mapには反映してないオブジェクト
-      mesh.scale.set( 500, 500, 500 );
+      mesh.position.set(1900, 10, 1600); // 決めうち! mapには反映してないオブジェクト
+      mesh.scale.set( 2000, 2000, 2000 );
       mesh.material.materials[0].ambient = mesh.material.materials[0].color;
+      mesh.material.materials[1].ambient = mesh.material.materials[1].color;
+      mesh.material.materials[2].ambient = mesh.material.materials[2].color;
 
       scene.add(mesh);
       loadsideObject = mesh;
     });
 
+
+    // ロードサイドオブジェクト2(obj)
+    // loadsideObject2 = null;
+    jsonLoader.load("./javascripts/atom1006.js", function(geometry, materials) { 
+      var faceMaterial = new THREE.MeshFaceMaterial( materials );
+      var mesh = new THREE.Mesh( geometry, faceMaterial );
+      mesh.position.set(3000, 10, 1600); // 決めうち! mapには反映してないオブジェクト
+      mesh.scale.set( 10, 10, 10 );
+      mesh.material.materials[0].ambient = mesh.material.materials[0].color;
+      mesh.material.materials[1].ambient = mesh.material.materials[1].color;
+      mesh.material.materials[2].ambient = mesh.material.materials[2].color;
+
+      scene.add(mesh);
+      loadsideObject2 = mesh;
+    });
+
+    // ロードサイドオブジェクト3(obj)
+    // loadsideObject3 = null;
+    jsonLoader.load("./javascripts/haruyama.js", function(geometry, materials) { 
+      var faceMaterial = new THREE.MeshFaceMaterial( materials );
+      var mesh = new THREE.Mesh( geometry, faceMaterial );
+      mesh.position.set(200, 0, 1000); // 決めうち! mapには反映してないオブジェクト
+      mesh.scale.set(20, 20, 20);
+      mesh.material.materials[0].ambient = mesh.material.materials[0].color;
+      mesh.material.materials[1].ambient = mesh.material.materials[1].color;
+      mesh.material.materials[2].ambient = mesh.material.materials[2].color;
+      mesh.material.materials[3].ambient = mesh.material.materials[3].color;
+      mesh.material.materials[4].ambient = mesh.material.materials[4].color;
+
+      scene.add(mesh);
+      loadsideObject2 = mesh;
+    });
+
+
+    // ロードサイドオブジェクト4(obj)
+    // loadsideObject3 = null;
+    jsonLoader.load("./javascripts/video.js", function(geometry, materials) { 
+      var faceMaterial = new THREE.MeshFaceMaterial( materials );
+      var mesh = new THREE.Mesh( geometry, faceMaterial );
+      mesh.position.set(400, 0, 1070); // 決めうち! mapには反映してないオブジェクト
+      mesh.scale.set(4, 4, 4);
+      mesh.material.materials[0].ambient = mesh.material.materials[0].color;
+      mesh.material.materials[1].ambient = mesh.material.materials[1].color;
+      mesh.material.materials[2].ambient = mesh.material.materials[2].color;
+      scene.add(mesh);
+      loadsideObject2 = mesh;
+    });
 
     // アイテムオブジェクト
     var geometry = new THREE.CubeGeometry(BLOCK_SIZE, BLOCK_SIZE + 60, BLOCK_SIZE);
@@ -318,7 +367,6 @@
     itemObject.position.set(item.y * 10, 50, item.x * 10);
     itemObject.scale.set(0.2,0.2,0.2)
     scene.add(itemObject);
-
 
     // 床
     var pGeometry = new THREE.PlaneGeometry(BLOCK_SIZE, BLOCK_SIZE);
@@ -375,9 +423,9 @@
     function bgUpdate() {
       skyBox.rotation.y += 0.0002;
       itemObject.rotation.y += 0.01;
-      if (loadsideObject) {
-        loadsideObject.rotation.y += 0.003;
-      }
+      // if (loadsideObject) {
+      //   loadsideObject.rotation.y += 0.003;
+      // }
     }
 
     /* ---------- ゲームイベント ---------- */
