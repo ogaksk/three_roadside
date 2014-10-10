@@ -318,20 +318,20 @@
 
 
     // // ロードサイドオブジェクト(obj)
-    // loadsideObject = null;
-    // var jsonLoader = new THREE.JSONLoader();
-    // jsonLoader.load("./javascripts/AEON.js", function(geometry, materials) { 
-    //   var faceMaterial = new THREE.MeshFaceMaterial( materials );
-    //   var mesh = new THREE.Mesh( geometry, faceMaterial );
-    //   mesh.position.set(1900, 10, 1600); // 決めうち! mapには反映してないオブジェクト
-    //   mesh.scale.set( 2000, 2000, 2000 );
-    //   mesh.material.materials[0].ambient = mesh.material.materials[0].color;
-    //   mesh.material.materials[1].ambient = mesh.material.materials[1].color;
-    //   mesh.material.materials[2].ambient = mesh.material.materials[2].color;
+    loadsideObject = null;
+    var jsonLoader = new THREE.JSONLoader();
+    jsonLoader.load("./javascripts/AEON.js", function(geometry, materials) { 
+      var faceMaterial = new THREE.MeshFaceMaterial( materials );
+      var mesh = new THREE.Mesh( geometry, faceMaterial );
+      mesh.position.set(1900, 10, 1600); // 決めうち! mapには反映してないオブジェクト
+      mesh.scale.set( 2000, 2000, 2000 );
+      mesh.material.materials[0].ambient = mesh.material.materials[0].color;
+      mesh.material.materials[1].ambient = mesh.material.materials[1].color;
+      mesh.material.materials[2].ambient = mesh.material.materials[2].color;
 
-    //   scene.add(mesh);
-    //   loadsideObject = mesh;
-    // });
+      scene.add(mesh);
+      loadsideObject = mesh;
+    });
 
 
     // アイテムオブジェクト
