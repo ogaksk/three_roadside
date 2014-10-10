@@ -68,7 +68,8 @@
   }
   var PLAYER_MOVE_SPEED = 0.5;
   var PLAYER_ROTATION_SPEED = 2;
-  var MAP_BLOCK_SIZE = 10;
+  var MAP_BLOCK_SIZE = 100;
+  var CHARA_SIZE = 10;
 
   // ゲーム開始
   enchant();
@@ -95,7 +96,7 @@
     var Player = Class.create(Sprite, {
       isMove: false,
       initialize: function (image, x, y) {
-        Sprite.call(this, MAP_BLOCK_SIZE, MAP_BLOCK_SIZE);
+        Sprite.call(this, CHARA_SIZE, CHARA_SIZE);
         this.x = x;
         this.y = y;
         this.loginName = name;
@@ -146,7 +147,7 @@
     var OtherPlayer = Class.create(Sprite, {
       isMove: false,
       initialize: function (image, x, y, log_name) {
-        Sprite.call(this, MAP_BLOCK_SIZE, MAP_BLOCK_SIZE);
+        Sprite.call(this, CHARA_SIZE, CHARA_SIZE);
         this.x = x;
         this.y = y;
         this.image = image;
@@ -159,7 +160,7 @@
     var Item = Class.create(Sprite, {
       isMove: false,
       initialize: function (image, x, y, log_name) {
-        Sprite.call(this, MAP_BLOCK_SIZE, MAP_BLOCK_SIZE);
+        Sprite.call(this, CHARA_SIZE, CHARA_SIZE);
         this.x = 100;
         this.y = 100;
         this.image = image;
@@ -179,7 +180,7 @@
     var field = new Field(game.assets["/images/map01.png"], MAP, MAP);
     //mapGroup.addChild(field);
     // プレーヤー
-    var player = new Player(game.assets["/images/player01.png"], Math.floor( Math.random() * COL_MAX_LENGTH * MAP_BLOCK_SIZE), Math.floor( Math.random() * ROW_MAX_LENGTH * MAP_BLOCK_SIZE));
+    var player = new Player(game.assets["/images/player01.png"], Math.floor( Math.random() * COL_MAX_LENGTH * CHARA_SIZE), Math.floor( Math.random() * ROW_MAX_LENGTH * CHARA_SIZE));
     mapGroup.addChild(player);
 
     // キャラクターのグループ
@@ -238,8 +239,8 @@
         otherPlayer.y += moveY;
 
         otherChara.rotation.y = -((otherPlayer.rotation + 90) * Math.PI / 180);
-        otherChara.position.z = otherPlayer.y * (BLOCK_SIZE / MAP_BLOCK_SIZE);
-        otherChara.position.x = otherPlayer.x * (BLOCK_SIZE / MAP_BLOCK_SIZE);
+        otherChara.position.z = otherPlayer.y * (BLOCK_SIZE / CHARA_SIZE);
+        otherChara.position.x = otherPlayer.x * (BLOCK_SIZE / CHARA_SIZE);
       });
 
       // 切断が送られてきたら表示とオブジェクトの消去
@@ -255,133 +256,78 @@
 
     // シーン
     var scene = new THREE.Scene();
+
+
     // 壁
-    var geometry = new THREE.PlaneGeometry(BLOCK_SIZE, BLOCK_SIZE);
-    var material = new THREE.MeshBasicMaterial( { color: 0x000000, opacity: 0.0, transparent: true } );
-    for (i = 0, max = MAP.length; i < max; i = i + 1) {
-      for (j = 0, max2 = MAP[i].length; j < max2; j = j + 1) {
-        if (MAP[i][j] == 1) {
-          var cube = new THREE.Mesh(geometry, material);
-          cube.position.set(BLOCK_SIZE * j, BLOCK_SIZE / 2, BLOCK_SIZE * i);
-          scene.add(cube);
-        }
-      }
-    }
+    // var geometry = new THREE.PlaneGeometry(MAP_BLOCK_SIZE, MAP_BLOCK_SIZE);
+    // var material = new THREE.MeshBasicMaterial( { color: 0x000000, opacity: 0.0, transparent: true } );
+    // for (i = 0, max = MAP.length; i < max; i = i + 1) {
+    //   for (j = 0, max2 = MAP[i].length; j < max2; j = j + 1) {
+    //     if (MAP[i][j] == 1) {
+    //       var cube = new THREE.Mesh(geometry, material);
+    //       cube.position.set(MAP_BLOCK_SIZE * j, MAP_BLOCK_SIZE / 2, MAP_BLOCK_SIZE * i);
+    //       scene.add(cube);
+    //     }
+    //   }
+    // }
+
 
     // ロードサイドオブジェクト1(plane)
-    var geometry = new THREE.PlaneGeometry(BLOCK_SIZE, BLOCK_SIZE * 2);
-    var texture = new THREE.ImageUtils.loadTexture("/images/roadside1.png");
-    var material = new THREE.MeshPhongMaterial({map: texture, bumpMap: texture, side: THREE.DoubleSide, bumpScale: 0.2, transparent: true });
-    for (i = 0, max = MAP.length; i < max; i = i + 1) {
-      for (j = 0, max2 = MAP[i].length; j < max2; j = j + 1) {
-        if (MAP[i][j] == 2) {
-          var cube = new THREE.Mesh(geometry, material);
-          cube.position.set(BLOCK_SIZE * j, BLOCK_SIZE -20, BLOCK_SIZE * i);
-          scene.add(cube);
-        }
-      }
-    }
+    // var geometry = new THREE.PlaneGeometry(BLOCK_SIZE, BLOCK_SIZE * 2);
+    // var texture = new THREE.ImageUtils.loadTexture("/images/roadside1.png");
+    // var material = new THREE.MeshPhongMaterial({map: texture, bumpMap: texture, side: THREE.DoubleSide, bumpScale: 0.2, transparent: true });
+    // for (i = 0, max = MAP.length; i < max; i = i + 1) {
+    //   for (j = 0, max2 = MAP[i].length; j < max2; j = j + 1) {
+    //     if (MAP[i][j] == 2) {
+    //       var cube = new THREE.Mesh(geometry, material);
+    //       cube.position.set(BLOCK_SIZE * j, BLOCK_SIZE -20, BLOCK_SIZE * i);
+    //       scene.add(cube);
+    //     }
+    //   }
+    // }
 
-    // ロードサイドオブジェクト2(plane)
-    var geometry = new THREE.PlaneGeometry(BLOCK_SIZE, BLOCK_SIZE * 2);
-    var texture = new THREE.ImageUtils.loadTexture("/images/roadside2.png");
-    var material = new THREE.MeshPhongMaterial({map: texture, bumpMap: texture, side: THREE.DoubleSide, bumpScale: 0.2, transparent: true });
-    for (i = 0, max = MAP.length; i < max; i = i + 1) {
-      for (j = 0, max2 = MAP[i].length; j < max2; j = j + 1) {
-        if (MAP[i][j] == 3) {
-          var cube = new THREE.Mesh(geometry, material);
-          cube.position.set(BLOCK_SIZE * j, BLOCK_SIZE - 20, BLOCK_SIZE * i);
-          scene.add(cube);
-        }
-      }
-    }
 
     // // ロードサイドオブジェクト(obj)
     // loadsideObject = null;
-    var jsonLoader = new THREE.JSONLoader();
-    jsonLoader.load("./javascripts/AEON.js", function(geometry, materials) { 
-      var faceMaterial = new THREE.MeshFaceMaterial( materials );
-      var mesh = new THREE.Mesh( geometry, faceMaterial );
-      mesh.position.set(1900, 10, 1600); // 決めうち! mapには反映してないオブジェクト
-      mesh.scale.set( 2000, 2000, 2000 );
-      mesh.material.materials[0].ambient = mesh.material.materials[0].color;
-      mesh.material.materials[1].ambient = mesh.material.materials[1].color;
-      mesh.material.materials[2].ambient = mesh.material.materials[2].color;
+    // var jsonLoader = new THREE.JSONLoader();
+    // jsonLoader.load("./javascripts/AEON.js", function(geometry, materials) { 
+    //   var faceMaterial = new THREE.MeshFaceMaterial( materials );
+    //   var mesh = new THREE.Mesh( geometry, faceMaterial );
+    //   mesh.position.set(1900, 10, 1600); // 決めうち! mapには反映してないオブジェクト
+    //   mesh.scale.set( 2000, 2000, 2000 );
+    //   mesh.material.materials[0].ambient = mesh.material.materials[0].color;
+    //   mesh.material.materials[1].ambient = mesh.material.materials[1].color;
+    //   mesh.material.materials[2].ambient = mesh.material.materials[2].color;
 
-      scene.add(mesh);
-      loadsideObject = mesh;
-    });
+    //   scene.add(mesh);
+    //   loadsideObject = mesh;
+    // });
 
-
-    // ロードサイドオブジェクト2(obj)
-    // loadsideObject2 = null;
-    jsonLoader.load("./javascripts/atom1006.js", function(geometry, materials) { 
-      var faceMaterial = new THREE.MeshFaceMaterial( materials );
-      var mesh = new THREE.Mesh( geometry, faceMaterial );
-      mesh.position.set(3000, 10, 1600); // 決めうち! mapには反映してないオブジェクト
-      mesh.scale.set( 10, 10, 10 );
-      mesh.material.materials[0].ambient = mesh.material.materials[0].color;
-      mesh.material.materials[1].ambient = mesh.material.materials[1].color;
-      mesh.material.materials[2].ambient = mesh.material.materials[2].color;
-
-      scene.add(mesh);
-      loadsideObject2 = mesh;
-    });
-
-    // ロードサイドオブジェクト3(obj)
-    // loadsideObject3 = null;
-    jsonLoader.load("./javascripts/haruyama.js", function(geometry, materials) { 
-      var faceMaterial = new THREE.MeshFaceMaterial( materials );
-      var mesh = new THREE.Mesh( geometry, faceMaterial );
-      mesh.position.set(200, 0, 1000); // 決めうち! mapには反映してないオブジェクト
-      mesh.scale.set(20, 20, 20);
-      mesh.material.materials[0].ambient = mesh.material.materials[0].color;
-      mesh.material.materials[1].ambient = mesh.material.materials[1].color;
-      mesh.material.materials[2].ambient = mesh.material.materials[2].color;
-      mesh.material.materials[3].ambient = mesh.material.materials[3].color;
-      mesh.material.materials[4].ambient = mesh.material.materials[4].color;
-
-      scene.add(mesh);
-      loadsideObject2 = mesh;
-    });
-
-
-    // ロードサイドオブジェクト4(obj)
-    // loadsideObject3 = null;
-    jsonLoader.load("./javascripts/video.js", function(geometry, materials) { 
-      var faceMaterial = new THREE.MeshFaceMaterial( materials );
-      var mesh = new THREE.Mesh( geometry, faceMaterial );
-      mesh.position.set(400, 0, 1070); // 決めうち! mapには反映してないオブジェクト
-      mesh.scale.set(4, 4, 4);
-      mesh.material.materials[0].ambient = mesh.material.materials[0].color;
-      mesh.material.materials[1].ambient = mesh.material.materials[1].color;
-      mesh.material.materials[2].ambient = mesh.material.materials[2].color;
-      scene.add(mesh);
-      loadsideObject2 = mesh;
-    });
 
     // アイテムオブジェクト
-    var geometry = new THREE.CubeGeometry(BLOCK_SIZE, BLOCK_SIZE + 60, BLOCK_SIZE);
-    var material = new THREE.MeshPhongMaterial({bumpMap: texture, bumpScale: 0.2});
-    var itemObject = new THREE.Mesh(geometry, material);
-    itemObject.position.set(item.y * 10, 50, item.x * 10);
-    itemObject.scale.set(0.2,0.2,0.2)
-    scene.add(itemObject);
+    // var geometry = new THREE.CubeGeometry(BLOCK_SIZE, BLOCK_SIZE + 60, BLOCK_SIZE);
+    // var material = new THREE.MeshPhongMaterial({bumpMap: texture, bumpScale: 0.2});
+    // var itemObject = new THREE.Mesh(geometry, material);
+    // itemObject.position.set(item.y * 10, 50, item.x * 10);
+    // itemObject.scale.set(0.2,0.2,0.2)
+    // scene.add(itemObject);
+
 
     // 床
-    var pGeometry = new THREE.PlaneGeometry(BLOCK_SIZE, BLOCK_SIZE);
-    var pTexture = new THREE.ImageUtils.loadTexture("/images/asfalt7.jpg");
-    var pMaterial = new THREE.MeshPhongMaterial({map: pTexture, side: THREE.DoubleSide, bumpMap: pTexture, bumpScale: 0.2});
-    for (i = 0, max = MAP.length; i < max; i = i + 1) {
-      for (j = 0, max2 = MAP[i].length; j < max2; j = j + 1) {
-        if (MAP[i][j] == 0 || MAP[i][j] == 2 || MAP[i][j] == 3) {
-          var plane = new THREE.Mesh(pGeometry, pMaterial);
-          plane.position.set(BLOCK_SIZE * j, 0, BLOCK_SIZE * i);
-          plane.rotation.x = 90 * Math.PI / 180;
-          scene.add(plane);
-        }
-      }
-    }
+    // var pGeometry = new THREE.PlaneGeometry(MAP_BLOCK_SIZE*10, MAP_BLOCK_SIZE*10);
+    // var pTexture = new THREE.ImageUtils.loadTexture("/images/asfalt7.jpg");
+    // var pMaterial = new THREE.MeshPhongMaterial({map: pTexture, side: THREE.DoubleSide, bumpMap: pTexture, bumpScale: 0.2});
+    // for (i = 0, max = MAP.length; i < max; i = i + 1) {
+    //   for (j = 0, max2 = MAP[i].length; j < max2; j = j + 1) {
+    //     if (MAP[i][j] == 0 || MAP[i][j] == 2 || MAP[i][j] == 3) {
+    //       var plane = new THREE.Mesh(pGeometry, pMaterial);
+    //       plane.position.set(MAP_BLOCK_SIZE * j *10, 0, MAP_BLOCK_SIZE * i *10);
+    //       plane.rotation.x = 90 * Math.PI / 180;
+    //       scene.add(plane);
+    //     }
+    //   }
+    // }
+
 
     // 背景
     var geometry = new THREE.SphereGeometry(4500, 60, 40);
@@ -395,7 +341,7 @@
       fragmentShader: document.getElementById('sky-fragment').textContent
     });
     skyBox = new THREE.Mesh(geometry, material);
-    skyBox.scale.set(-1, 1, 1);
+    skyBox.scale.set(-3, 3, 3);
     skyBox.eulerOrder = 'XZY';
     skyBox.renderDepth = 1000.0;
     //skyBox.position.setY(300);
@@ -422,7 +368,7 @@
 
     function bgUpdate() {
       skyBox.rotation.y += 0.0002;
-      itemObject.rotation.y += 0.01;
+      // itemObject.rotation.y += 0.01;
       // if (loadsideObject) {
       //   loadsideObject.rotation.y += 0.003;
       // }
@@ -432,11 +378,11 @@
 
     game.rootScene.addEventListener(enchant.Event.ENTER_FRAME, function() {
       camera.rotation.y = -((player.rotation + 90) * Math.PI / 180);
-      camera.position.z = player.y * (BLOCK_SIZE / MAP_BLOCK_SIZE);
-      camera.position.x = player.x * (BLOCK_SIZE / MAP_BLOCK_SIZE);
+      camera.position.z = player.y * (BLOCK_SIZE / CHARA_SIZE);
+      camera.position.x = player.x * (BLOCK_SIZE / CHARA_SIZE);
       light.rotation.y = -((player.rotation + 90) * Math.PI / 180);
-      light.position.z = player.y * (BLOCK_SIZE / MAP_BLOCK_SIZE);
-      light.position.x = player.x * (BLOCK_SIZE / MAP_BLOCK_SIZE);
+      light.position.z = player.y * (BLOCK_SIZE / CHARA_SIZE);
+      light.position.x = player.x * (BLOCK_SIZE / CHARA_SIZE);
       bgUpdate();
       renderer.render(scene, camera);
     });
