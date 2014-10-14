@@ -205,8 +205,21 @@
       var texture = new THREE.ImageUtils.loadTexture("/images/wall01.jpg");
       var material = new THREE.MeshPhongMaterial({map: texture, bumpMap: texture, bumpScale: 0.2});
 
-      var otherChara = new THREE.Mesh(geometry, material);
-      scene.add(otherChara);
+
+      var otherChara;
+      var jsonLoader = new THREE.JSONLoader();
+      jsonLoader.load("./javascripts/kei.js", function(geometry, materials) { 
+        var faceMaterial = new THREE.MeshFaceMaterial( materials );
+        
+        otherChara = new THREE.Mesh( geometry, faceMaterial );
+        otherChara.scale.set(200, 200, 200);
+        for(var i = 0; i < 13; i++) {
+          otherChara.material.materials[i].ambient = otherChara.material.materials[i].color;
+        }
+        scene.add(otherChara);
+
+      });
+
 
       // サーバからこのユーザの移動が来たら移動させる
       socket.on("position:" + loginName, function(pos) {
@@ -220,10 +233,12 @@
         otherPlayer.x += moveX;
         otherPlayer.y += moveY;
 
-        otherChara.rotation.y = -((otherPlayer.rotation + 90) * Math.PI / 180);
-        otherChara.position.z = otherPlayer.y * (BLOCK_SIZE / CHARA_SIZE);
-        otherChara.position.x = otherPlayer.x * (BLOCK_SIZE / CHARA_SIZE);
-
+        if(otherChara != undefined) {
+          otherChara.rotation.y = -((otherPlayer.rotation - 90) * Math.PI / 180);
+          otherChara.position.z = otherPlayer.y * (BLOCK_SIZE / CHARA_SIZE);
+          otherChara.position.x = otherPlayer.x * (BLOCK_SIZE / CHARA_SIZE);
+        }
+        
         //
         // -----------音操作系--------------
         //
