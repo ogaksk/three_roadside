@@ -1,7 +1,6 @@
 (function () {
 
   var name = prompt("名前を入れてください:");
-
   var socket = io.connect();
 
   socket.on("connect", function() {
@@ -53,7 +52,9 @@
   var MAP_BLOCK_SIZE = 10;
   var CHARA_SIZE = 10;
 
-  // ゲーム開始
+  /*
+  //------------------------------------- ゲーム開始 -------------------------------------------//
+  */
   enchant();
   var game = new Core(STAGE_WIDTH, STAGE_HEIGHT);
   game.preload([
@@ -185,7 +186,6 @@
     // 他のユーザのログイン
     socket.on("name", function(text) {
       var loginName = text;
-
       var otherPlayer = new OtherPlayer(game.assets["/images/player01.png"]);
       otherPlayer.loginName = loginName
       // キャラクタ表示レイヤーとメッセージ表示レイヤーに追加
@@ -223,6 +223,15 @@
         otherChara.rotation.y = -((otherPlayer.rotation + 90) * Math.PI / 180);
         otherChara.position.z = otherPlayer.y * (BLOCK_SIZE / CHARA_SIZE);
         otherChara.position.x = otherPlayer.x * (BLOCK_SIZE / CHARA_SIZE);
+
+        //
+        // -----------音操作系--------------
+        //
+        if(gainNode != undefined) {
+          // gainNode.gain.value = 0.0;
+          gainNode.gain.value =  (10 / Math.sqrt(Math.pow(player.x - otherPlayer.x, 2) + Math.pow(player.y - otherPlayer.y, 2)) );
+        };
+
       });
 
       // 切断が送られてきたら表示とオブジェクトの消去
@@ -385,6 +394,22 @@
       light.position.x = player.x * (BLOCK_SIZE / CHARA_SIZE);
       bgUpdate();
       renderer.render(scene, camera);
+    });
+
+    /*----------------サウンドパート----------------*/
+    var gainNode;
+    var audio = new AudioBufferLoader("sounds/car1.mp3", "sounds/car2.mp3", function() {
+      var self = this;
+      var source1 = self.context.createBufferSource();
+      source1.buffer = self.bufferList[0];
+      source1.loop = true;
+
+      gainNode = self.context.createGain();
+      gainNode.gain.value = 0.0;
+            
+      source1.connect(gainNode);
+      gainNode.connect(self.context.destination);
+      source1.start();
     });
   }
   game.start();
