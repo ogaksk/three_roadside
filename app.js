@@ -68,7 +68,7 @@ io.sockets.on("connection", function(socket) {
     // CHECK: randomなhexの名前を与える
     player.login_name = randomHex();
     player.message = text;
-    socket.broadcast.emit("name", player.login_name);
+    socket.broadcast.emit("name", player);
 
     // ログイン中プレイヤーリストへの登録
     player_list[ player.login_name ] = player;
@@ -82,10 +82,9 @@ io.sockets.on("connection", function(socket) {
       // ログイン中プレイヤーリストからプレイヤー情報取得
       if( player.login_name != player_list[i].login_name) {
         var c = player_list[i]; 
-        socket.emit("name", c.login_name);
+        socket.emit("name", c);
         socket.emit("position:" + c.login_name,
                   c.x + "," + c.y + "," + c.direction);
-        socket.emit("message:" + c.login_name, c.message);
       }
     }
   })

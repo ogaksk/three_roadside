@@ -190,10 +190,10 @@
 
 
     // 他のユーザのログイン
-    socket.on("name", function(text) {
-      var loginName = text;
+    socket.on("name", function(data) {
+      var loginName = data.login_name;
       var otherPlayer = new OtherPlayer(game.assets["/images/player01.png"]);
-      otherPlayer.loginName = loginName
+      otherPlayer.loginName = loginName;
       otherPlayer.soundTrackId = parseInt(loginName[0], 16)
 
       // キャラクタ表示レイヤーとメッセージ表示レイヤーに追加
@@ -219,8 +219,28 @@
         for(var i = 0; i < 13; i++) {
           otherChara.material.materials[i].ambient = otherChara.material.materials[i].color;
         }
-        scene.add(otherChara);
+        // scene.add(otherChara);
       });
+
+      // 他キャラ名前テクスチャレンダー
+      // テクスチャを描画
+      var canvas = document.createElement('canvas');
+      canvas.width = 500; canvas.height = 250;
+      var ctx = canvas.getContext('2d');
+      ctx.fillStyle = 'white';
+      ctx.font = "55px sans-serif";
+      ctx.textAlign = 'center';
+      ctx.fillText(otherPlayer.message, 256, 100);
+      var texture = new THREE.Texture(canvas);
+      texture.needsUpdate = true;
+       
+      var geometry = new THREE.PlaneGeometry(2, 1);
+      var material = new THREE.MeshPhongMaterial({
+        color: 0xffffff, specular: 0xcccccc, shininess:50, ambient: 0xffffff,
+        map: texture, side: THREE.DoubleSide });
+      var charaMassage = new THREE.Mesh(geometry, material);
+      charaMassage.scale.set(100, 100, 100);
+      scene.add(charaMassage);
 
 
       // サーバからこのユーザの移動が来たら移動させる
@@ -236,9 +256,9 @@
         otherPlayer.y += moveY;
 
         if(otherChara != undefined) {
-          otherChara.rotation.y = -((otherPlayer.rotation - 90) * Math.PI / 180);
-          otherChara.position.z = otherPlayer.y * (BLOCK_SIZE / CHARA_SIZE);
-          otherChara.position.x = otherPlayer.x * (BLOCK_SIZE / CHARA_SIZE);
+          otherChara.rotation.y = charaMassage.rotation.y = -((otherPlayer.rotation - 90) * Math.PI / 180);
+          otherChara.position.z = charaMassage.position.z = otherPlayer.y * (BLOCK_SIZE / CHARA_SIZE);
+          otherChara.position.x = charaMassage.position.x = otherPlayer.x * (BLOCK_SIZE / CHARA_SIZE);
         }
         
         // -------------音操作系-------------- //
