@@ -68,25 +68,22 @@ io.sockets.on("connection", function(socket) {
     player.login_name = text;
     socket.broadcast.emit("name", player.login_name);
 
-    setTimeout(function() {
-      // それまでにログインしてるプレイヤー情報を送る
-      for (var i in player_list) {
-        var c = player_list[i]; // ログイン中プレイヤーリストからプレイヤー情報取得
-        socket.emit("name", c.login_name);
-        socket.emit("position:" + c.login_name,
-                    c.x + "," + c.y + "," + c.direction);
-        socket.emit("message:" + c.login_name, c.message);
-      }
-    }, 5000);
-    
-
- 
-
     // ログイン中プレイヤーリストへの登録
     player_list[ player.login_name ] = player;
     // ストアファイルへも登録
     fs.writeFile(player_list_store_path, JSON.stringify(player_list));
   });
+
+  socket.on("get_user_list", function() {  
+    // それまでにログインしてるプレイヤー情報を送る
+    for (var i in player_list) {
+      var c = player_list[i]; // ログイン中プレイヤーリストからプレイヤー情報取得
+      socket.emit("name", c.login_name);
+      socket.emit("position:" + c.login_name,
+                  c.x + "," + c.y + "," + c.direction);
+      socket.emit("message:" + c.login_name, c.message);
+    }
+  })
 
   // 移動処理
   socket.on("position", function(pos) {

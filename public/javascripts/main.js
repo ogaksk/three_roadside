@@ -184,10 +184,12 @@
       }
     });
 
+    // 他のユーザーリストの取得
+    socket.emit("get_user_list");
+
 
     // 他のユーザのログイン
     socket.on("name", function(text) {
-      console.log("bisibasi!!!")
       var loginName = text;
       var otherPlayer = new OtherPlayer(game.assets["/images/player01.png"]);
       otherPlayer.loginName = loginName
