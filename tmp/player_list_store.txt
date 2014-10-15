@@ -1,1 +1,1 @@
-{"a":{"login_name":"a","x":238.79318087443278,"y":405.2258239311355,"message":"…","rotation":380},"b":{"login_name":"b","x":308.7593518275411,"y":459.7828925029186,"message":"…","rotation":278},"dd":{"login_name":"dd","x":0,"y":0,"message":"…"}}
+{"a":{"login_name":"a","x":523,"y":487,"message":"…","rotation":90}}

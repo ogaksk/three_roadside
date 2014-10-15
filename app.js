@@ -52,7 +52,6 @@ var player_list = {};
 
 // 通信プロトコル
 io.sockets.on("connection", function(socket) {
-
   var player = {
     login_name : "",
     x : 0,

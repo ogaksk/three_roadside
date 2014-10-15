@@ -186,7 +186,6 @@
 
     // 他のユーザーリストの取得
     socket.emit("get_user_list");
-    console.log("aaaa");
 
 
     // 他のユーザのログイン
@@ -197,6 +196,7 @@
       // キャラクタ表示レイヤーとメッセージ表示レイヤーに追加
       charaGroup.addChild(otherPlayer);
       mapGroup.addChild(otherPlayer);
+
       
       // 他キャラ衝突判定
       otherPlayer.addEventListener('enterframe', function() {
@@ -251,7 +251,8 @@
         socket.on("disconnect:" + loginName, function() {
         // レイヤーから削除
         charaGroup.removeChild(otherPlayer);
-        // charaGroup.removeChild(otherPlayer.loginName);
+        mapGroup.removeChild(otherPlayer);
+        scene.remove(otherChara);
         delete otherPlayer;
       });
     });
