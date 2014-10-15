@@ -219,7 +219,7 @@
         for(var i = 0; i < 13; i++) {
           otherChara.material.materials[i].ambient = otherChara.material.materials[i].color;
         }
-        // scene.add(otherChara);
+        scene.add(otherChara);
       });
 
       // 他キャラ名前テクスチャレンダー
@@ -228,17 +228,18 @@
       canvas.width = 500; canvas.height = 250;
       var ctx = canvas.getContext('2d');
       ctx.fillStyle = 'white';
-      ctx.font = "55px sans-serif";
+      ctx.font = "40px sans-serif";
       ctx.textAlign = 'center';
-      ctx.fillText(otherPlayer.message, 256, 100);
+      ctx.fillText(data.message, 256, 100);
       var texture = new THREE.Texture(canvas);
       texture.needsUpdate = true;
        
       var geometry = new THREE.PlaneGeometry(2, 1);
       var material = new THREE.MeshPhongMaterial({
-        color: 0xffffff, specular: 0xcccccc, shininess:50, ambient: 0xffffff,
-        map: texture, side: THREE.DoubleSide });
+        color: 0xffffff, specular: 0xcccccc, shininess:100, ambient: 0xffffff,
+        map: texture, side: THREE.DoubleSide, transparent: true });
       var charaMassage = new THREE.Mesh(geometry, material);
+      charaMassage.position.set(0, 140, 0);
       charaMassage.scale.set(100, 100, 100);
       scene.add(charaMassage);
 
@@ -275,6 +276,7 @@
         charaGroup.removeChild(otherPlayer);
         mapGroup.removeChild(otherPlayer);
         scene.remove(otherChara);
+        scene.remove(charaMassage);
         delete otherPlayer;
       });
     });
