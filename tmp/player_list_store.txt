@@ -1,1 +1,1 @@
-{}
+{"a":{"login_name":"a","x":0,"y":0,"message":"…"},"g":{"login_name":"g","x":0,"y":0,"message":"…"}}

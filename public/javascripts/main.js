@@ -190,7 +190,6 @@
 
     // 他のユーザのログイン
     socket.on("name", function(text) {
-      console.log("loggin")
       var loginName = text;
       var otherPlayer = new OtherPlayer(game.assets["/images/player01.png"]);
       otherPlayer.loginName = loginName
@@ -240,9 +239,9 @@
         }
         
         // -------------音操作系-------------- //
-        if(gainNode != undefined) {
+        if(gainNodes[0] != undefined) {
           // gainNode.gain.value = 0.0;
-          gainNode.gain.value =  (10 / Math.sqrt(Math.pow(player.x - otherPlayer.x, 2) + Math.pow(player.y - otherPlayer.y, 2)) );
+          gainNodes[0].gain.value =  (10 / Math.sqrt(Math.pow(player.x - otherPlayer.x, 2) + Math.pow(player.y - otherPlayer.y, 2)) );
         };
 
       });
@@ -372,19 +371,21 @@
     });
 
     /*----------------サウンドパート----------------*/
-    var gainNode;
+    var gainNodes = [];
     var audio = new AudioBufferLoader("sounds/car1.mp3", "sounds/car2.mp3", function() {
+      var source, gainNode;
       var self = this;
-      var source1 = self.context.createBufferSource();
-      source1.buffer = self.bufferList[1];
-      source1.loop = true;
-
-      gainNode = self.context.createGain();
-      gainNode.gain.value = 0.0;
-            
-      source1.connect(gainNode);
-      gainNode.connect(self.context.destination);
-      source1.start();
+      for (var i = 0; i < self.urlList.length; i++) {
+        var source = self.context.createBufferSource();
+        source.buffer = self.bufferList[i];
+        source.loop = true;
+        gainNode = self.context.createGain();
+        gainNode.gain.value = 0.0;
+        source.connect(gainNode);
+        gainNode.connect(self.context.destination)
+        gainNodes.push(gainNode);
+        source.start();
+      }      
     });
   }
   game.start();

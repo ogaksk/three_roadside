@@ -6,7 +6,8 @@ var express = require('express')
   , routes = require('./routes')
   , http = require('http')
   , path = require('path')
-  , fs = require('fs');
+  , fs = require('fs')
+  , crypto = require('crypto');;
 
 var app = express();
 
@@ -107,3 +108,13 @@ io.sockets.on("connection", function(socket) {
   });
 
 });
+
+
+/*utility*/
+
+function md5Hex(src) {
+  var md5 = crypto.createHash('md5');
+  md5.update(src, 'utf8');
+  return md5.digest('hex');
+}
+
