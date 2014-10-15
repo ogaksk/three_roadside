@@ -186,6 +186,7 @@
 
     // 他のユーザーリストの取得
     socket.emit("get_user_list");
+    console.log("aaaa");
 
 
     // 他のユーザのログイン

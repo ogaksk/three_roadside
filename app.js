@@ -40,14 +40,14 @@ server.listen(app.get('port'), function(){
 });
 
 // ユーザーストアファイル取得
-var fd = fs.openSync(player_list_store_path, 'a+');
-fs.closeSync(fd);
-var player_list;
-if (fs.readFileSync(player_list_store_path, 'utf-8')) {
-  player_list = JSON.parse(fs.readFileSync(player_list_store_path, 'utf-8'));
-} else {
-  player_list = {};
-}
+// var fd = fs.openSync(player_list_store_path, 'a+');
+// fs.closeSync(fd);
+var player_list = {};
+// if (fs.readFileSync(player_list_store_path, 'utf-8')) {
+//   player_list = JSON.parse(fs.readFileSync(player_list_store_path, 'utf-8'));
+// } else {
+//   player_list = {};
+// }
 
 
 // 通信プロトコル
