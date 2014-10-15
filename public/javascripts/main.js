@@ -5,7 +5,7 @@
 
   socket.on("connect", function() {
     socket.emit("name", name);
-    socket.emit("message", "…"); // 初期メッセージ
+    // socket.emit("message", massage); // 初期メッセージ
   });
 
 
@@ -137,6 +137,7 @@
         this.image = image;
         this.loginName = log_name;
         this.rotation = 90;
+        this.soundTrackNumber;
         // this.addEventListener(enchant.Event.ENTER_FRAME, this.onEnterFrame);
       }
     })
@@ -193,6 +194,8 @@
       var loginName = text;
       var otherPlayer = new OtherPlayer(game.assets["/images/player01.png"]);
       otherPlayer.loginName = loginName
+      otherPlayer.soundTrackId = parseInt(loginName[0], 16)
+
       // キャラクタ表示レイヤーとメッセージ表示レイヤーに追加
       charaGroup.addChild(otherPlayer);
       mapGroup.addChild(otherPlayer);
@@ -239,9 +242,9 @@
         }
         
         // -------------音操作系-------------- //
-        if(gainNodes[0] != undefined) {
+        if(gainNodes[otherPlayer.soundTrackId % gainNodes.length] != undefined) {
           // gainNode.gain.value = 0.0;
-          gainNodes[0].gain.value =  (10 / Math.sqrt(Math.pow(player.x - otherPlayer.x, 2) + Math.pow(player.y - otherPlayer.y, 2)) );
+          gainNodes[otherPlayer.soundTrackId % gainNodes.length].gain.value =  (10 / Math.sqrt(Math.pow(player.x - otherPlayer.x, 2) + Math.pow(player.y - otherPlayer.y, 2)) );
         };
 
       });

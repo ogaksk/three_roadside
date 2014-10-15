@@ -7,7 +7,7 @@ var express = require('express')
   , http = require('http')
   , path = require('path')
   , fs = require('fs')
-  , crypto = require('crypto');;
+  , crypto = require('crypto');
 
 var app = express();
 
@@ -65,7 +65,9 @@ io.sockets.on("connection", function(socket) {
   // ログイン名を送ってきた時は新規ログインの処理
   socket.on("name", function(text) {
     console.log("name: " + text);
-    player.login_name = text;
+    // CHECK: randomなhexの名前を与える
+    player.login_name = randomHex();
+    player.message = text;
     socket.broadcast.emit("name", player.login_name);
 
     // ログイン中プレイヤーリストへの登録
@@ -116,5 +118,9 @@ function md5Hex(src) {
   var md5 = crypto.createHash('md5');
   md5.update(src, 'utf8');
   return md5.digest('hex');
+}
+
+function randomHex() {
+  return crypto.pseudoRandomBytes(8).toString("hex")
 }
 
