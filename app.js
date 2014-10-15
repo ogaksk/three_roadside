@@ -76,11 +76,14 @@ io.sockets.on("connection", function(socket) {
   socket.on("get_user_list", function() {  
     // それまでにログインしてるプレイヤー情報を送る
     for (var i in player_list) {
-      var c = player_list[i]; // ログイン中プレイヤーリストからプレイヤー情報取得
-      socket.emit("name", c.login_name);
-      socket.emit("position:" + c.login_name,
+      // ログイン中プレイヤーリストからプレイヤー情報取得
+      if( player.login_name != player_list[i].login_name) {
+        var c = player_list[i]; 
+        socket.emit("name", c.login_name);
+        socket.emit("position:" + c.login_name,
                   c.x + "," + c.y + "," + c.direction);
-      socket.emit("message:" + c.login_name, c.message);
+        socket.emit("message:" + c.login_name, c.message);
+      }
     }
   })
 

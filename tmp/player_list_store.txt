@@ -1,1 +1,1 @@
-{"a":{"login_name":"a","x":523,"y":487,"message":"…","rotation":90}}
+{}

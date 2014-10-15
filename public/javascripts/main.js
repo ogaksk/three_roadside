@@ -162,7 +162,7 @@
     game.rootScene.addChild(mapGroup);
     // マップ
     var field = new Field(game.assets["/images/map01.png"], MAP, MAP);
-    //mapGroup.addChild(field);
+    // mapGroup.addChild(field);
     // プレーヤー
     var player = new Player(game.assets["/images/player01.png"], Math.floor( Math.random() * COL_MAX_LENGTH * CHARA_SIZE), Math.floor( Math.random() * ROW_MAX_LENGTH * CHARA_SIZE));
     mapGroup.addChild(player);
@@ -190,13 +190,13 @@
 
     // 他のユーザのログイン
     socket.on("name", function(text) {
+      console.log("loggin")
       var loginName = text;
       var otherPlayer = new OtherPlayer(game.assets["/images/player01.png"]);
       otherPlayer.loginName = loginName
       // キャラクタ表示レイヤーとメッセージ表示レイヤーに追加
       charaGroup.addChild(otherPlayer);
       mapGroup.addChild(otherPlayer);
-
       
       // 他キャラ衝突判定
       otherPlayer.addEventListener('enterframe', function() {
