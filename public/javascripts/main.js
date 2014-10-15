@@ -191,7 +191,7 @@
       // キャラクタ表示レイヤーとメッセージ表示レイヤーに追加
       charaGroup.addChild(otherPlayer);
       mapGroup.addChild(otherPlayer);
-
+      
       // 他キャラ衝突判定
       otherPlayer.addEventListener('enterframe', function() {
         if (player.intersect(this)) {
@@ -201,11 +201,6 @@
       });
  
       // 他キャラレンダー
-      var geometry = new THREE.CubeGeometry(BLOCK_SIZE, BLOCK_SIZE + 60, BLOCK_SIZE);
-      var texture = new THREE.ImageUtils.loadTexture("/images/wall01.jpg");
-      var material = new THREE.MeshPhongMaterial({map: texture, bumpMap: texture, bumpScale: 0.2});
-
-
       var otherChara;
       var jsonLoader = new THREE.JSONLoader();
       jsonLoader.load("./javascripts/kei.js", function(geometry, materials) { 
@@ -217,12 +212,11 @@
           otherChara.material.materials[i].ambient = otherChara.material.materials[i].color;
         }
         scene.add(otherChara);
-
       });
 
 
       // サーバからこのユーザの移動が来たら移動させる
-      socket.on("position:" + loginName, function(pos) {
+      socket.on("position:" + loginName, function(pos) { 
         otherPlayer.x = pos.x;
         otherPlayer.y = pos.y;
         otherPlayer.rotation = pos.rotation;
@@ -239,9 +233,7 @@
           otherChara.position.x = otherPlayer.x * (BLOCK_SIZE / CHARA_SIZE);
         }
         
-        //
-        // -----------音操作系--------------
-        //
+        // -------------音操作系-------------- //
         if(gainNode != undefined) {
           // gainNode.gain.value = 0.0;
           gainNode.gain.value =  (10 / Math.sqrt(Math.pow(player.x - otherPlayer.x, 2) + Math.pow(player.y - otherPlayer.y, 2)) );
@@ -275,35 +267,6 @@
         }
       }
     }
-    // 壁(ブロック)
-    // var geometry = new THREE.CubeGeometry(BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
-    // var texture = new THREE.ImageUtils.loadTexture("images/wall01.jpg");
-    // var material = new THREE.MeshPhongMaterial({map: texture, bumpMap: texture, bumpScale: 0.2});
-    // for (var i = 0, max = MAP.length; i < max; i = i + 1) {
-    //   for (var j = 0, max2 = MAP[i].length; j < max2; j = j + 1) {
-    //     if (MAP[i][j] == 1) {
-    //       var cube = new THREE.Mesh(geometry, material);
-    //       cube.position.set(BLOCK_SIZE * j, BLOCK_SIZE / 2, BLOCK_SIZE * i);
-    //       scene.add(cube);
-    //     }
-    //   }
-    // }
-
-
-    // ロードサイドオブジェクト1(plane)
-    // var geometry = new THREE.PlaneGeometry(BLOCK_SIZE, BLOCK_SIZE * 2);
-    // var texture = new THREE.ImageUtils.loadTexture("/images/roadside1.png");
-    // var material = new THREE.MeshPhongMaterial({map: texture, bumpMap: texture, side: THREE.DoubleSide, bumpScale: 0.2, transparent: true });
-    // for (var i = 0, max = MAP.length; i < max; i = i + 1) {
-    //   for (var j = 0, max2 = MAP[i].length; j < max2; j = j + 1) {
-    //     if (MAP[i][j] == 2) {
-    //       var cube = new THREE.Mesh(geometry, material);
-    //       cube.position.set(BLOCK_SIZE * j, BLOCK_SIZE -20, BLOCK_SIZE * i);
-    //       scene.add(cube);
-    //     }
-    //   }
-    // }
-
 
     // // ロードサイドオブジェクト(obj)
     loadsideObject = null;
@@ -340,16 +303,6 @@
     plane.position.set(100, 0, 1);
     plane.rotation.x = 90 * Math.PI / 180;
     scene.add(plane);
-    // for (var i = 0, max = MAP.length; i < max; i = i + 1) {
-    //   for (var j = 0, max2 = MAP[i].length; j < max2; j = j + 1) {
-    //     if (MAP[i][j] == 0 || MAP[i][j] == 2 || MAP[i][j] == 3) {
-    //       var plane = new THREE.Mesh(pGeometry, pMaterial);
-    //       plane.position.set(MAP_BLOCK_SIZE * j, 0, MAP_BLOCK_SIZE * i);
-    //       plane.rotation.x = 90 * Math.PI / 180;
-    //       scene.add(plane);
-    //     }
-    //   }
-    // }
 
 
     // 背景
@@ -416,7 +369,7 @@
     var audio = new AudioBufferLoader("sounds/car1.mp3", "sounds/car2.mp3", function() {
       var self = this;
       var source1 = self.context.createBufferSource();
-      source1.buffer = self.bufferList[0];
+      source1.buffer = self.bufferList[1];
       source1.loop = true;
 
       gainNode = self.context.createGain();
