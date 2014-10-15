@@ -1,1 +1,1 @@
-{"aa":{"login_name":"aa","x":129,"y":380,"message":"…","rotation":114},"bb":{"login_name":"bb","x":0,"y":0,"message":"…"}}
+{"a":{"login_name":"a","x":393,"y":183,"message":"…","rotation":90},"b":{"login_name":"b","x":0,"y":0,"message":"…"}}

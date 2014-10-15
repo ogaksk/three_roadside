@@ -8,6 +8,7 @@
     socket.emit("message", "…"); // 初期メッセージ
   });
 
+
   // var socket = io('http://localhost');
   // socket.on('connect', function() {
   //   // connect後にemitする
@@ -181,10 +182,12 @@
         player.y -= 3;
         location.href = "download";
       }
-    })
+    });
+
 
     // 他のユーザのログイン
     socket.on("name", function(text) {
+      console.log("bisibasi!!!")
       var loginName = text;
       var otherPlayer = new OtherPlayer(game.assets["/images/player01.png"]);
       otherPlayer.loginName = loginName
