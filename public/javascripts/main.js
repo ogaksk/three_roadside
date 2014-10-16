@@ -206,7 +206,7 @@
       // 他キャラレンダー
       var otherChara;
       var jsonLoader = new THREE.JSONLoader();
-      jsonLoader.load("./javascripts/plane_car.js", function(geometry, materials) { 
+      jsonLoader.load("./javascripts/json_objects/plane_car.js", function(geometry, materials) { 
         var faceMaterial = new THREE.MeshFaceMaterial( materials );
         
         otherChara = new THREE.Mesh( geometry, faceMaterial );
