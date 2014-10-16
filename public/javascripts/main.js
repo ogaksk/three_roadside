@@ -211,13 +211,18 @@
       // 他キャラレンダー
       var otherChara;
       var jsonLoader = new THREE.JSONLoader();
-      jsonLoader.load("./javascripts/kei.js", function(geometry, materials) { 
+      jsonLoader.load("./javascripts/plane_car.js", function(geometry, materials) { 
         var faceMaterial = new THREE.MeshFaceMaterial( materials );
         
         otherChara = new THREE.Mesh( geometry, faceMaterial );
         otherChara.scale.set(200, 200, 200);
-        for(var i = 0; i < 13; i++) {
-          otherChara.material.materials[i].ambient = otherChara.material.materials[i].color;
+
+        for (var i = 0; i < 12; i++) {
+          if (i == 1) {
+            otherChara.material.materials[i].ambient = { r: Math.random(), g: Math.random(), b:Math.random()};
+          } else {
+            otherChara.material.materials[i].ambient = otherChara.material.materials[i].color;
+          }
         }
         scene.add(otherChara);
       });
