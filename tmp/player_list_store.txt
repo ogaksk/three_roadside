@@ -1,1 +1,1 @@
-{"5dd620bb5b69ce28":{"login_name":"5dd620bb5b69ce28","x":274.10171980222015,"y":445.1195331691437,"message":";salfkla;f","rotation":-30}}
+{"4ed0c82ddafc09d9":{"login_name":"4ed0c82ddafc09d9","x":0,"y":0,"message":"a;lfa;"}}

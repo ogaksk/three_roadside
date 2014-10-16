@@ -307,7 +307,7 @@
           var faceMaterial = new THREE.MeshFaceMaterial( materials );
           var mesh = new THREE.Mesh( geometry, faceMaterial );
           mesh.position.set(Shops[shop].locations[i][0] * BLOCK_SIZE, 10, Shops[shop].locations[i][1] * BLOCK_SIZE); 
-          mesh.scale.set( Shops[shop].scale, Shops[shop].scale, Shops[shop].scale );
+          mesh.scale.set( Shops[shop].scale *3, Shops[shop].scale * 3, Shops[shop].scale * 3);
           for (var l = 0; l < mesh.material.materials.length; l++) {
             mesh.material.materials[l].ambient = mesh.material.materials[l].color;
           }
