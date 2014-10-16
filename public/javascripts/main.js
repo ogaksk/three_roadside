@@ -71,7 +71,7 @@
     });
 
     var Shops = {
-      aeon: { path: "./javascripts/AEON.js", x: 10, y:40, scale: 2000 }
+      aeon: { path: "./javascripts/json_objects/AEON.js", x: 10, y:40, scale: 2000 }
     };
     
     // プレーヤー

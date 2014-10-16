@@ -11,7 +11,7 @@
 	"colorAmbient" : [0.1, 0.1, 0.1],
 	"colorDiffuse" : [1.0, 1.0, 1.0],
 	"colorSpecular" : [1.0, 1.0, 1.0],
-	"mapDiffuse" : "../../images/haruyama/haruyama02.png",
+	"mapDiffuse" : "./obj_images/haruyama/haruyama02.png",
 	"specularCoef" : 80.0,
 	"transparency" : 1.0
 	},
@@ -23,7 +23,7 @@
 	"colorAmbient" : [0.1, 0.1, 0.1],
 	"colorDiffuse" : [1.0, 1.0, 1.0],
 	"colorSpecular" : [1.0, 1.0, 1.0],
-	"mapDiffuse" : "../../images/haruyama/haruyama.png",
+	"mapDiffuse" : "./obj_images/haruyama/haruyama.png",
 	"specularCoef" : 80.0,
 	"transparency" : 1.0
 	},
@@ -45,7 +45,7 @@
 	"colorAmbient" : [0.1, 0.1, 0.1],
 	"colorDiffuse" : [1.0, 1.0, 1.0],
 	"colorSpecular" : [1.0, 1.0, 1.0],
-	"mapDiffuse" : "../../images/haruyama/harukabe.png",
+	"mapDiffuse" : "./obj_images/haruyama/harukabe.png",
 	"specularCoef" : 80.0,
 	"transparency" : 1.0
 	},

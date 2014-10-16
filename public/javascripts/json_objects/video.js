@@ -32,7 +32,7 @@
 	"colorAmbient" : [0.1, 0.1, 0.1],
 	"colorDiffuse" : [1.0, 1.0, 1.0],
 	"colorSpecular" : [1.0, 1.0, 1.0],
-	"mapDiffuse" : "../../images/video.png",
+	"mapDiffuse" : "./obj_images/video.png",
 	"specularCoef" : 80.0,
 	"transparency" : 1.0
 	}],
