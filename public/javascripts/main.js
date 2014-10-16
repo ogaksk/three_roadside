@@ -9,12 +9,6 @@
   });
 
 
-  // var socket = io('http://localhost');
-  // socket.on('connect', function() {
-  //   // connect後にemitする
-  //   socket.emit('foo', 1);
-  // });
-
   // 定数
   var STAGE_WIDTH = screen.width;
   var STAGE_HEIGHT = screen.height;
@@ -75,6 +69,10 @@
         if (collisionData) this.collisionData = collisionData;
       }
     });
+
+    var Shops = {
+      aeon: { path: "./javascripts/AEON.js", x: 10, y:40, scale: 2000 }
+    };
     
     // プレーヤー
     var Player = Class.create(Sprite, {
@@ -163,7 +161,7 @@
     game.rootScene.addChild(mapGroup);
     // マップ
     var field = new Field(game.assets["/images/map01.png"], MAP, MAP);
-    // mapGroup.addChild(field);
+    mapGroup.addChild(field);
     // プレーヤー
     var player = new Player(game.assets["/images/player01.png"], Math.floor( Math.random() * COL_MAX_LENGTH * CHARA_SIZE), Math.floor( Math.random() * ROW_MAX_LENGTH * CHARA_SIZE));
     mapGroup.addChild(player);
@@ -304,21 +302,36 @@
       }
     }
 
-    // // ロードサイドオブジェクト(obj)
-    loadsideObject = null;
+    // // 静的ロードサイドオブジェクト(obj)
     var jsonLoader = new THREE.JSONLoader();
-    jsonLoader.load("./javascripts/AEON.js", function(geometry, materials) { 
-      var faceMaterial = new THREE.MeshFaceMaterial( materials );
-      var mesh = new THREE.Mesh( geometry, faceMaterial );
-      mesh.position.set(1900, 10, 1600); // 決めうち! mapには反映してないオブジェクト
-      mesh.scale.set( 2000, 2000, 2000 );
-      mesh.material.materials[0].ambient = mesh.material.materials[0].color;
-      mesh.material.materials[1].ambient = mesh.material.materials[1].color;
-      mesh.material.materials[2].ambient = mesh.material.materials[2].color;
+    for (var k in Shops) {
+      jsonLoader.load(Shops[k].path, function(geometry, materials) { 
+        var faceMaterial = new THREE.MeshFaceMaterial( materials );
+        var mesh = new THREE.Mesh( geometry, faceMaterial );
+        mesh.position.set(Shops[k].x * BLOCK_SIZE, 10, Shops[k].y * BLOCK_SIZE); 
+        mesh.scale.set( 2000, 2000, 2000 );
+        for (var l = 0; l < mesh.material.materials.length; l++) {
+          mesh.material.materials[l].ambient = mesh.material.materials[l].color;
+        }
+        scene.add(mesh);
+      });
+    }
+    
 
-      scene.add(mesh);
-      loadsideObject = mesh;
-    });
+    // 動的ロードサイドオブジェクト(obj)
+    // loadsideObject = null;
+    // var jsonLoader = new THREE.JSONLoader();
+    // jsonLoader.load("./javascripts/AEON.js", function(geometry, materials) { 
+    //   var faceMaterial = new THREE.MeshFaceMaterial( materials );
+    //   var mesh = new THREE.Mesh( geometry, faceMaterial );
+    //   mesh.position.set(1900, 10, 1600); // 決めうち! mapには反映してないオブジェクト
+    //   mesh.scale.set( 2000, 2000, 2000 );
+    //   mesh.material.materials[0].ambient = mesh.material.materials[0].color;
+    //   mesh.material.materials[1].ambient = mesh.material.materials[1].color;
+    //   mesh.material.materials[2].ambient = mesh.material.materials[2].color;
+    //   scene.add(mesh);
+    //   loadsideObject = mesh;
+    // });
 
 
     // アイテムオブジェクト

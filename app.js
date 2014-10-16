@@ -40,16 +40,7 @@ server.listen(app.get('port'), function(){
   console.log("server listening on port.... " + app.get('port'));
 });
 
-// ユーザーストアファイル取得
-// var fd = fs.openSync(player_list_store_path, 'a+');
-// fs.closeSync(fd);
 var player_list = {};
-// if (fs.readFileSync(player_list_store_path, 'utf-8')) {
-//   player_list = JSON.parse(fs.readFileSync(player_list_store_path, 'utf-8'));
-// } else {
-//   player_list = {};
-// }
-
 
 // 通信プロトコル
 io.sockets.on("connection", function(socket) {
@@ -72,8 +63,6 @@ io.sockets.on("connection", function(socket) {
 
     // ログイン中プレイヤーリストへの登録
     player_list[ player.login_name ] = player;
-    // ストアファイルへも登録
-    fs.writeFile(player_list_store_path, JSON.stringify(player_list));
   });
 
   socket.on("get_user_list", function() {  
@@ -104,8 +93,6 @@ io.sockets.on("connection", function(socket) {
     socket.broadcast.emit("disconnect:" + player.login_name);
     // ログイン中プレイヤーリストからの削除
     delete player_list[ player.login_name ];
-    //ストアファイルからも削除
-    fs.writeFile(player_list_store_path, JSON.stringify(player_list));
   });
 
 });

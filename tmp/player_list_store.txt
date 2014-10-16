@@ -1,1 +1,1 @@
-{"a3b4770f99420325":{"login_name":"a3b4770f99420325","x":578.4242502365678,"y":239.1281460020036,"message":"sd;alfkas;","rotation":1074},"633c403f1e9fc2d0":{"login_name":"633c403f1e9fc2d0","x":0,"y":0,"message":"s;alkf;dlsakf"}}
+{"63d2f722748ec31c":{"login_name":"63d2f722748ec31c","x":0,"y":0,"message":"sdaasdf;lk"}}
