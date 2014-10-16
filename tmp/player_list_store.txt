@@ -1,1 +1,1 @@
-{"aa3d334bddf7df99":{"login_name":"aa3d334bddf7df99","x":478,"y":784,"message":"asd;lfka","rotation":90}}
+{"6a45dbadbac2c314":{"login_name":"6a45dbadbac2c314","x":0,"y":0,"message":"ds;lfka;lfk;a"}}

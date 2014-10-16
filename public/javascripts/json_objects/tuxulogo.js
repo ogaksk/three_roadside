@@ -11,7 +11,7 @@
 	"colorAmbient" : [0.1, 0.1, 0.1],
 	"colorDiffuse" : [1.0, 1.0, 1.0],
 	"colorSpecular" : [1.0, 1.0, 1.0],
-	"mapDiffuse" : "./obj_images/tuxutex.jpg",
+	"mapDiffuse" : "./obj_images/tuxulogo/tuxutex.jpg",
 	"specularCoef" : 80.0,
 	"transparency" : 1.0
 	},
