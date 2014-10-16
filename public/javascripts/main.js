@@ -158,7 +158,7 @@
     game.rootScene.addChild(mapGroup);
     // マップ
     var field = new Field(game.assets["/images/map01.png"], MAP, MAP);
-    mapGroup.addChild(field);
+    // mapGroup.addChild(field);
     // プレーヤー
     var player = new Player(game.assets["/images/player01.png"], Math.floor( Math.random() * COL_MAX_LENGTH * CHARA_SIZE), Math.floor( Math.random() * ROW_MAX_LENGTH * CHARA_SIZE));
     mapGroup.addChild(player);
