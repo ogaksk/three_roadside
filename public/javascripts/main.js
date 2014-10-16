@@ -69,48 +69,6 @@
         if (collisionData) this.collisionData = collisionData;
       }
     });
-
-    var Shops = {
-      aeon: { path: "./javascripts/json_objects/AEON.js", x: 5, y:5, scale: 2000 },
-      alpen: { path: "./javascripts/json_objects/alpen.js", x: 20, y:20, scale: 200 },
-      atom: { path: "./javascripts/json_objects/atom1006.js", x: 25, y:25, scale: 1 },
-      // cosmo: { path: "./javascripts/json_objects/cosmo.js", x: 30, y:30, scale: 200 },
-      // cosmo_kanban: { path: "./javascripts/json_objects/cosmo_kanban.js", x: 31, y:31, scale: 20 },
-      // haruyama: { path: "./javascripts/json_objects/haruyama.js", x: 35, y:35, scale: 20 },
-      // korochan: { path: "./javascripts/json_objects/korochan.js", x: 40, y:40, scale: 20 },
-      // ramenshop: { path: "./javascripts/json_objects/ramenshop.js", x: 50, y:50, scale: 20 },
-      // video: { path: "./javascripts/json_objects/video.js", x: 55, y:55, scale: 200 },
-      // yellowhat: { path: "./javascripts/json_objects/yellowhat.js", x: 60, y:60, scale: 20 },
-      // ykk: { path: "./javascripts/json_objects/ykk.js", x: 65, y:65, scale: 20 }
-    };
-
-
-    var Shops = [
-      { path: "./javascripts/json_objects/AEON.js", x: 5, y:5, scale: 2000 },
-      { path: "./javascripts/json_objects/alpen.js", x: 20, y:20, scale: 100 },
-      { path: "./javascripts/json_objects/atom1006.js", x: 25, y:25, scale: 5 },
-      { path: "./javascripts/json_objects/cosmo.js", x: 30, y:30, scale: 50 },
-      { path: "./javascripts/json_objects/cosmo_kanban.js", x: 32, y:32, scale: 62 },
-      { path: "./javascripts/json_objects/haruyama.js", x: 35, y:35, scale: 15 },
-      { path: "./javascripts/json_objects/korochan.js", x: 40, y:40, scale: 100 },
-      { path: "./javascripts/json_objects/ramenshop.js", x: 50, y:50, scale: 100 },
-      { path: "./javascripts/json_objects/video.js", x: 55, y:55, scale: 20 },
-      { path: "./javascripts/json_objects/yellowhat.js", x: 60, y:60, scale: 150 },
-      { path: "./javascripts/json_objects/ykk.js", x: 65, y:65, scale: 20 }
-    ];
-
-    //   aeon:  { path: "./javascripts/json_objects/AEON.js", x: 5, y:5, scale: 2000 },
-    //   alpen: { path: "./javascripts/json_objects/alpen.js", x: 20, y:20, scale: 200 },
-    //   atom:  { path: "./javascripts/json_objects/atom1006.js", x: 25, y:25, scale: 1 },
-    //   // cosmo: { path: "./javascripts/json_objects/cosmo.js", x: 30, y:30, scale: 200 },
-    //   // cosmo_kanban: { path: "./javascripts/json_objects/cosmo_kanban.js", x: 31, y:31, scale: 20 },
-    //   // haruyama: { path: "./javascripts/json_objects/haruyama.js", x: 35, y:35, scale: 20 },
-    //   // korochan: { path: "./javascripts/json_objects/korochan.js", x: 40, y:40, scale: 20 },
-    //   // ramenshop: { path: "./javascripts/json_objects/ramenshop.js", x: 50, y:50, scale: 20 },
-    //   // video: { path: "./javascripts/json_objects/video.js", x: 55, y:55, scale: 200 },
-    //   // yellowhat: { path: "./javascripts/json_objects/yellowhat.js", x: 60, y:60, scale: 20 },
-    //   // ykk: { path: "./javascripts/json_objects/ykk.js", x: 65, y:65, scale: 20 }
-    // };
     
     
     // プレーヤー
@@ -341,22 +299,23 @@
       }
     }
 
-    //// --------------------------静的ロードサイドオブジェクト(obj)--------------------------- ////
+    //// ---静的ロードサイドオブジェクト(obj)--- ////
     var jsonLoader = new THREE.JSONLoader();
-    async.forEachSeries(Shops, function(shop, callback) {
-      jsonLoader.load(shop.path, function(geometry, materials) {
-        var faceMaterial = new THREE.MeshFaceMaterial( materials );
-        var mesh = new THREE.Mesh( geometry, faceMaterial );
-        mesh.position.set(shop.x * BLOCK_SIZE, 10, shop.y * BLOCK_SIZE); 
-        mesh.scale.set( shop.scale, shop.scale, shop.scale );
-        for (var l = 0; l < mesh.material.materials.length; l++) {
-          mesh.material.materials[l].ambient = mesh.material.materials[l].color;
+    async.forEachSeries(Object.keys(Shops), function(shop, callback) {
+      jsonLoader.load(Shops[shop].path, function(geometry, materials) {
+        for (var i in Shops[shop].locations) {
+          var faceMaterial = new THREE.MeshFaceMaterial( materials );
+          var mesh = new THREE.Mesh( geometry, faceMaterial );
+          mesh.position.set(Shops[shop].locations[i][0] * BLOCK_SIZE, 10, Shops[shop].locations[i][1] * BLOCK_SIZE); 
+          mesh.scale.set( Shops[shop].scale, Shops[shop].scale, Shops[shop].scale );
+          for (var l = 0; l < mesh.material.materials.length; l++) {
+            mesh.material.materials[l].ambient = mesh.material.materials[l].color;
+          }
+          scene.add(mesh);
         }
-        scene.add(mesh);
         callback();
       }); 
     }, function(err){
-      console.log("fin");
     });
 
 
