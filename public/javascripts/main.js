@@ -149,6 +149,72 @@
       }
     })
 
+    var NPC = Class.create(Sprite, {
+      initialize: function (image, x, y, log_name) {
+        Sprite.call(this, CHARA_SIZE, CHARA_SIZE);
+        this.walk = 0;
+        this.x = x;
+        this.y = y;
+        this.image = image;
+        this.rotation = 90;
+        this.isMoving = false; 
+        this.noMoving = false;
+        this.addEventListener('enterframe', function() {
+          if (this.noMoving) return; // 動かないNPCならリターン
+          // NPCの移動処理
+        
+          // 歩行アニメーションのフレーム切り替え
+          this.frame = this.direction * 3 + this.walk;
+        
+          // 移動中の処理
+          if (this.isMoving) {
+            this.moveBy(this.vx, this.vy);
+            this.walk = 0.003;
+            if ((this.vx && this.x % 3 == 0) || (this.vy && this.y % 3 == 0)) {
+              this.isMoving = false;
+              this.walk = 0;
+            }
+          } else {
+            // 移動中でないときは、ランダムに移動方向を設定する
+            this.vx = this.vy = 0;
+            this.mov = Math.floor( Math.random() * 4);
+            if (this.mov == 1) {
+              this.direction = 1;
+              this.vx = -4;
+            } else if (this.mov == 2) {
+              this.direction = 2;
+              this.vx = 4;
+            } else if (this.mov == 3) {
+              this.direction = 3;
+              this.vy = -4;
+            } else if (this.mov == 0) {
+              this.direction = 0;
+              this.vy = 4;
+            }
+             // 移動先が決まったら
+            if (this.vx || this.vy) {
+              
+              // 移動先の座標を求める
+              
+              var x = (this.x + (this.vx ? this.vx / Math.abs(this.vx) : 0));
+              var y = (this.y + (this.vy ? this.vy / Math.abs(this.vy) : 0));
+              
+              // その座標が移動可能な場所なら
+              if (0 <= x && x < 1000 && 0 <= y && y < 1000) {
+                console.log("ok!!!")
+                // 移動フラグを「true」にする
+                this.isMoving = true;
+                // 自身(「enterframe」イベントリスナ)を呼び出す
+                // (歩行アニメーションをスムーズに表示するため)
+                arguments.callee.call(this);
+              }
+            }
+          }
+        });
+      }
+    });
+
+
     /* ---------- ゲームアクション ---------- */
 
     // シーン
@@ -159,10 +225,15 @@
     // マップ
     var field = new Field(game.assets["/images/map01.png"], MAP, MAP);
     // mapGroup.addChild(field);
+    
     // プレーヤー
     // var player = new Player(game.assets["/images/player01.png"], Math.floor( Math.random() * COL_MAX_LENGTH * CHARA_SIZE), Math.floor( Math.random() * ROW_MAX_LENGTH * CHARA_SIZE));
     var player = new Player("", Math.floor( Math.random() * COL_MAX_LENGTH * CHARA_SIZE), Math.floor( Math.random() * ROW_MAX_LENGTH * CHARA_SIZE));
     mapGroup.addChild(player);
+
+    // NPC
+    var npc = new NPC(game.assets["/images/player01.png"], Math.floor( Math.random() * COL_MAX_LENGTH * CHARA_SIZE), Math.floor( Math.random() * ROW_MAX_LENGTH * CHARA_SIZE));
+    mapGroup.addChild(npc);
 
     // キャラクターのグループ
     var charaGroup = new Group();
