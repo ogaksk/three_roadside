@@ -380,13 +380,13 @@
 
     // light
     var light = new THREE.PointLight(0x0000F0, 1.5, 300);
-    light.position.set(0, BLOCK_SIZE, 0);
+    light.position.set(0, BLOCK_SIZE / 6, 0);
     scene.add(light);
     var ambient = new THREE.AmbientLight(0xFFFFF0);
     scene.add(ambient);
     // camera
     var camera = new THREE.PerspectiveCamera(45, STAGE_WIDTH / STAGE_HEIGHT, 1, 15000);
-    camera.position.set(0, BLOCK_SIZE / 2, 0);
+    camera.position.set(0, BLOCK_SIZE / 6, 0);
     // rendering
     var renderer = new THREE.WebGLRenderer();
     renderer.setSize(STAGE_WIDTH, STAGE_HEIGHT);
@@ -408,10 +408,10 @@
 
     game.rootScene.addEventListener(enchant.Event.ENTER_FRAME, function() {
       camera.rotation.y = -((player.rotation + 90) * Math.PI / 180);
-      camera.position.z = player.y * (BLOCK_SIZE / CHARA_SIZE) - 70;
+      camera.position.z = player.y * (BLOCK_SIZE / CHARA_SIZE);
       camera.position.x = player.x * (BLOCK_SIZE / CHARA_SIZE);
       light.rotation.y = -((player.rotation + 90) * Math.PI / 180);
-      light.position.z = player.y * (BLOCK_SIZE / CHARA_SIZE) - 70;
+      light.position.z = player.y * (BLOCK_SIZE / CHARA_SIZE);
       light.position.x = player.x * (BLOCK_SIZE / CHARA_SIZE);
       bgUpdate();
       renderer.render(scene, camera);

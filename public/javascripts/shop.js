@@ -9,7 +9,7 @@ var Shops = {
   },
   alpen: { 
     path: "./javascripts/json_objects/alpen.js", 
-    scale: 200,
+    scale: 250,
     rotation:0,
     locations: [
       [20, 20], [80, 20], [80, 80], [20, 70]
@@ -18,7 +18,7 @@ var Shops = {
 
   haruyama: { 
     path: "./javascripts/json_objects/haruyama.js", 
-    scale: 30,
+    scale: 40,
     rotation:0,
     locations: [
       [60, 20], [60, 80]
