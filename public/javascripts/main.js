@@ -15,12 +15,12 @@
 
   var MAP = [];
   (function() {
-    for (var i = 0; i < 150; i++) {
+    for (var i = 0; i < 100; i++) {
       var col = [];
-      for (var j = 0; j < 80; j++) {
-        if (i == 0 || i == 149) {
+      for (var j = 0; j < 100; j++) {
+        if (i == 0 || i == 99) {
           col.push(1);
-        } else if (j == 0 || j == 79) {
+        } else if (j == 0 || j == 99) {
           col.push(1);
         } else {
           col.push(0);
@@ -56,7 +56,6 @@
     "/images/map01.png", "/images/player01.png", "/images/wall01.jpg", "/images/land01.jpg"
   ]);
   game.fps = 60;
-  game.keybind('Z'.charCodeAt(0), 'a');
   game.onload = function() {
     
     /* ---------- ゲームクラス ---------- */
@@ -161,10 +160,7 @@
     var field = new Field(game.assets["/images/map01.png"], MAP, MAP);
     // mapGroup.addChild(field);
     // プレーヤー
-    var player = new Player(
-      // game.assets["/images/player01.png"], Math.floor( Math.random() * COL_MAX_LENGTH * CHARA_SIZE), Math.floor( Math.random() * ROW_MAX_LENGTH * CHARA_SIZE)
-      game.assets["/images/player01.png"], 10, 100
-    );
+    var player = new Player(game.assets["/images/player01.png"], Math.floor( Math.random() * COL_MAX_LENGTH * CHARA_SIZE), Math.floor( Math.random() * ROW_MAX_LENGTH * CHARA_SIZE));
     mapGroup.addChild(player);
 
     // キャラクターのグループ
@@ -289,10 +285,10 @@
 
     // シーン
     var scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2( 0x1e1eff, 0.00002 );
 
-    var geometry = new THREE.CubeGeometry(BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
-    var material = new THREE.MeshBasicMaterial( { color: 0xFFFFFF, opacity: 0.0, transparent: false } );
+
+    var geometry = new THREE.PlaneGeometry(BLOCK_SIZE, BLOCK_SIZE);
+    var material = new THREE.MeshBasicMaterial( { color: 0x000000, opacity: 0.0, transparent: true } );
     for (var i = 0, max = MAP.length; i < max; i = i + 1) {
       for (var j = 0, max2 = MAP[i].length; j < max2; j = j + 1) {
         if (MAP[i][j] == 1) {
@@ -350,14 +346,14 @@
     scene.add(itemObject);
 
 
-    // // 床
-    // var pGeometry = new THREE.PlaneGeometry(MAP_BLOCK_SIZE*10000, MAP_BLOCK_SIZE*10000);
-    // var pTexture = new THREE.ImageUtils.loadTexture("/images/asfalt7.jpg");
-    // var pMaterial = new THREE.MeshPhongMaterial({map: pTexture, side: THREE.DoubleSide, bumpMap: pTexture, bumpScale: 0.2});
-    // var plane = new THREE.Mesh(pGeometry, pMaterial);
-    // plane.position.set(100, 0, 1);
-    // plane.rotation.x = 90 * Math.PI / 180;
-    // scene.add(plane);
+    // 床
+    var pGeometry = new THREE.PlaneGeometry(MAP_BLOCK_SIZE*10000, MAP_BLOCK_SIZE*10000);
+    var pTexture = new THREE.ImageUtils.loadTexture("/images/asfalt7.jpg");
+    var pMaterial = new THREE.MeshPhongMaterial({map: pTexture, side: THREE.DoubleSide, bumpMap: pTexture, bumpScale: 0.2});
+    var plane = new THREE.Mesh(pGeometry, pMaterial);
+    plane.position.set(100, 0, 1);
+    plane.rotation.x = 90 * Math.PI / 180;
+    scene.add(plane);
 
 
     // 背景
@@ -387,8 +383,7 @@
     var ambient = new THREE.AmbientLight(0xFFFFF0);
     scene.add(ambient);
     // camera
-
-    var camera = new THREE.PerspectiveCamera(45, STAGE_WIDTH / STAGE_HEIGHT, 1, 10000);
+    var camera = new THREE.PerspectiveCamera(45, STAGE_WIDTH / STAGE_HEIGHT, 1, 15000);
     camera.position.set(0, BLOCK_SIZE / 2, 0);
     // rendering
     var renderer = new THREE.WebGLRenderer();
@@ -413,29 +408,11 @@
       camera.rotation.y = -((player.rotation + 90) * Math.PI / 180);
       camera.position.z = player.y * (BLOCK_SIZE / CHARA_SIZE);
       camera.position.x = player.x * (BLOCK_SIZE / CHARA_SIZE);
-
-      camera.rotation.y = -((player.rotation + 90) * Math.PI / 180);
-      camera.position.z = player.y * (BLOCK_SIZE / CHARA_SIZE);
-      camera.position.x = player.x * (BLOCK_SIZE / CHARA_SIZE);
-
-      
-      skyBox.position.z = player.y * (BLOCK_SIZE / CHARA_SIZE);
-      skyBox.position.x = player.x * (BLOCK_SIZE / CHARA_SIZE);
-      
       light.rotation.y = -((player.rotation + 90) * Math.PI / 180);
       light.position.z = player.y * (BLOCK_SIZE / CHARA_SIZE);
       light.position.x = player.x * (BLOCK_SIZE / CHARA_SIZE);
       bgUpdate();
       renderer.render(scene, camera);
-    });
-
-    game.addEventListener(enchant.Event.A_BUTTON_DOWN, function() { 
-      player.x = 70;
-      player.z = 88;
-      camera.position.y = player.y + 10000;
-      camera.rotation.x = 90;
-      camera.rotation.z = 90;
-      
     });
 
     /*----------------サウンドパート----------------*/
