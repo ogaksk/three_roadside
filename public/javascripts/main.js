@@ -307,7 +307,9 @@
           var faceMaterial = new THREE.MeshFaceMaterial( materials );
           var mesh = new THREE.Mesh( geometry, faceMaterial );
           mesh.position.set(Shops[shop].locations[i][0] * BLOCK_SIZE, 10, Shops[shop].locations[i][1] * BLOCK_SIZE); 
-          mesh.scale.set( Shops[shop].scale *3, Shops[shop].scale * 3, Shops[shop].scale * 3);
+          mesh.scale.set( Shops[shop].scale , Shops[shop].scale , Shops[shop].scale );
+
+          mesh.rotation.set(0, Shops[shop].rotation, 0);
           for (var l = 0; l < mesh.material.materials.length; l++) {
             mesh.material.materials[l].ambient = mesh.material.materials[l].color;
           }
@@ -406,10 +408,10 @@
 
     game.rootScene.addEventListener(enchant.Event.ENTER_FRAME, function() {
       camera.rotation.y = -((player.rotation + 90) * Math.PI / 180);
-      camera.position.z = player.y * (BLOCK_SIZE / CHARA_SIZE);
+      camera.position.z = player.y * (BLOCK_SIZE / CHARA_SIZE) - 70;
       camera.position.x = player.x * (BLOCK_SIZE / CHARA_SIZE);
       light.rotation.y = -((player.rotation + 90) * Math.PI / 180);
-      light.position.z = player.y * (BLOCK_SIZE / CHARA_SIZE);
+      light.position.z = player.y * (BLOCK_SIZE / CHARA_SIZE) - 70;
       light.position.x = player.x * (BLOCK_SIZE / CHARA_SIZE);
       bgUpdate();
       renderer.render(scene, camera);
