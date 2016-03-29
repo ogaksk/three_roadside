@@ -164,12 +164,12 @@
           // NPCの移動処理
         
           // 歩行アニメーションのフレーム切り替え
-          this.frame = this.direction * 3 + this.walk;
+          this.frame = 5;
         
           // 移動中の処理
           if (this.isMoving) {
             this.moveBy(this.vx, this.vy);
-            this.walk = 0.003;
+            
             if ((this.vx && this.x % 3 == 0) || (this.vy && this.y % 3 == 0)) {
               this.isMoving = false;
               this.walk = 0;
@@ -177,7 +177,7 @@
           } else {
             // 移動中でないときは、ランダムに移動方向を設定する
             this.vx = this.vy = 0;
-            this.mov = Math.floor( Math.random() * 4);
+            this.mov = Math.floor( Math.random() * 200);
             if (this.mov == 1) {
               this.direction = 1;
               this.vx = -4;
