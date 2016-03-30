@@ -141,8 +141,8 @@
       isMove: false,
       initialize: function (image, x, y, log_name) {
         Sprite.call(this, CHARA_SIZE, CHARA_SIZE);
-        this.x = 100;
-        this.y = 100;
+        this.x = 500;
+        this.y = 550;
         this.image = image;
         this.rotation = 90;
         // this.addEventListener(enchant.Event.ENTER_FRAME, this.onEnterFrame);
@@ -203,8 +203,8 @@
     // mapGroup.addChild(field);
     
     // プレーヤー
-    // var player = new Player(game.assets["/images/player01.png"], Math.floor( Math.random() * COL_MAX_LENGTH * CHARA_SIZE), Math.floor( Math.random() * ROW_MAX_LENGTH * CHARA_SIZE));
-    var player = new Player("", Math.floor( Math.random() * COL_MAX_LENGTH * CHARA_SIZE), Math.floor( Math.random() * ROW_MAX_LENGTH * CHARA_SIZE));
+    var player = new Player(game.assets["/images/player01.png"], Math.floor( Math.random() * COL_MAX_LENGTH * CHARA_SIZE * 0.9), Math.floor( Math.random() * ROW_MAX_LENGTH * CHARA_SIZE* 0.9));
+    // var player = new Player("", Math.floor( Math.random() * COL_MAX_LENGTH * CHARA_SIZE), Math.floor( Math.random() * ROW_MAX_LENGTH * CHARA_SIZE));
     mapGroup.addChild(player);
 
      
@@ -212,7 +212,9 @@
     var charaGroup = new Group();
 
     // アイテム
-    var item = new Item("");
+    var itemObject;
+
+    var item = new Item(game.assets["/images/player01.png"]);
     mapGroup.addChild(item);
     item.addEventListener('enterframe', function() { 
       if (player.intersect(this)) {
@@ -418,13 +420,14 @@
 
 
     // アイテムオブジェクト
-    var geometry = new THREE.CubeGeometry(BLOCK_SIZE, BLOCK_SIZE + 60, BLOCK_SIZE);
-    var texture = new THREE.ImageUtils.loadTexture("");
-    var material = new THREE.MeshPhongMaterial({bumpMap: texture, bumpScale: 0.2});
-    var itemObject = new THREE.Mesh(geometry, material);
-    itemObject.position.set(item.y * 10, 50, item.x * 10);
-    itemObject.scale.set(0.2,0.2,0.2)
-    scene.add(itemObject);
+    var jsonLoader = new THREE.JSONLoader();
+    jsonLoader.load("./javascripts/json_objects/mp3.js", function(geometry, materials) { 
+      var faceMaterial = new THREE.MeshFaceMaterial( materials );
+      itemObject = new THREE.Mesh( geometry, faceMaterial );
+      itemObject.position.set(item.x * 10, 50, item.y * 10); 
+      itemObject.scale.set( 10, 10, 10);
+      scene.add(itemObject);
+    });
 
 
     // 床
@@ -477,7 +480,10 @@
 
     function bgUpdate() {
       skyBox.rotation.y += 0.0002;
-      // itemObject.rotation.y += 0.01;
+      if (itemObject != undefined) {
+        itemObject.rotation.y += 0.01;
+      }
+      
       // if (loadsideObject) {
       //   loadsideObject.rotation.y += 0.003;
       // }
@@ -510,10 +516,6 @@
       if (npcSets.length < 8) {
         randomNpcCreate();
       }
-      if (npcSets.length == 8) {
-        console.log("npcdone")
-      }
-      
 
       if(npcSets.length != 0) {
         for (var i = 0; i < npcSets.length; i ++) {
