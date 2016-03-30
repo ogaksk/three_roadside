@@ -425,7 +425,7 @@
       var faceMaterial = new THREE.MeshFaceMaterial( materials );
       itemObject = new THREE.Mesh( geometry, faceMaterial );
       itemObject.position.set(item.x * 10, 50, item.y * 10); 
-      itemObject.scale.set( 10, 10, 10);
+      itemObject.scale.set( 30, 30, 30);
       scene.add(itemObject);
     });
 
