@@ -561,7 +561,7 @@
   }
   var viamusic = new Audio();
   viamusic.src = "sounds/VIA0329.mp3";
-  viamusic.volume = 0.3;
+  viamusic.volume = 0.1;
   viamusic.loop = true;
   viamusic.play();
 
