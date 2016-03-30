@@ -142,7 +142,7 @@
       initialize: function (image, x, y, log_name) {
         Sprite.call(this, CHARA_SIZE, CHARA_SIZE);
         this.x = 500;
-        this.y = 550;
+        this.y = 500;
         this.image = image;
         this.rotation = 90;
         // this.addEventListener(enchant.Event.ENTER_FRAME, this.onEnterFrame);
