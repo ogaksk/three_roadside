@@ -203,8 +203,8 @@
     // mapGroup.addChild(field);
     
     // プレーヤー
-    var player = new Player(game.assets["/images/player01.png"], Math.floor( Math.random() * COL_MAX_LENGTH * CHARA_SIZE * 0.9), Math.floor( Math.random() * ROW_MAX_LENGTH * CHARA_SIZE* 0.9));
-    // var player = new Player("", Math.floor( Math.random() * COL_MAX_LENGTH * CHARA_SIZE), Math.floor( Math.random() * ROW_MAX_LENGTH * CHARA_SIZE));
+    // var player = new Player(game.assets["/images/player01.png"], Math.floor( Math.random() * COL_MAX_LENGTH * CHARA_SIZE * 0.9), Math.floor( Math.random() * ROW_MAX_LENGTH * CHARA_SIZE* 0.9));
+    var player = new Player("", Math.floor( Math.random() * COL_MAX_LENGTH * CHARA_SIZE), Math.floor( Math.random() * ROW_MAX_LENGTH * CHARA_SIZE));
     mapGroup.addChild(player);
 
      
@@ -214,7 +214,7 @@
     // アイテム
     var itemObject;
 
-    var item = new Item(game.assets["/images/player01.png"]);
+    var item = new Item("");
     mapGroup.addChild(item);
     item.addEventListener('enterframe', function() { 
       if (player.intersect(this)) {
