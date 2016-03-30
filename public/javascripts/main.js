@@ -199,7 +199,7 @@
     
     // プレーヤー
     // var player = new Player(game.assets["/images/player01.png"], Math.floor( Math.random() * COL_MAX_LENGTH * CHARA_SIZE), Math.floor( Math.random() * ROW_MAX_LENGTH * CHARA_SIZE));
-    var player = new Player(game.assets["/images/player01.png"], Math.floor( Math.random() * COL_MAX_LENGTH * CHARA_SIZE), Math.floor( Math.random() * ROW_MAX_LENGTH * CHARA_SIZE));
+    var player = new Player("", Math.floor( Math.random() * COL_MAX_LENGTH * CHARA_SIZE), Math.floor( Math.random() * ROW_MAX_LENGTH * CHARA_SIZE));
     mapGroup.addChild(player);
 
      
@@ -480,7 +480,7 @@
 
     function npcCreate () {
       var npcSet = {};
-      npcSet.data = new NPC(game.assets["/images/player01.png"], Math.floor( Math.random() * COL_MAX_LENGTH * CHARA_SIZE), Math.floor( Math.random() * ROW_MAX_LENGTH * CHARA_SIZE));
+      npcSet.data = new NPC("", Math.floor( Math.random() * COL_MAX_LENGTH * CHARA_SIZE), Math.floor( Math.random() * ROW_MAX_LENGTH * CHARA_SIZE));
       mapGroup.addChild(npcSet.data);
       npcSet.soundTrackId = Math.floor(Math.random() * 2);
       NPCModel(npcSet);
