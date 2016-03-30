@@ -560,8 +560,8 @@
     });
   }
   var viamusic = new Audio();
-  viamusic.src = "sounds/VIA0329.mp3";
-  viamusic.volume = 0.1;
+  viamusic.src = "sounds/ikuzou.mp3";
+  viamusic.volume = 0.2;
   viamusic.loop = true;
   viamusic.play();
 
