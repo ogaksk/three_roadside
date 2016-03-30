@@ -153,7 +153,7 @@
       initialize: function (image, x, y, log_name) {
         Sprite.call(this, CHARA_SIZE, CHARA_SIZE);
         // 超雑　ひどい
-        if(Math.floor(Math.random()*2) == 0) {
+        if(Math.floor(Math.random() * 2) == 0) {
           this.x = 0;
           this.y = Math.floor(Math.random()*100 + 450);
           this.image = image;
@@ -167,7 +167,7 @@
             }
           });
         } else {
-          this.x = 1000;
+          this.x = 1500;
           this.y = Math.floor(Math.random()*100 + 450);
           this.image = image;
           this.rotation = 180;
@@ -229,7 +229,7 @@
       var loginName = data.login_name;
       var otherPlayer = new OtherPlayer("");
       otherPlayer.loginName = loginName;
-      otherPlayer.soundTrackId = parseInt(loginName[0], 16)
+      otherPlayer.soundTrackId = Math.floor(Math.random() * 2);
 
       // キャラクタ表示レイヤーとメッセージ表示レイヤーに追加
       charaGroup.addChild(otherPlayer);
@@ -486,7 +486,7 @@
     }
 
     function randomNpcCreate () {
-      if( Math.floor(Math.random() * 1000) % 1000 == 0) {
+      if( Math.floor(Math.random() * 750) % 750 == 0) {
         npcCreate();
       }
     }
@@ -512,6 +512,7 @@
             charaGroup.removeChild(npcSets[i].data);
             mapGroup.removeChild(npcSets[i].data);
             scene.remove(npcSets[i].model);
+            npcSets.splice(i, 1);
           }
         }
       }
