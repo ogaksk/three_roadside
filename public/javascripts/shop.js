@@ -45,15 +45,15 @@ var Shops = {
     ]
   },
 
-  ykk: { 
-    path: "./javascripts/json_objects/ykk.js", 
-    scale: 5,
-    rotation: 80,
-    locations: [
-      [35, 40], [45, 40], [55, 40], [65, 40], [75, 40],
-      [30, 60], [40, 60], [50, 60], [60, 60], [70, 60], [80, 60],
-    ]
-  },
+  // ykk: { 
+  //   path: "./javascripts/json_objects/ykk.js", 
+  //   scale: 5,
+  //   rotation: 80,
+  //   locations: [
+  //     [35, 40], [45, 40], [55, 40], [65, 40], [75, 40],
+  //     [30, 60], [40, 60], [50, 60], [60, 60], [70, 60], [80, 60],
+  //   ]
+  // },
 
   // CHECK: つくしって何 つくし3本とちがうの
 
@@ -122,7 +122,18 @@ var Shops = {
       [20, 10], [30, 10], [40, 10], [50, 10], [60, 10], [70, 10], [80, 10], 
       [20, 90], [30, 90], [40, 90], [50, 90], [60, 90], [70, 90], [80, 90]
     ]
+  },
+
+  video: {
+    path: "./javascripts/json_objects/video.js",
+    scale: 6,
+    rotation: 80,
+    locations: [
+      [35, 40], [45, 40], [55, 40], [65, 40], [75, 40],
+      [30, 60], [40, 60], [50, 60], [60, 60], [70, 60], [80, 60],
+    ]
   }
+
 
   // cosmo: { path: "./javascripts/json_objects/cosmo.js", x: 30, y:30, scale: 50 },
   // cosmo_kanban: { path: "./javascripts/json_objects/cosmo_kanban.js", x: 31, y:31, scale: 62 },
