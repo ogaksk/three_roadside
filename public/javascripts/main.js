@@ -152,21 +152,34 @@
     var NPC = Class.create(Sprite, {
       initialize: function (image, x, y, log_name) {
         Sprite.call(this, CHARA_SIZE, CHARA_SIZE);
-        this.walk = 0.1;
-        this.x = 0;
-        this.y = Math.floor(Math.random()*100 + 450);
-        this.image = image;
-        this.rotation = -80;
-        this.isMoving = false;
-        this.end = false;
-        this.addEventListener('enterframe', function() {
-          this.moveBy(1, 0);
-          if(this.x == 1500) {
-            this.end = true;
-            // this.x = 0;
-            // this.y = 500;
-          }
-        });
+        // 超雑　ひどい
+        if(Math.floor(Math.random()*2) == 0) {
+          this.x = 0;
+          this.y = Math.floor(Math.random()*100 + 450);
+          this.image = image;
+          this.rotation = 0;
+          this.isMoving = false;
+          this.end = false;
+          this.addEventListener('enterframe', function() {
+            this.moveBy(1, 0);
+            if(this.x == 1500) {
+              this.end = true;
+            }
+          });
+        } else {
+          this.x = 1000;
+          this.y = Math.floor(Math.random()*100 + 450);
+          this.image = image;
+          this.rotation = 180;
+          this.isMoving = false;
+          this.end = false;
+          this.addEventListener('enterframe', function() {
+            this.moveBy(-1, 0);
+            if(this.x == 0) {
+              this.end = true;
+            }
+          });
+        }
       }
     });
 
@@ -357,7 +370,7 @@
             
             npcModel = new THREE.Mesh( geometry, faceMaterial );
             npcModel.scale.set(200, 200, 200);
-            npcModel.rotation.set(0, 90, 0);
+            npcModel.rotation.set(0, -((npcSet.data.rotation - 90) * Math.PI / 180), 0);
 
             for (var i = 0; i < 12; i++) {
               if (i == 1) {
