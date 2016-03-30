@@ -154,25 +154,23 @@
         Sprite.call(this, CHARA_SIZE, CHARA_SIZE);
         this.walk = 0.1;
         this.x = 0;
-        this.y = 500;
+        this.y = Math.floor(Math.random()*100 + 450);
         this.image = image;
         this.rotation = -80;
-        this.isMoving = false; 
-        this.fps = 10;
-        this.fpsCount = 0;
-        this.digreeCount = 0;
+        this.isMoving = false;
+        this.end = false;
         this.addEventListener('enterframe', function() {
           this.moveBy(1, 0);
-          if(this.digreeCount == 1000) {
-            this.digreeCount = 0;
-            this.x = 0;
-            this.y = 500;
+          if(this.x == 1500) {
+            this.end = true;
+            // this.x = 0;
+            // this.y = 500;
           }
-          this.digreeCount += 1;
-          console.log(this.digreeCount)
         });
       }
     });
+
+    var npcSets = [];
 
 
     /* ---------- ゲームアクション ---------- */
@@ -191,10 +189,7 @@
     var player = new Player(game.assets["/images/player01.png"], Math.floor( Math.random() * COL_MAX_LENGTH * CHARA_SIZE), Math.floor( Math.random() * ROW_MAX_LENGTH * CHARA_SIZE));
     mapGroup.addChild(player);
 
-    // NPC
-    var npc = new NPC(game.assets["/images/player01.png"], Math.floor( Math.random() * COL_MAX_LENGTH * CHARA_SIZE), Math.floor( Math.random() * ROW_MAX_LENGTH * CHARA_SIZE));
-    mapGroup.addChild(npc);
-
+     
     // キャラクターのグループ
     var charaGroup = new Group();
 
@@ -318,7 +313,6 @@
     // シーン
     var scene = new THREE.Scene();
 
-
     var geometry = new THREE.PlaneGeometry(BLOCK_SIZE, BLOCK_SIZE);
     var material = new THREE.MeshBasicMaterial( { color: 0x000000, opacity: 0.0, transparent: true } );
     for (var i = 0, max = MAP.length; i < max; i = i + 1) {
@@ -353,25 +347,41 @@
     });
 
     // NPC
-    var npcModel;
-    var jsonLoader = new THREE.JSONLoader();
-    jsonLoader.load("./javascripts/json_objects/plane_car.js", function(geometry, materials) { 
-      var faceMaterial = new THREE.MeshFaceMaterial( materials );
-      
-      npcModel = new THREE.Mesh( geometry, faceMaterial );
-      npcModel.scale.set(200, 200, 200);
-      npcModel.rotation.set(0, npc.rotation, 0);
+    function NPCModel (npcSet) {
+      var npcModel;
+      var jsonLoader = new THREE.JSONLoader();
+      async.waterfall([
+        function (callback) {
+          jsonLoader.load("./javascripts/json_objects/plane_car.js", function(geometry, materials) { 
+            var faceMaterial = new THREE.MeshFaceMaterial( materials );
+            
+            npcModel = new THREE.Mesh( geometry, faceMaterial );
+            npcModel.scale.set(200, 200, 200);
+            npcModel.rotation.set(0, 90, 0);
 
-      for (var i = 0; i < 12; i++) {
-        if (i == 1) {
-          npcModel.material.materials[i].ambient = { r: Math.random(), g: Math.random(), b:Math.random()};
-        } else {
-          npcModel.material.materials[i].ambient = npcModel.material.materials[i].color;
+            for (var i = 0; i < 12; i++) {
+              if (i == 1) {
+                npcModel.material.materials[i].ambient = { r: Math.random(), g: Math.random(), b:Math.random()};
+              } else {
+                npcModel.material.materials[i].ambient = npcModel.material.materials[i].color;
+              }
+            }
+            scene.add(npcModel);
+            
+            callback();
+          });
+        }, function (callback) {
+          npcSet.model = npcModel;
+          callback();
         }
-      }
-      scene.add(npcModel);
+      ], function(err) { 
+        if (err) {
+          throw err;
+        }
+      npcSets.push(npcSet);      
     });
-
+    }
+    
 
     // 動的ロードサイドオブジェクト(obj)
     // loadsideObject = null;
@@ -455,6 +465,19 @@
       // }
     }
 
+    function npcCreate () {
+      var npcSet = {};
+      npcSet.data = new NPC(game.assets["/images/player01.png"], Math.floor( Math.random() * COL_MAX_LENGTH * CHARA_SIZE), Math.floor( Math.random() * ROW_MAX_LENGTH * CHARA_SIZE));
+      mapGroup.addChild(npcSet.data);
+      NPCModel(npcSet);
+    }
+
+    function randomNpcCreate () {
+      if( Math.floor(Math.random() * 1000) % 1000 == 0) {
+        npcCreate();
+      }
+    }
+
     /* ---------- ゲームイベント ---------- */
 
     game.rootScene.addEventListener(enchant.Event.ENTER_FRAME, function() {
@@ -465,10 +488,19 @@
       light.position.z = player.y * (BLOCK_SIZE / CHARA_SIZE);
       light.position.x = player.x * (BLOCK_SIZE / CHARA_SIZE);
       bgUpdate();
+      randomNpcCreate();
 
-      if(npcModel != undefined) {
-        npcModel.position.z = npc.y * (BLOCK_SIZE / CHARA_SIZE);
-        npcModel.position.x = npc.x * (BLOCK_SIZE / CHARA_SIZE);
+      if(npcSets.length != 0) {
+        for (var i = 0; i < npcSets.length; i ++) {
+          npcSets[i].model.position.z = npcSets[i].data.y * (BLOCK_SIZE / CHARA_SIZE);
+          npcSets[i].model.position.x = npcSets[i].data.x * (BLOCK_SIZE / CHARA_SIZE);
+
+          if (npcSets[i].data.end == true) {
+            charaGroup.removeChild(npcSets[i].data);
+            mapGroup.removeChild(npcSets[i].data);
+            scene.remove(npcSets[i].model);
+          }
+        }
       }
 
       renderer.render(scene, camera);
