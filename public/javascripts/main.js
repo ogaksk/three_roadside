@@ -152,64 +152,24 @@
     var NPC = Class.create(Sprite, {
       initialize: function (image, x, y, log_name) {
         Sprite.call(this, CHARA_SIZE, CHARA_SIZE);
-        this.walk = 0;
-        this.x = x;
-        this.y = y;
+        this.walk = 0.1;
+        this.x = 0;
+        this.y = 500;
         this.image = image;
-        this.rotation = 90;
+        this.rotation = -80;
         this.isMoving = false; 
-        this.noMoving = false;
+        this.fps = 10;
+        this.fpsCount = 0;
+        this.digreeCount = 0;
         this.addEventListener('enterframe', function() {
-          if (this.noMoving) return; // 動かないNPCならリターン
-          // NPCの移動処理
-        
-          // 歩行アニメーションのフレーム切り替え
-          this.frame = 5;
-        
-          // 移動中の処理
-          if (this.isMoving) {
-            this.moveBy(this.vx, this.vy);
-            
-            if ((this.vx && this.x % 3 == 0) || (this.vy && this.y % 3 == 0)) {
-              this.isMoving = false;
-              this.walk = 0;
-            }
-          } else {
-            // 移動中でないときは、ランダムに移動方向を設定する
-            this.vx = this.vy = 0;
-            this.mov = Math.floor( Math.random() * 200);
-            if (this.mov == 1) {
-              this.direction = 1;
-              this.vx = -4;
-            } else if (this.mov == 2) {
-              this.direction = 2;
-              this.vx = 4;
-            } else if (this.mov == 3) {
-              this.direction = 3;
-              this.vy = -4;
-            } else if (this.mov == 0) {
-              this.direction = 0;
-              this.vy = 4;
-            }
-             // 移動先が決まったら
-            if (this.vx || this.vy) {
-              
-              // 移動先の座標を求める
-              
-              var x = (this.x + (this.vx ? this.vx / Math.abs(this.vx) : 0));
-              var y = (this.y + (this.vy ? this.vy / Math.abs(this.vy) : 0));
-              
-              // その座標が移動可能な場所なら
-              if (0 <= x && x < 1000 && 0 <= y && y < 1000) {
-                console.log("ok!!!")
-                // 移動フラグを「true」にする
-                this.isMoving = true;
-                // 自身(「enterframe」イベントリスナ)を呼び出す
-                // (歩行アニメーションをスムーズに表示するため)
-                arguments.callee.call(this);
-              }
-            }
+          this.moveBy(1, 0);
+          if(this.digreeCount == 1000) {
+            this.digreeCount = 0;
+            this.x = 0;
+            this.y = 500;
           }
+          this.digreeCount += 1;
+          console.log(this.digreeCount)
         });
       }
     });
@@ -228,7 +188,7 @@
     
     // プレーヤー
     // var player = new Player(game.assets["/images/player01.png"], Math.floor( Math.random() * COL_MAX_LENGTH * CHARA_SIZE), Math.floor( Math.random() * ROW_MAX_LENGTH * CHARA_SIZE));
-    var player = new Player("", Math.floor( Math.random() * COL_MAX_LENGTH * CHARA_SIZE), Math.floor( Math.random() * ROW_MAX_LENGTH * CHARA_SIZE));
+    var player = new Player(game.assets["/images/player01.png"], Math.floor( Math.random() * COL_MAX_LENGTH * CHARA_SIZE), Math.floor( Math.random() * ROW_MAX_LENGTH * CHARA_SIZE));
     mapGroup.addChild(player);
 
     // NPC
@@ -392,6 +352,25 @@
     }, function(err){
     });
 
+    // NPC
+    var npcModel;
+    var jsonLoader = new THREE.JSONLoader();
+    jsonLoader.load("./javascripts/json_objects/plane_car.js", function(geometry, materials) { 
+      var faceMaterial = new THREE.MeshFaceMaterial( materials );
+      
+      npcModel = new THREE.Mesh( geometry, faceMaterial );
+      npcModel.scale.set(200, 200, 200);
+      npcModel.rotation.set(0, npc.rotation, 0);
+
+      for (var i = 0; i < 12; i++) {
+        if (i == 1) {
+          npcModel.material.materials[i].ambient = { r: Math.random(), g: Math.random(), b:Math.random()};
+        } else {
+          npcModel.material.materials[i].ambient = npcModel.material.materials[i].color;
+        }
+      }
+      scene.add(npcModel);
+    });
 
 
     // 動的ロードサイドオブジェクト(obj)
@@ -452,13 +431,13 @@
 
     // light
     var light = new THREE.PointLight(0x0000F0, 1.5, 300);
-    light.position.set(0, BLOCK_SIZE / 6, 0);
+    light.position.set(0, BLOCK_SIZE / 4, 0);
     scene.add(light);
     var ambient = new THREE.AmbientLight(0xFFFFF0);
     scene.add(ambient);
     // camera
     var camera = new THREE.PerspectiveCamera(45, STAGE_WIDTH / STAGE_HEIGHT, 1, 15000);
-    camera.position.set(0, BLOCK_SIZE / 6, 0);
+    camera.position.set(0, BLOCK_SIZE / 4, 0);
     // rendering
     var renderer = new THREE.WebGLRenderer();
     renderer.setSize(STAGE_WIDTH, STAGE_HEIGHT);
@@ -486,7 +465,14 @@
       light.position.z = player.y * (BLOCK_SIZE / CHARA_SIZE);
       light.position.x = player.x * (BLOCK_SIZE / CHARA_SIZE);
       bgUpdate();
+
+      if(npcModel != undefined) {
+        npcModel.position.z = npc.y * (BLOCK_SIZE / CHARA_SIZE);
+        npcModel.position.x = npc.x * (BLOCK_SIZE / CHARA_SIZE);
+      }
+
       renderer.render(scene, camera);
+
     });
 
     /*----------------サウンドパート----------------*/
