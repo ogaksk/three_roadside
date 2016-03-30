@@ -163,7 +163,9 @@
           this.addEventListener('enterframe', function() {
             this.moveBy(1, 0);
             if(this.x == 1500) {
-              this.end = true;
+              // this.end = true;
+              this.x = 0;
+              this.y = Math.floor(Math.random()*100 + 450);
             }
           });
         } else {
@@ -176,7 +178,9 @@
           this.addEventListener('enterframe', function() {
             this.moveBy(-1, 0);
             if(this.x == 0) {
-              this.end = true;
+              // this.end = true;
+              this.x = 1500;
+              this.y = Math.floor(Math.random()*100 + 450);
             }
           });
         }
@@ -184,6 +188,7 @@
     });
 
     var npcSets = [];
+
 
 
     /* ---------- ゲームアクション ---------- */
@@ -487,7 +492,7 @@
     }
 
     function randomNpcCreate () {
-      if( Math.floor(Math.random() * 750) % 750 == 0) {
+      if( Math.floor(Math.random() * 100) % 100 == 0) {
         npcCreate();
       }
     }
@@ -502,7 +507,13 @@
       light.position.z = player.y * (BLOCK_SIZE / CHARA_SIZE);
       light.position.x = player.x * (BLOCK_SIZE / CHARA_SIZE);
       bgUpdate();
-      randomNpcCreate();
+      if (npcSets.length < 8) {
+        randomNpcCreate();
+      }
+      if (npcSets.length == 8) {
+        console.log("npcdone")
+      }
+      
 
       if(npcSets.length != 0) {
         for (var i = 0; i < npcSets.length; i ++) {
@@ -514,12 +525,13 @@
             gainNodes[npcSets[i].soundTrackId].gain.value =  (10 / Math.sqrt(Math.pow(player.x - npcSets[i].data.x, 2) + Math.pow(player.y - npcSets[i].data.y, 2)) );
           }
 
-          if (npcSets[i].data.end == true) {
-            charaGroup.removeChild(npcSets[i].data);
-            mapGroup.removeChild(npcSets[i].data);
-            scene.remove(npcSets[i].model);
-            npcSets.splice(i, 1);
-          }
+          // ------------消す処理------------ //
+          // if (npcSets[i].data.end == true) {
+          //   charaGroup.removeChild(npcSets[i].data);
+          //   mapGroup.removeChild(npcSets[i].data);
+          //   scene.remove(npcSets[i].model);
+          //   npcSets.splice(i, 1);
+          // }
         }
       }
 
