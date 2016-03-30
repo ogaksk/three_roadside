@@ -482,6 +482,7 @@
       var npcSet = {};
       npcSet.data = new NPC(game.assets["/images/player01.png"], Math.floor( Math.random() * COL_MAX_LENGTH * CHARA_SIZE), Math.floor( Math.random() * ROW_MAX_LENGTH * CHARA_SIZE));
       mapGroup.addChild(npcSet.data);
+      npcSet.soundTrackId = Math.floor(Math.random() * 2);
       NPCModel(npcSet);
     }
 
@@ -507,6 +508,11 @@
         for (var i = 0; i < npcSets.length; i ++) {
           npcSets[i].model.position.z = npcSets[i].data.y * (BLOCK_SIZE / CHARA_SIZE);
           npcSets[i].model.position.x = npcSets[i].data.x * (BLOCK_SIZE / CHARA_SIZE);
+
+          // -------------音操作系-------------- //
+          if(gainNodes[npcSets[i].soundTrackId] != undefined) {
+            gainNodes[npcSets[i].soundTrackId].gain.value =  (10 / Math.sqrt(Math.pow(player.x - npcSets[i].data.x, 2) + Math.pow(player.y - npcSets[i].data.y, 2)) );
+          }
 
           if (npcSets[i].data.end == true) {
             charaGroup.removeChild(npcSets[i].data);
@@ -539,6 +545,12 @@
       }      
     });
   }
+  var viamusic = new Audio();
+  viamusic.src = "sounds/VIA0329.mp3";
+  viamusic.volume = 0.3;
+  viamusic.loop = true;
+  viamusic.play();
+
   game.start();
 
 })();
