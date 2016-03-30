@@ -164,7 +164,7 @@
             this.moveBy(1, 0);
             if(this.x == 1500) {
               // this.end = true;
-              this.x = 0;
+              this.x = -Math.floor(Math.random()*200) + 200;
               this.y = Math.floor(Math.random()*100 + 450);
             }
           });
@@ -179,7 +179,7 @@
             this.moveBy(-1, 0);
             if(this.x == 0) {
               // this.end = true;
-              this.x = 1500;
+              this.x = 1500　-Math.floor(Math.random()*200) + 200;
               this.y = Math.floor(Math.random()*100 + 450);
             }
           });
