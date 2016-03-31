@@ -476,6 +476,8 @@
     function npcCreate () {
       var npcSet = {};
       npcSet.dataset = new NPC("", Math.floor( Math.random() * COL_MAX_LENGTH * CHARA_SIZE), Math.floor( Math.random() * ROW_MAX_LENGTH * CHARA_SIZE));
+      
+      /*^^^^^^^^^^^ CHECK:  NPCのあたり判定　ここから^^^^^^^^^^^^^^^^*/
       npcSet.dataset.identifier = npcSets.length // idを付与
       npcSet.dataset.addEventListener( "enterframe", function() { 
         for (var i = 0; i < npcSets.length; i ++) {
@@ -496,6 +498,7 @@
         }
         
       });
+      /*^^^^^^^^^^^^^^^ CHECK:  NPCのあたり判定　ここまで^^^^^^^^^^*/
 
       npcGroup.addChild(npcSet.dataset);
       mapGroup.addChild(npcGroup);
