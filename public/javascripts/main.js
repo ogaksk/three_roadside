@@ -491,17 +491,20 @@
       npcSet.dataset = new NPC("");
       
       /*^^^^^^^^^^^ CHECK:  NPCのあたり判定　ここから^^^^^^^^^^^^^^^^*/
-      npcSet.dataset.identifier = npcSets.length // idを付与
       npcSet.dataset.addEventListener( "enterframe", function() { 
-        // for (var i = 0; i < npcSets.length; i ++) {
-        //   if ( this.identifier != i && this.intersect(npcGroup.childNodes[i]) ) {
-        //     if (this.rotation == 0) {
-        //       this.moveBy(-10, -1);
-        //     } else {
-        //       this.moveBy(10, 1);
-        //     }
-        //   }
-        // }
+        for (var i = 0; i < npcGroup.childNodes.length; i ++) {
+          if (this.intersect(npcGroup.childNodes[i]) ) {
+            if (npcGroup.childNodes[i] != this) {
+              if (this.rotation == 0) {
+                this.moveBy(-10, -1);
+              } else {
+                this.moveBy(10, 1);
+              }
+            }
+          }
+        }
+        
+
         if (player.intersect(this)) {
           if (this.rotation == 0) {
             player.moveBy(3, 0);
@@ -522,7 +525,7 @@
     }
 
     function randomNpcCreate () {
-      if( Math.floor(Math.random() * 100) % 100 == 0) {
+      if( Math.floor(Math.random() * 160) % 160 == 0) {
         npcCreate();
       }
     }
@@ -537,7 +540,7 @@
       light.position.z = player.y * (BLOCK_SIZE / CHARA_SIZE);
       light.position.x = player.x * (BLOCK_SIZE / CHARA_SIZE);
       bgUpdate();
-      if (npcSets.length < 10) {
+      if (npcSets.length < 11) {
         randomNpcCreate();
       }
 
@@ -556,7 +559,6 @@
 
           //------------消す処理------------ //
           if (npcSets[i].dataset.end == true) {
-            console.log("del")
             npcGroup.removeChild(npcSets[i].dataset);
 
             scene.remove(npcSets[i].model);
