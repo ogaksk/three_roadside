@@ -153,7 +153,7 @@
       initialize: function (image, x, y, log_name) {
         Sprite.call(this, CHARA_SIZE, CHARA_SIZE);
         // 超雑　ひどい
-        this.speed = Math.floor(Math.random() * 10) % 10 == 0 ? 8 : Math.floor(Math.random() * 2) + 1
+        this.speed = Math.floor(Math.random() * 10) % 10 == 0 ? 9 : Math.floor(Math.random() * 2) + 1
         if(Math.floor(Math.random() * 2) == 0) {
           this.x = -Math.floor(Math.random()*200) + 200;
           this.y = Math.floor(Math.random()*130)  + 400;
