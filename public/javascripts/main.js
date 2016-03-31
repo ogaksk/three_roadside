@@ -366,40 +366,50 @@
     }, function(err){
     });
 
-    // NPC
-    function NPCModel (npcSet) {
-      var npcModel;
-      var jsonLoader = new THREE.JSONLoader();
-      async.waterfall([
-        function (callback) {
-          jsonLoader.load("./javascripts/json_objects/plane_car.js", function(geometry, materials) { 
-            var faceMaterial = new THREE.MeshFaceMaterial( materials );
-            
-            npcModel = new THREE.Mesh( geometry, faceMaterial );
-            npcModel.scale.set(200, 200, 200);
-            npcModel.rotation.set(0, -((npcSet.dataset.rotation - 90) * Math.PI / 180), 0);
 
-            for (var i = 0; i < 12; i++) {
-              if (i == 1) {
-                npcModel.material.materials[i].ambient = { r: Math.random(), g: Math.random(), b:Math.random()};
-              } else {
-                npcModel.material.materials[i].ambient = npcModel.material.materials[i].color;
-              }
-            }
-            scene.add(npcModel);
-            
-            callback();
-          });
-        }, function (callback) {
-          npcSet.model = npcModel;
+    // NPC
+    var npcModel;
+    var npcMaterial;
+    var npcModelLoaded = false;
+    // オリジナル作成
+    async.waterfall([
+      function (callback) {
+        var jsonLoader = new THREE.JSONLoader();
+        jsonLoader.load("./javascripts/json_objects/plane_car.js", function(geometry, materials) { 
+          npcMaterial = new THREE.MeshFaceMaterial( materials );
+          npcModel = new THREE.Mesh( geometry, npcMaterial );
+          npcModel.scale.set(200, 200, 200);
           callback();
-        }
-      ], function(err) { 
-        if (err) {
-          throw err;
-        }
-      npcSets.push(npcSet);      
+        });
+      }, function (callback) {
+        npcModelLoaded = true;
+        callback();
+      }
+    ], 
+    function(err) { 
+      if (err) {
+        throw err;
+      }  
     });
+
+    function NPCModel (npcSet) {
+      if (npcModelLoaded) {
+        console.log(model);
+        var model = npcModel.clone();
+        model.material = npcMaterial.clone();
+        model.rotation.set(0, -((npcSet.dataset.rotation - 90) * Math.PI / 180), 0);
+        
+        for (var i = 0; i < 12; i++) {
+          if (i == 1) {
+            model.material.materials[i].ambient = { r: Math.random(), g: Math.random(), b:Math.random()};
+          } else {
+            model.material.materials[i].ambient = model.material.materials[i].color;
+          }
+        }
+        scene.add(model);
+        npcSet.model = model;
+        npcSets.push(npcSet);
+      }
     }
     
     // アイテムオブジェクト
@@ -475,7 +485,7 @@
     var npcGroup = new Group();
     function npcCreate () {
       var npcSet = {};
-      npcSet.dataset = new NPC("", Math.floor( Math.random() * COL_MAX_LENGTH * CHARA_SIZE), Math.floor( Math.random() * ROW_MAX_LENGTH * CHARA_SIZE));
+      npcSet.dataset = new NPC("");
       
       /*^^^^^^^^^^^ CHECK:  NPCのあたり判定　ここから^^^^^^^^^^^^^^^^*/
       npcSet.dataset.identifier = npcSets.length // idを付与
