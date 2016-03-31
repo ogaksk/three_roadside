@@ -377,7 +377,7 @@
             
             npcModel = new THREE.Mesh( geometry, faceMaterial );
             npcModel.scale.set(200, 200, 200);
-            npcModel.rotation.set(0, -((npcSet.data.rotation - 90) * Math.PI / 180), 0);
+            npcModel.rotation.set(0, -((npcSet.dataset.rotation - 90) * Math.PI / 180), 0);
 
             for (var i = 0; i < 12; i++) {
               if (i == 1) {
@@ -402,23 +402,6 @@
     });
     }
     
-
-    // 動的ロードサイドオブジェクト(obj)
-    // loadsideObject = null;
-    // var jsonLoader = new THREE.JSONLoader();
-    // jsonLoader.load("./javascripts/AEON.js", function(geometry, materials) { 
-    //   var faceMaterial = new THREE.MeshFaceMaterial( materials );
-    //   var mesh = new THREE.Mesh( geometry, faceMaterial );
-    //   mesh.position.set(1900, 10, 1600); // 決めうち! mapには反映してないオブジェクト
-    //   mesh.scale.set( 2000, 2000, 2000 );
-    //   mesh.material.materials[0].ambient = mesh.material.materials[0].color;
-    //   mesh.material.materials[1].ambient = mesh.material.materials[1].color;
-    //   mesh.material.materials[2].ambient = mesh.material.materials[2].color;
-    //   scene.add(mesh);
-    //   loadsideObject = mesh;
-    // });
-
-
     // アイテムオブジェクト
     var jsonLoader = new THREE.JSONLoader();
     jsonLoader.load("./javascripts/json_objects/mp3.js", function(geometry, materials) { 
@@ -489,10 +472,35 @@
       // }
     }
 
+    var npcGroup = new Group();
     function npcCreate () {
       var npcSet = {};
-      npcSet.data = new NPC("", Math.floor( Math.random() * COL_MAX_LENGTH * CHARA_SIZE), Math.floor( Math.random() * ROW_MAX_LENGTH * CHARA_SIZE));
-      mapGroup.addChild(npcSet.data);
+      npcSet.dataset = new NPC("", Math.floor( Math.random() * COL_MAX_LENGTH * CHARA_SIZE), Math.floor( Math.random() * ROW_MAX_LENGTH * CHARA_SIZE));
+      npcSet.dataset.identifier = npcSets.length // idを付与
+      npcSet.dataset.addEventListener( "enterframe", function() { 
+        for (var i = 0; i < npcSets.length; i ++) {
+          if ( this.identifier != i && this.intersect(npcGroup.childNodes[i]) ) {
+            if (this.rotation == 0) {
+              this.moveBy(-10, -1);
+            } else {
+              this.moveBy(10, 1);
+            }
+          }
+        }
+        if (player.intersect(this)) {
+          if (this.rotation == 0) {
+          player.moveBy(-3, 0);
+        } else {
+          player.moveBy(3, 0);
+        }
+        }
+        
+      });
+
+      npcGroup.addChild(npcSet.dataset);
+      mapGroup.addChild(npcGroup);
+      
+
       npcSet.soundTrackId = Math.floor(Math.random() * 2);
       NPCModel(npcSet);
     }
@@ -519,12 +527,15 @@
 
       if(npcSets.length != 0) {
         for (var i = 0; i < npcSets.length; i ++) {
-          npcSets[i].model.position.z = npcSets[i].data.y * (BLOCK_SIZE / CHARA_SIZE);
-          npcSets[i].model.position.x = npcSets[i].data.x * (BLOCK_SIZE / CHARA_SIZE);
+          npcSets[i].model.position.z = npcSets[i].dataset.y * (BLOCK_SIZE / CHARA_SIZE);
+          npcSets[i].model.position.x = npcSets[i].dataset.x * (BLOCK_SIZE / CHARA_SIZE);
+          // if (npcSets[i].intersect() ) {
+          //   console.log("bang")
+          // }
 
           // -------------音操作系-------------- //
           if(gainNodes[npcSets[i].soundTrackId] != undefined) {
-            gainNodes[npcSets[i].soundTrackId].gain.value =  (10 / Math.sqrt(Math.pow(player.x - npcSets[i].data.x, 2) + Math.pow(player.y - npcSets[i].data.y, 2)) );
+            gainNodes[npcSets[i].soundTrackId].gain.value =  (10 / Math.sqrt(Math.pow(player.x - npcSets[i].dataset.x, 2) + Math.pow(player.y - npcSets[i].dataset.y, 2)) );
           }
 
           // ------------消す処理------------ //
