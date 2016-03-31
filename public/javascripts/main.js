@@ -154,34 +154,38 @@
         Sprite.call(this, CHARA_SIZE, CHARA_SIZE);
         // 超雑　ひどい
         if(Math.floor(Math.random() * 2) == 0) {
-          this.x = 0;
+          this.x = -Math.floor(Math.random()*200) + 200;
           this.y = Math.floor(Math.random()*100 + 450);
           this.image = image;
           this.rotation = 0;
           this.isMoving = false;
           this.end = false;
+          this.degree = 0;
           this.addEventListener('enterframe', function() {
             this.moveBy(1, 0);
-            if(this.x == 1500) {
-              // this.end = true;
-              this.x = -Math.floor(Math.random()*200) + 200;
-              this.y = Math.floor(Math.random()*100 + 450);
+            if(this.degree == 1500) {
+              this.end = true;
+              // this.x = -Math.floor(Math.random()*200) + 200;
+              // this.y = Math.floor(Math.random()*100 + 450);
             }
+            this.degree += 1;
           });
         } else {
-          this.x = 1500;
+          this.x = 1500　-Math.floor(Math.random()*200) + 200;
           this.y = Math.floor(Math.random()*100 + 450);
           this.image = image;
           this.rotation = 180;
           this.isMoving = false;
           this.end = false;
+          this.degree = 0;
           this.addEventListener('enterframe', function() {
             this.moveBy(-1, 0);
-            if(this.x == 0) {
-              // this.end = true;
-              this.x = 1500　-Math.floor(Math.random()*200) + 200;
-              this.y = Math.floor(Math.random()*100 + 450);
+            if(this.degree == 1500) {
+              this.end = true;
+              // this.x = 1500　-Math.floor(Math.random()*200) + 200;
+              // this.y = Math.floor(Math.random()*100 + 450);
             }
+            this.degree += 1;
           });
         }
       }
@@ -394,7 +398,6 @@
 
     function NPCModel (npcSet) {
       if (npcModelLoaded) {
-        console.log(model);
         var model = npcModel.clone();
         model.material = npcMaterial.clone();
         model.rotation.set(0, -((npcSet.dataset.rotation - 90) * Math.PI / 180), 0);
@@ -490,15 +493,15 @@
       /*^^^^^^^^^^^ CHECK:  NPCのあたり判定　ここから^^^^^^^^^^^^^^^^*/
       npcSet.dataset.identifier = npcSets.length // idを付与
       npcSet.dataset.addEventListener( "enterframe", function() { 
-        for (var i = 0; i < npcSets.length; i ++) {
-          if ( this.identifier != i && this.intersect(npcGroup.childNodes[i]) ) {
-            if (this.rotation == 0) {
-              this.moveBy(-10, -1);
-            } else {
-              this.moveBy(10, 1);
-            }
-          }
-        }
+        // for (var i = 0; i < npcSets.length; i ++) {
+        //   if ( this.identifier != i && this.intersect(npcGroup.childNodes[i]) ) {
+        //     if (this.rotation == 0) {
+        //       this.moveBy(-10, -1);
+        //     } else {
+        //       this.moveBy(10, 1);
+        //     }
+        //   }
+        // }
         if (player.intersect(this)) {
           if (this.rotation == 0) {
             player.moveBy(3, 0);
@@ -534,7 +537,7 @@
       light.position.z = player.y * (BLOCK_SIZE / CHARA_SIZE);
       light.position.x = player.x * (BLOCK_SIZE / CHARA_SIZE);
       bgUpdate();
-      if (npcSets.length < 8) {
+      if (npcSets.length < 10) {
         randomNpcCreate();
       }
 
@@ -551,13 +554,14 @@
             gainNodes[npcSets[i].soundTrackId].gain.value =  (10 / Math.sqrt(Math.pow(player.x - npcSets[i].dataset.x, 2) + Math.pow(player.y - npcSets[i].dataset.y, 2)) );
           }
 
-          // ------------消す処理------------ //
-          // if (npcSets[i].data.end == true) {
-          //   charaGroup.removeChild(npcSets[i].data);
-          //   mapGroup.removeChild(npcSets[i].data);
-          //   scene.remove(npcSets[i].model);
-          //   npcSets.splice(i, 1);
-          // }
+          //------------消す処理------------ //
+          if (npcSets[i].dataset.end == true) {
+            console.log("del")
+            npcGroup.removeChild(npcSets[i].dataset);
+
+            scene.remove(npcSets[i].model);
+            npcSets.splice(i, 1);
+          }
         }
       }
 
