@@ -489,10 +489,10 @@
         }
         if (player.intersect(this)) {
           if (this.rotation == 0) {
-          player.moveBy(-3, 0);
-        } else {
-          player.moveBy(3, 0);
-        }
+            player.moveBy(3, 0);
+            } else {
+            player.moveBy(-3, 0);
+          }
         }
         
       });
