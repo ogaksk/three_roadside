@@ -497,9 +497,9 @@
           if (this.intersect(npcGroup.childNodes[i]) ) {
             if (npcGroup.childNodes[i] != this) {
               if (this.rotation == 0) {
-                this.moveBy(-1, -0);
+                this.moveBy(-2, -0);
               } else {
-                this.moveBy(1, 0);
+                this.moveBy(2, 0);
               }
             }
           }
