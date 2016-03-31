@@ -153,16 +153,17 @@
       initialize: function (image, x, y, log_name) {
         Sprite.call(this, CHARA_SIZE, CHARA_SIZE);
         // 超雑　ひどい
+        this.speed = Math.floor(Math.random() * 10) % 10 == 0 ? 10 : Math.floor(Math.random() * 2) + 1
         if(Math.floor(Math.random() * 2) == 0) {
           this.x = -Math.floor(Math.random()*200) + 200;
-          this.y = Math.floor(Math.random()*100 + 450);
+          this.y = Math.floor(Math.random()*130)  + 400;
           this.image = image;
           this.rotation = 0;
           this.isMoving = false;
           this.end = false;
           this.degree = 0;
           this.addEventListener('enterframe', function() {
-            this.moveBy(1, 0);
+            this.moveBy(this.speed, 0);
             if(this.degree == 1500) {
               this.end = true;
               // this.x = -Math.floor(Math.random()*200) + 200;
@@ -172,14 +173,14 @@
           });
         } else {
           this.x = 1500　-Math.floor(Math.random()*200) + 200;
-          this.y = Math.floor(Math.random()*100 + 450);
+          this.y = Math.floor(Math.random()*150) + 400;
           this.image = image;
           this.rotation = 180;
           this.isMoving = false;
           this.end = false;
           this.degree = 0;
           this.addEventListener('enterframe', function() {
-            this.moveBy(-1, 0);
+            this.moveBy(-this.speed, 0);
             if(this.degree == 1500) {
               this.end = true;
               // this.x = 1500　-Math.floor(Math.random()*200) + 200;
@@ -489,16 +490,16 @@
     function npcCreate () {
       var npcSet = {};
       npcSet.dataset = new NPC("");
-      
+
       /*^^^^^^^^^^^ CHECK:  NPCのあたり判定　ここから^^^^^^^^^^^^^^^^*/
       npcSet.dataset.addEventListener( "enterframe", function() { 
         for (var i = 0; i < npcGroup.childNodes.length; i ++) {
           if (this.intersect(npcGroup.childNodes[i]) ) {
             if (npcGroup.childNodes[i] != this) {
               if (this.rotation == 0) {
-                this.moveBy(-10, -1);
+                this.moveBy(-1, -0);
               } else {
-                this.moveBy(10, 1);
+                this.moveBy(1, 0);
               }
             }
           }
