@@ -491,31 +491,31 @@
       var npcSet = {};
       npcSet.dataset = new NPC("");
 
-      // /*^^^^^^^^^^^ CHECK:  NPCのあたり判定　ここから^^^^^^^^^^^^^^^^*/
-      // npcSet.dataset.addEventListener( "enterframe", function() { 
-      //   for (var i = 0; i < npcGroup.childNodes.length; i ++) {
-      //     if (this.intersect(npcGroup.childNodes[i]) ) {
-      //       if (npcGroup.childNodes[i] != this) {
-      //         if (this.rotation == 0) {
-      //           this.moveBy(-2, -0);
-      //         } else {
-      //           this.moveBy(2, 0);
-      //         }
-      //       }
-      //     }
-      //   }
+      /*^^^^^^^^^^^ CHECK:  NPCのあたり判定　ここから^^^^^^^^^^^^^^^^*/
+      npcSet.dataset.addEventListener( "enterframe", function() { 
+        // for (var i = 0; i < npcGroup.childNodes.length; i ++) {
+        //   if (this.intersect(npcGroup.childNodes[i]) ) {
+        //     if (npcGroup.childNodes[i] != this) {
+        //       if (this.rotation == 0) {
+        //         this.moveBy(-2, -0);
+        //       } else {
+        //         this.moveBy(2, 0);
+        //       }
+        //     }
+        //   }
+        // }
         
 
-      //   if (player.intersect(this)) {
-      //     if (this.rotation == 0) {
-      //       player.moveBy(3, 0);
-      //       } else {
-      //       player.moveBy(-3, 0);
-      //     }
-      //   }
+        if (player.intersect(this)) {
+          if (this.rotation == 0) {
+            player.moveBy(3, 0);
+            } else {
+            player.moveBy(-3, 0);
+          }
+        }
         
-      // });
-      // /*^^^^^^^^^^^^^^^ CHECK:  NPCのあたり判定　ここまで^^^^^^^^^^*/
+      });
+      /*^^^^^^^^^^^^^^^ CHECK:  NPCのあたり判定　ここまで^^^^^^^^^^*/
 
       npcGroup.addChild(npcSet.dataset);
       mapGroup.addChild(npcGroup);
