@@ -19,9 +19,11 @@
       var col = [];
       for (var j = 0; j < 100; j++) {
         if (i == 0 || i == 99) {
-          col.push(1);
+          col.push(1); // 壁用意
+          // col.push(0); // 壁無し
         } else if (j == 0 || j == 99) {
-          col.push(1);
+          col.push(1); // 壁用意
+          // col.push(0); // 壁無し
         } else {
           col.push(0);
         }
