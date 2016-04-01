@@ -358,6 +358,7 @@
       jsonLoader.load(Shops[shop].path, function(geometry, materials) {
         for (var i in Shops[shop].locations) {
           var faceMaterial = new THREE.MeshFaceMaterial( materials );
+          
           var mesh = new THREE.Mesh( geometry, faceMaterial );
           mesh.position.set(Shops[shop].locations[i][0] * BLOCK_SIZE, 10, Shops[shop].locations[i][1] * BLOCK_SIZE); 
           mesh.scale.set( Shops[shop].scale , Shops[shop].scale , Shops[shop].scale );
