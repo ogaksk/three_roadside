@@ -10,6 +10,12 @@
           padding: 0;
           background-color: #000;
       }
+      #foo {
+        position: fixed;
+        width: 10px;
+        height: 10px;
+        z-index: 2;
+      }
     </style>
 
     <script type="application/x-glsl" id="sky-vertex">
@@ -39,7 +45,7 @@
     <h1><%= title %></h1>
     <p>Welcome to <%= title %></p>
   </body>
-  <div id="foo"></div>
+  <div id="foo">aaa</div>
     <script src="/javascripts/vendor/enchant.min.js"></script>
     <script src="/javascripts/vendor/three.min.js"></script>
     <script src="/javascripts/vendor/AudioBufferLoader.js"></script>
