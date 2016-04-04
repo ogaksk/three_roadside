@@ -12,7 +12,15 @@ var Shops = {
     scale: 250,
     rotation:0,
     locations: [
-      [20, 30], [80, 20], [80, 80], [20, 70]
+      [80, 20], [80, 80]
+    ]
+  }, 
+  videoa: { 
+    path: "./javascripts/json_objects/videoa.js", 
+    scale: 250,
+    rotation:0,
+    locations: [
+      [20, 30], [20, 70]
 
     ]
   }, 
