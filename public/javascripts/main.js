@@ -363,7 +363,8 @@
           mesh.position.set(Shops[shop].locations[i][0] * BLOCK_SIZE, 10, Shops[shop].locations[i][1] * BLOCK_SIZE); 
           mesh.scale.set( Shops[shop].scale , Shops[shop].scale , Shops[shop].scale );
 
-          mesh.rotation.set(0, Shops[shop].rotation, 0);
+          mesh.rotation.set(0, -((Shops[shop].rotation - 90) * Math.PI / 180), 0)
+          
           for (var l = 0; l < mesh.material.materials.length; l++) {
             mesh.material.materials[l].ambient = mesh.material.materials[l].color;
           }
