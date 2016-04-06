@@ -1,6 +1,6 @@
 (function () {
 
-  var name = prompt("名前を入れてください:");
+  var name = prompt("ニックネームを入れてください:");
   var socket = io.connect();
 
   socket.on("connect", function() {
@@ -55,9 +55,28 @@
   enchant();
   var game = new Core(STAGE_WIDTH, STAGE_HEIGHT);
   game.preload([
+    "/images/navigation-keys_thumb3.png", "/images/default.gif",
     "/images/map01.png", "/images/player01.png", "/images/wall01.jpg", "/images/land01.jpg"
   ]);
   game.fps = 60;
+
+  /*---------- イントロ ---------*/
+  var loadScene = new Scene();  
+  game.loadingScene = loadScene;
+
+  loadScene.addEventListener('progress', function(e) {
+    var loadImg = new Sprite(400, 420);
+    loadImg.image = game.assets['/images/navigation-keys_thumb3.png'];
+    loadScene.addChild(loadImg);
+  });
+
+  loadScene.addEventListener('load', function(e) {
+    console.log("loaded")
+    var core = enchant.Core.instance;
+    core.removeScene(core.loadingScene);
+    core.dispatchEvent(e);
+  });
+
   game.onload = function() {
     
     /* ---------- ゲームクラス ---------- */
