@@ -66,8 +66,16 @@
 
   loadScene.addEventListener('progress', function(e) {
     var loadImg = new Sprite(400, 420);
+    loadImg.x = STAGE_WIDTH * 0.5 - 400;
+    loadImg.y = STAGE_WIDTH * 0.5 - 620;
     loadImg.image = game.assets['/images/navigation-keys_thumb3.png'];
     loadScene.addChild(loadImg);
+
+    var loadImg2 = new Sprite(110, 110);
+    loadImg2.x = STAGE_WIDTH * 0.5  + 200;
+    loadImg2.y = STAGE_WIDTH * 0.5 - 420;
+    loadImg2.image = game.assets['/images/default.gif'];
+    loadScene.addChild(loadImg2);
   });
 
   loadScene.addEventListener('load', function(e) {
