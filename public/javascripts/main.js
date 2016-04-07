@@ -2,12 +2,12 @@
 
   var name = prompt("ニックネームを入れてください:");
   var socket = io.connect();
+  
 
   socket.on("connect", function() {
     socket.emit("name", name);
     // socket.emit("message", massage); // 初期メッセージ
   });
-
 
   // 定数
   var STAGE_WIDTH = screen.width;
@@ -55,7 +55,6 @@
   enchant();
   var game = new Core(STAGE_WIDTH, STAGE_HEIGHT);
   game.preload([
-    "/images/navigation-keys_thumb3.png", "/images/default.gif",
     "/images/map01.png", "/images/player01.png", "/images/wall01.jpg", "/images/land01.jpg"
   ]);
   game.fps = 60;
@@ -65,17 +64,6 @@
   game.loadingScene = loadScene;
 
   loadScene.addEventListener('progress', function(e) {
-    var loadImg = new Sprite(400, 420);
-    loadImg.x = STAGE_WIDTH * 0.5 - 400;
-    loadImg.y = STAGE_WIDTH * 0.5 - 620;
-    loadImg.image = game.assets['/images/navigation-keys_thumb3.png'];
-    loadScene.addChild(loadImg);
-
-    var loadImg2 = new Sprite(110, 110);
-    loadImg2.x = STAGE_WIDTH * 0.5  + 200;
-    loadImg2.y = STAGE_WIDTH * 0.5 - 420;
-    loadImg2.image = game.assets['/images/default.gif'];
-    loadScene.addChild(loadImg2);
   });
 
   loadScene.addEventListener('load', function(e) {
@@ -83,7 +71,31 @@
     var core = enchant.Core.instance;
     core.removeScene(core.loadingScene);
     core.dispatchEvent(e);
-  });
+  }); 
+
+  firstCreateIntro();
+
+  /*----------------イントロのシーン出し分けパート----------------*/    
+  /*静的ロードサイドがロード完了したら呼び出される*/
+  var introScene;
+
+  function firstCreateIntro () {
+    introScene = document.createElement("div");
+    introScene.style.cssText = "float: reft";;
+                        + "position: absolute;"
+                        + "width: 30%;"
+                        + "height: 30%;"
+                        + "color: #00ff00";
+  
+    introScene.innerHTML = "<img src='images/default.gif'></img>";
+    document.getElementById("dummyIntro").appendChild(introScene);
+  }
+
+  function toLenderingStart (renderer) {
+    document.getElementById("dummyIntro").removeChild(introScene);
+    document.getElementById("enchant-stage").appendChild(renderer.domElement);
+  }
+
 
   game.onload = function() {
     
@@ -381,6 +393,7 @@
 
     //// ---静的ロードサイドオブジェクト(obj)--- ////
     var jsonLoader = new THREE.JSONLoader();
+    var progressCount = 0;
     async.forEachSeries(Object.keys(Shops), function(shop, callback) {
       jsonLoader.load(Shops[shop].path, function(geometry, materials) {
         for (var i in Shops[shop].locations) {
@@ -397,9 +410,13 @@
           }
           scene.add(mesh);
         }
+        progressCount += 1;
+        var progress = (progressCount / Object.keys(Shops).length) * 100
+        console.log( progress + "%")
         callback();
       }); 
     }, function(err){
+      toLenderingStart(renderer);
     });
 
 
@@ -488,6 +505,7 @@
     scene.add(skyBox);
 
 
+    /*---  webGL render ---*/
     // light
     var light = new THREE.PointLight(0x0000F0, 1.5, 300);
     light.position.set(0, BLOCK_SIZE / 4, 0);
@@ -503,8 +521,6 @@
     renderer.setClearColor(0x000000, 1);
     renderer.autoClear = false;
     renderer.shadowMapEnabled = true;
-    document.getElementById("enchant-stage").appendChild(renderer.domElement);
-
 
     function bgUpdate() {
       skyBox.rotation.y += 0.0002;
@@ -535,7 +551,6 @@
         //     }
         //   }
         // }
-        
 
         if (player.intersect(this)) {
           if (this.rotation == 0) {
@@ -550,8 +565,6 @@
 
       npcGroup.addChild(npcSet.dataset);
       mapGroup.addChild(npcGroup);
-      
-
       npcSet.soundTrackId = Math.floor(Math.random() * 2);
       NPCModel(npcSet);
     }
@@ -602,6 +615,7 @@
       renderer.render(scene, camera);
 
     });
+
 
     /*----------------サウンドパート----------------*/
     var gainNodes = [];
