@@ -80,14 +80,20 @@
   var introScene;
 
   function firstCreateIntro () {
+    document.getElementById("logocontainer").style.visibility = "visible";
+    
     introScene = document.createElement("div");
-    introScene.style.cssText = "float: reft";;
-                        + "position: absolute;"
-                        + "width: 30%;"
-                        + "height: 30%;"
-                        + "color: #00ff00";
+    introScene.style.cssText = "float: left;"
+                        + "position: fixed;"
+                        + "width: 1000px;"
+                        + "margin-left: "+ STAGE_WIDTH / 2.8 + "px;"
+                        + "margin-top: "+ STAGE_HEIGHT / 3.7 + "px;";
   
-    introScene.innerHTML = "<img src='images/default.gif'></img>";
+    introScene.innerHTML = 
+      "<img src='images/keys_thumb.png' width='170px' style='float:left;'></img>"
+    + "<div style='width:50px; height: 10px; float:left;'></div>" 
+    + "<img src='images/default.gif' style='float:left;'></img>"
+    ;
     document.getElementById("dummyIntro").appendChild(introScene);
   }
 
