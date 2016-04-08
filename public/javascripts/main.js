@@ -97,6 +97,7 @@
     document.getElementById("dummyIntro").appendChild(introScene);
   }
 
+  // TODO ここにasyncでNPCをレンダーする
   function toLenderingStart (renderer) {
     document.getElementById("dummyIntro").removeChild(introScene);
     document.getElementById("enchant-stage").appendChild(renderer.domElement);
@@ -302,15 +303,30 @@
         }
       });
  
-      // 他キャラレンダー
+      // 他キャラレンダー 超バッド
       var otherChara;
-      var jsonLoader = new THREE.JSONLoader();
-      jsonLoader.load("./javascripts/json_objects/plane_car.js", function(geometry, materials) { 
-        var faceMaterial = new THREE.MeshFaceMaterial( materials );
-        
-        otherChara = new THREE.Mesh( geometry, faceMaterial );
-        otherChara.scale.set(200, 200, 200);
+      if (npcModel == undefined) {
+        var jsonLoader = new THREE.JSONLoader();
+        jsonLoader.load("./javascripts/json_objects/plane_car.js", function(geometry, materials) { 
+          var faceMaterial = new THREE.MeshFaceMaterial( materials );
+          
+          otherChara = new THREE.Mesh( geometry, faceMaterial );
+          otherChara.scale.set(200, 200, 200);
 
+          for (var i = 0; i < 12; i++) {
+            if (i == 1) {
+              otherChara.material.materials[i].ambient = { r: Math.random(), g: Math.random(), b:Math.random()};
+            } else {
+              otherChara.material.materials[i].ambient = otherChara.material.materials[i].color;
+            }
+          }
+          scene.add(otherChara);
+        });
+      } else {
+        otherChara = npcModel.clone();
+        otherChara.material = npcMaterial.clone();
+        otherChara.scale.set(200, 200, 200);
+        
         for (var i = 0; i < 12; i++) {
           if (i == 1) {
             otherChara.material.materials[i].ambient = { r: Math.random(), g: Math.random(), b:Math.random()};
@@ -319,7 +335,9 @@
           }
         }
         scene.add(otherChara);
-      });
+      }
+      
+      
 
       // 他キャラ名前テクスチャレンダー
       // テクスチャを描画
@@ -384,6 +402,11 @@
 
     // シーン
     var scene = new THREE.Scene();
+    
+    // NPC
+    var npcModel;
+    var npcMaterial;
+    var npcModelLoaded = false;
 
     var geometry = new THREE.PlaneGeometry(BLOCK_SIZE, BLOCK_SIZE);
     var material = new THREE.MeshBasicMaterial( { color: 0x000000, opacity: 0.0, transparent: true } );
@@ -422,34 +445,37 @@
         callback();
       }); 
     }, function(err){
+      // CHECK 超バッド
+      lenderNPC();
       toLenderingStart(renderer);
     });
 
 
-    // NPC
-    var npcModel;
-    var npcMaterial;
-    var npcModelLoaded = false;
+
     // オリジナル作成
-    async.waterfall([
-      function (callback) {
-        var jsonLoader = new THREE.JSONLoader();
-        jsonLoader.load("./javascripts/json_objects/plane_car.js", function(geometry, materials) { 
-          npcMaterial = new THREE.MeshFaceMaterial( materials );
-          npcModel = new THREE.Mesh( geometry, npcMaterial );
-          npcModel.scale.set(200, 200, 200);
+    function lenderNPC () {
+      async.waterfall([
+        function (callback) {
+          var jsonLoader = new THREE.JSONLoader();
+          jsonLoader.load("./javascripts/json_objects/plane_car.js", function(geometry, materials) { 
+            npcMaterial = new THREE.MeshFaceMaterial( materials );
+            npcModel = new THREE.Mesh( geometry, npcMaterial );
+            npcModel.scale.set(200, 200, 200);
+            callback();
+          });
+        }, function (callback) {
+          npcModelLoaded = true;
           callback();
-        });
-      }, function (callback) {
-        npcModelLoaded = true;
-        callback();
-      }
-    ], 
-    function(err) { 
-      if (err) {
-        throw err;
-      }  
-    });
+        }
+      ], 
+      function(err) { 
+        if (err) {
+          throw err;
+        }
+        console.log("NPC lender.....done")
+      });
+    }
+    
 
     function NPCModel (npcSet) {
       if (npcModelLoaded) {
