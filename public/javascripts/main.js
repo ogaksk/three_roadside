@@ -58,6 +58,7 @@
     "/images/map01.png", "/images/player01.png", "/images/wall01.jpg", "/images/land01.jpg"
   ]);
   game.fps = 60;
+  game.keybind(' '.charCodeAt(0), 'b');
 
   /*---------- イントロ ---------*/
   var loadScene = new Scene();  
@@ -625,6 +626,10 @@
         randomNpcCreate();
       }
 
+      if (game.input.b) {
+        cracshonPlay();
+      }
+
       if(npcSets.length != 0) {
         for (var i = 0; i < npcSets.length; i ++) {
           npcSets[i].model.position.z = npcSets[i].dataset.y * (BLOCK_SIZE / CHARA_SIZE);
@@ -671,6 +676,41 @@
       }      
     });
   }
+
+  var audioctx;
+  window.AudioContext = window.AudioContext
+      || window.webkitAudioContext
+      || window.mozAudioContext
+      || window.msAudioContext;
+  try {
+      audioctx = new AudioContext;
+  }
+  catch(e) {
+      alert('Web Audio API is not supported in this browser');
+  }
+
+  // クラクション
+  var cracshonSource;
+  new AudioBufferLoader("sounds/pu.mp3", function() {
+      var self = this;
+      cracshonSource = self.context.createBufferSource();
+      console.log(cracshonSource)
+      cracshonSource.buffer = self.bufferList[0];
+      // gainNode = self.context.createGain();
+      // gainNode.gain.value = 0.0;
+      // source.connect(gainNode);
+      // gainNode.connect(self.context.destination)
+      // gainNodes.push(gainNode);
+      // source.start();
+  });
+
+  function cracshonPlay() {
+    var src = audioctx.createBufferSource();
+    src.buffer = cracshonSource.buffer;
+    src.connect(audioctx.destination);
+    src.start(0);
+  }
+
   var viamusic = new Audio();
   viamusic.src = "sounds/ikuzou.mp3";
   viamusic.volume = 0.2;
