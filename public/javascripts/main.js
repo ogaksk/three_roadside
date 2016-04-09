@@ -294,13 +294,15 @@
 
       // キャラクタ表示レイヤーとメッセージ表示レイヤーに追加
       charaGroup.addChild(otherPlayer);
-      // mapGroup.addChild(otherPlayer);
+      mapGroup.addChild(otherPlayer);
       
       // 他キャラ衝突判定
       otherPlayer.addEventListener('enterframe', function() {
         if (player.intersect(this)) {
           // player.x -= 1;
-          player.y -= 1;
+          // this.y -= 10;
+          // CHECk: ここを角度から移動する位置を三角関数で算出も出来るはず
+          player.y -= 2;
         }
       });
  
