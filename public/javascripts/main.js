@@ -502,7 +502,11 @@
       var faceMaterial = new THREE.MeshFaceMaterial( materials );
       itemObject = new THREE.Mesh( geometry, faceMaterial );
       itemObject.position.set(item.x * 10, 100, item.y * 10); 
-      itemObject.scale.set( 30, 30, 30);
+      itemObject.scale.set( 30, 30, 30);      
+      for (var l = 0; l < itemObject.material.materials.length; l++) {
+        itemObject.material.materials[l].ambient = itemObject.material.materials[l].color;
+      }
+
       scene.add(itemObject);
     });
 
