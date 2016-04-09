@@ -10,10 +10,10 @@ exports.index = function(req, res){
 
   for (var i = 0; i < incompatibles.length; i ++) {
     if(ua.indexOf(incompatibles[i]) != -1){
-      res.render('incompatible', { title: 'sorry!!' });
+      res.render('incompatible', { title: 'ロードサイドオンライン' });
       return
     }
   }
 
-  res.render('index', { title: 'ロードサイド3D' });
+  res.render('index', { title: 'ロードサイドオンライン' });
 };
