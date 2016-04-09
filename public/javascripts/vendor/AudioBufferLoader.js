@@ -1,6 +1,16 @@
 function AudioBufferLoader() {
   this.bufferLoader;
-  this.context = new webkitAudioContext();
+  this.context;
+  window.AudioContext = window.AudioContext
+      || window.webkitAudioContext
+      || window.mozAudioContext
+      || window.msAudioContext;
+  try {
+      this.context = new AudioContext;
+  }
+  catch(e) {
+      alert('Web Audio API is not supported in this browser');
+  }
 
   var urls = [];
   var finishedLoading;
