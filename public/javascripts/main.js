@@ -696,10 +696,9 @@
   new AudioBufferLoader("sounds/pu.mp3", function() {
       var self = this;
       cracshonSource = self.context.createBufferSource();
-      console.log(cracshonSource)
       cracshonSource.buffer = self.bufferList[0];
       // gainNode = self.context.createGain();
-      // gainNode.gain.value = 0.0;
+      // gainNode.gain.value = 0.5;
       // source.connect(gainNode);
       // gainNode.connect(self.context.destination)
       // gainNodes.push(gainNode);
@@ -709,7 +708,12 @@
   function cracshonPlay() {
     var src = audioctx.createBufferSource();
     src.buffer = cracshonSource.buffer;
-    src.connect(audioctx.destination);
+
+    var gainNode = audioctx.createGain();
+    gainNode.gain.value = 0.5;
+    src.connect(gainNode);
+    gainNode.connect(audioctx.destination);
+
     src.start(0);
   }
 
