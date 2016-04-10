@@ -27,8 +27,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', routes.index);
 app.get('/download', function(req, res) {
-  var file = __dirname +'/contents/a.zip';
-  res.download(file);
+  res.redirect(302, "http://tuxurecords.sakura.ne.jp/zip/TUXU026.zip");
+  // var file = __dirname +'/contents/a.zip';
+  // res.download(file);
 });
 
 server = http.createServer(app);
