@@ -274,9 +274,9 @@
       if (player.intersect(this)) {
         this.x += Math.floor(Math.random()*200);
         this.y += Math.floor(Math.random()*200);
-        itemObject.position.set(this.x * 10, 50, this.y * 10);
-        // this.parentNode.removeChild(this);
-        player.y -= 3;
+        // itemObject.position.set(this.x * 10, 50, this.y * 10);
+        this.parentNode.removeChild(this);
+        scene.remove(itemObject);
         location.href = "download";
       }
     });
@@ -339,8 +339,6 @@
         }
         scene.add(otherChara);
       }
-      
-      
 
       // 他キャラ名前テクスチャレンダー
       // テクスチャを描画
@@ -453,8 +451,6 @@
       toLenderingStart(renderer);
     });
 
-
-
     // オリジナル作成
     function lenderNPC () {
       async.waterfall([
@@ -478,7 +474,6 @@
         console.log("NPC lender.....done")
       });
     }
-    
 
     function NPCModel (npcSet) {
       if (npcModelLoaded) {
