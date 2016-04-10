@@ -1,42 +1,71 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-    <style type="text/css">
-      body {
-          margin: 0;
-          padding: 0;
-          background-color: #fff;
-      }
-      #logocontainer {
-        position: fixed;
-        width: 100%;
-        height: 51px;
-        z-index: 2;
-      }
-      #logo {
-        float: right;        
-      }
 
-    </style>
-
-  </head>
+<!DOCTYPE HTML>
+<html lang="jp-JP">
+<head>
+<title>ロードサイドオンライン</title>
+<meta charset="UTF-8">
+<meta property="og:image" content="http://tuxurecords.sakura.ne.jp/data/roadside/ogp.jpg" />
+<meta property="og:image:width" content="600" />
+<meta property="og:description" content='つくしレコーズ＋古町MOI -ロードサイドEP'>
+<style type="text/css">
+  body {
+    margin: 0 auto;
+  padding: 0;
+  background-color: #000;
+  color: #fff;
+  font-family: Verdana, Roboto, "Droid Sans", "游ゴシック", YuGothic, "メイリオ", Meiryo, "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", "ＭＳ Ｐゴシック", sans-serif;
+  font
+  }
   
+  #container {
+  margin: 100px 0;
+  text-align: center;
+  }
+  
+  #logo {
+  margin-top: 100px;
+  }
+  
+  h1 {
+  font-size: 28px;
+  }
+  p {
+    margin: 50px 0;
+  }
+  
+  .iframeObj{
+  position: relative;
+  width: 100%;
+  }
+
+  .iframeObj iframe{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100% !important;
+  height: 100% !important
+  }
+
+</style>
+</head>
   <body>
-    <div id="logocontainer" Align="right">
-      <!--CHECK: 本番前に下のリンクは書き換える -->
-      <a href="http://tuxurecords.tumblr.com/" id="logo">
-        <img src="/images/tuxu_logo_mini.png" alt="tuxurecords.com">
-      </a> 
+    <div id="container">
+      <h1>
+      Sorry...<br />
+        <br />
+        ロードサイドオンラインは、<br />
+        PCでのみ体験できます。
+      </h1>
+      <p>スマホの方は動画でお楽しみください。</p>
+      <div class="iframeObj" style="padding-top: 100%;">
+      <!-- <iframe width="320" height="240" src="https://www.youtube.com/embed/1iVzneKEAPY?list=FL9VfytiT6lOtKi_rBWJztwQ" frameborder="0" allowfullscreen></iframe> -->
+      <iframe width="320" height="180" src="https://www.youtube.com/embed/Y2xIz_RWMkQ" frameborder="0" allowfullscreen></iframe>
     </div>
-
-
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-    <p>これでも見てろカス</p>
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/1iVzneKEAPY?list=FL9VfytiT6lOtKi_rBWJztwQ" frameborder="0" allowfullscreen></iframe>
-
+    <div id="logo">
+      <a href="http://tuxurecords.tumblr.com/">
+        <img src="images/tuxu_logo_mini.png" alt="tuxurecords.com">
+      </a>
     </div>
   </body>
 </html>
