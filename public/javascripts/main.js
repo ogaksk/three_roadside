@@ -705,7 +705,7 @@
     src.buffer = cracshonSource.buffer;
 
     var gainNode = audioctx.createGain();
-    gainNode.gain.value = 0.25;
+    gainNode.gain.value = 0.05;
     src.connect(gainNode);
     gainNode.connect(audioctx.destination);
 
