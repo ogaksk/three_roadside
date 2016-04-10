@@ -7,6 +7,16 @@ var Shops = {
       [10, 48]
     ]
   },
+
+  suzuki: {
+    path: "./javascripts/json_objects/suzuki.js",
+    scale: 100,
+    rotation: 0,
+    locations: [
+      [100, 40], [100, 60], 
+    ]
+  },
+
   alpen: { 
     path: "./javascripts/json_objects/alpen.js", 
     scale: 250,
