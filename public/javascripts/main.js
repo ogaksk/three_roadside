@@ -287,7 +287,7 @@
 
     // 他のユーザのログイン
     socket.on("name", function(data) {
-      var loginName = data.login_name;
+      var loginName = data.login_id;
       var otherPlayer = new OtherPlayer("");
       otherPlayer.loginName = loginName;
       otherPlayer.soundTrackId = Math.floor(Math.random() * 2);
@@ -348,7 +348,7 @@
       ctx.fillStyle = 'white';
       ctx.font = "40px sans-serif";
       ctx.textAlign = 'center';
-      ctx.fillText(data.message, 256, 100);
+      ctx.fillText(data.login_name, 256, 100);
       var texture = new THREE.Texture(canvas);
       texture.needsUpdate = true;
        

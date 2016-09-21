@@ -46,10 +46,10 @@ var player_list = {};
 // 通信プロトコル
 io.sockets.on("connection", function(socket) {
   var player = {
-    login_name : "",
+    login_id : "",
     x : 0,
     y : 0,
-    message : "…", // フキダシの中身
+    login_name : "…", // フキダシの中身
   };
 
   console.log("connect new client.");
@@ -58,12 +58,12 @@ io.sockets.on("connection", function(socket) {
   socket.on("name", function(text) {
     console.log("name: " + text);
     // CHECK: randomなhexの名前を与える
-    player.login_name = randomHex();
-    player.message = text;
+    player.login_id = socket.id;
+    player.login_name = text;
     socket.broadcast.emit("name", player);
 
     // ログイン中プレイヤーリストへの登録
-    player_list[ player.login_name ] = player;
+    player_list[ player.login_id ] = player;
     //  var msg = name + "が入室しました";
     // userHash[socket.id] = name;
     // io.sockets.emit("publish", {value: msg});
@@ -73,10 +73,10 @@ io.sockets.on("connection", function(socket) {
     // それまでにログインしてるプレイヤー情報を送る
     for (var i in player_list) {
       // ログイン中プレイヤーリストからプレイヤー情報取得
-      if( player.login_name != player_list[i].login_name) {
+      if( player.login_id != player_list[i].login_id) {
         var c = player_list[i]; 
         socket.emit("name", c);
-        socket.emit("position:" + c.login_name,
+        socket.emit("position:" + c.login_id,
                   c.x + "," + c.y + "," + c.direction);
       }
     }
@@ -84,19 +84,19 @@ io.sockets.on("connection", function(socket) {
 
   // 移動処理
   socket.on("position", function(pos) {
-    // console.log("position:" + player.login_name + "x="+ pos.x + "y=" + pos.y);
+    // console.log("position:" + player.login_id + "x="+ pos.x + "y=" + pos.y);
     player.x = pos.x;
     player.y = pos.y;
     player.rotation = pos.rotation;
-    socket.broadcast.emit("position:" + player.login_name, pos);
+    socket.broadcast.emit("position:" + player.login_id, pos);
   });
 
   // 切断した時の処理
   socket.on("disconnect", function() {
-    console.log("disconnect:" + player.login_name);
-    socket.broadcast.emit("disconnect:" + player.login_name);
+    console.log("disconnect:" + player.login_id);
+    socket.broadcast.emit("disconnect:" + player.login_id);
     // ログイン中プレイヤーリストからの削除
-    delete player_list[ player.login_name ];
+    delete player_list[ player.login_id ];
   });
 
 });
