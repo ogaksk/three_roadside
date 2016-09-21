@@ -727,7 +727,7 @@
 
   function publishMessage() {
     var textInput = document.getElementById('msg_input');
-    var msg = "[" + name + "] " + textInput.value;
+    var msg = "[" + name + "] " + textInput.value.slice(0, 128);
     socket.emit("publish", {value: msg});
     textInput.value = '';
   }
