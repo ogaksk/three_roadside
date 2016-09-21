@@ -61,12 +61,10 @@ io.sockets.on("connection", function(socket) {
     player.login_id = socket.id;
     player.login_name = text;
     socket.broadcast.emit("name", player);
+    io.sockets.emit("publish", {value: player.login_name + "が入室しました"});
 
     // ログイン中プレイヤーリストへの登録
     player_list[ player.login_id ] = player;
-    //  var msg = name + "が入室しました";
-    // userHash[socket.id] = name;
-    // io.sockets.emit("publish", {value: msg});
   });
 
   socket.on("get_user_list", function() {  
@@ -91,11 +89,18 @@ io.sockets.on("connection", function(socket) {
     socket.broadcast.emit("position:" + player.login_id, pos);
   });
 
+  // チャット処理
+  socket.on("publish", function (data) {
+    io.sockets.emit("publish", {value:data.value});
+  });
+
+
   // 切断した時の処理
   socket.on("disconnect", function() {
     console.log("disconnect:" + player.login_id);
     socket.broadcast.emit("disconnect:" + player.login_id);
     // ログイン中プレイヤーリストからの削除
+    io.sockets.emit("publish", {value: player.login_name + "が退出しました"});
     delete player_list[ player.login_id ];
   });
 

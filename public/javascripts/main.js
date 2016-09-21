@@ -82,6 +82,7 @@
 
   function firstCreateIntro () {
     document.getElementById("logocontainer").style.visibility = "visible";
+    document.getElementById("chat-area").style.visibility = "hidden";
     
     introScene = document.createElement("div");
     introScene.style.cssText = "float: left;"
@@ -102,8 +103,8 @@
   function toLenderingStart (renderer) {
     document.getElementById("dummyIntro").removeChild(introScene);
     document.getElementById("enchant-stage").appendChild(renderer.domElement);
-  }
 
+  }
 
   game.onload = function() {
     
@@ -399,6 +400,7 @@
       });
     });
 
+
     /* ---------- 3Dアクション ---------- */
 
     // シーン
@@ -450,6 +452,7 @@
       // CHECK 超バッド
       lenderNPC();
       toLenderingStart(renderer);
+      isAdmin(name);
     });
 
     // オリジナル作成
@@ -718,6 +721,37 @@
   viamusic.volume = 0.2;
   viamusic.loop = true;
   viamusic.play();
+
+
+  /* ---------- チャット ---------- */
+
+  function publishMessage() {
+    var textInput = document.getElementById('msg_input');
+    var msg = "[" + name + "] " + textInput.value;
+    socket.emit("publish", {value: msg});
+    textInput.value = '';
+  }
+
+  function addMessage (msg) {
+    var domMeg = document.createElement('div');
+    domMeg.innerHTML = new Date().toLocaleTimeString() + ' ' + msg;
+    msgArea.appendChild(domMeg);
+  }
+  socket.on( "publish", function (data) { 
+    addMessage(data.value); 
+  });
+
+  var msgArea = document.getElementById("msg");
+  document.getElementById("publish-message").addEventListener("click", function () {
+    publishMessage();
+  })
+
+  /*------------------- デバグ系 -----------------*/
+  function isAdmin (name) {
+    if( name.indexOf('admin') != -1 ) {
+      document.getElementById("chat-area").style.visibility = "visible";
+    }
+  }
 
   game.start();
 

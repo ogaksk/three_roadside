@@ -30,6 +30,14 @@
 
       #dummyIntro {
       }
+
+      #chat-area {
+        position: fixed;
+        width: 100%;
+        /*height: 300px;*/
+        z-index: 2;
+        visibility:hidden;
+      }
     </style>
 
     <script type="application/x-glsl" id="sky-vertex">
@@ -61,10 +69,18 @@
       </a> 
     </div>
 
+    <div id="chat-area">
+      <input type="text" id="msg_input" style="width:200px;" />
+      <button id="publish-message">語る</button>
+      <div id="msg"></div>
+    </div>
+
     <div id="dummyIntro">
     </div>
 
+
     <div id="enchant-stage"></div>
+
   
     <h1><%= title %></h1>
     <p>Welcome to <%= title %></p>
