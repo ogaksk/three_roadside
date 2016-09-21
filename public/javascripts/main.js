@@ -440,6 +440,7 @@
           }
           scene.add(mesh);
         }
+        console.log(Shops[shop].path)
         progressCount += 1;
         var progress = (progressCount / Object.keys(Shops).length) * 100
         console.log( progress + "%")

@@ -64,6 +64,9 @@ io.sockets.on("connection", function(socket) {
 
     // ログイン中プレイヤーリストへの登録
     player_list[ player.login_name ] = player;
+    //  var msg = name + "が入室しました";
+    // userHash[socket.id] = name;
+    // io.sockets.emit("publish", {value: msg});
   });
 
   socket.on("get_user_list", function() {  

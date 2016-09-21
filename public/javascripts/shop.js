@@ -45,7 +45,7 @@ var Shops = {
   },
 
   haruyama_r: { 
-    path: "./javascripts/json_objects/haruyama.js", 
+    path: "./javascripts/json_objects/haruyama2.js", 
     scale: 40,
     rotation: 0,
     locations: [
@@ -125,7 +125,7 @@ var Shops = {
   },
 
     korochan_r: { 
-    path: "./javascripts/json_objects/korochan.js", 
+    path: "./javascripts/json_objects/korochan2.js", 
     scale: 150,
     rotation: 0,
     locations: [
@@ -143,7 +143,7 @@ var Shops = {
   },
 
   ramenshop_r: { 
-    path: "./javascripts/json_objects/ramenshop.js", 
+    path: "./javascripts/json_objects/ramenshop2.js", 
     scale: 50,
     rotation: 90,
     locations: [
