@@ -734,6 +734,10 @@
 
   function addMessage (msg) {
     var domMeg = document.createElement('div');
+    var messageLength = document.getElementById("msg").children.length;
+    if (messageLength > 20) {
+      document.getElementById("msg").removeChild(document.getElementById("msg").firstElementChild);
+    }
     domMeg.innerHTML = new Date().toLocaleTimeString() + ' ' + msg;
     msgArea.appendChild(domMeg);
   }
