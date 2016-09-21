@@ -746,6 +746,12 @@
     publishMessage();
   })
 
+  document.getElementById("msg_input").addEventListener("keypress", function (e) {
+    if(13 === e.keyCode) {
+      publishMessage();  
+    }
+  })
+
   /*------------------- デバグ系 -----------------*/
   function isAdmin (name) {
     if( name.indexOf('admin') != -1 ) {
