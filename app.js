@@ -4,6 +4,7 @@
 
 var express = require('express')
   , routes = require('./routes')
+  , tweetRoute = require('./routes/tweet')
   , http = require('http')
   , path = require('path')
   , fs = require('fs')
@@ -26,11 +27,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.get('/', routes.index);
+app.get('/tweet', tweetRoute.tweet);
 app.get('/download', function(req, res) {
   res.redirect(302, "http://tuxurecords.sakura.ne.jp/zip/TUXU038.zip");
   // var file = __dirname +'/contents/a.zip';
   // res.download(file);
 });
+
 
 server = http.createServer(app);
 var socketio = require('socket.io');
