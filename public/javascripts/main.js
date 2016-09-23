@@ -663,7 +663,7 @@
 
     var aroundCount = 0;
     function cycleAroundWorld(object, atr) {
-      aroundCount += 0.0005;
+      aroundCount += 0.0001;
       object.position.z = (Math.sin(aroundCount) * 5000) + 5000;
       object.position.x = (Math.cos(aroundCount) * 5000) + 5000;
       if (atr == "rota") {
@@ -686,7 +686,7 @@
 
     function cameraUpdate() {
       if (airCamera == true) {
-        camera.position.y = 2000;
+        camera.position.y = 1400;
         // camera.rotation.x = -(-90 * Math.PI / 180)
         // camera.rotation.y = -(-120 * Math.PI / 180)
         // camera.rotation.z = -(90 * Math.PI / 180)
