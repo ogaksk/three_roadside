@@ -298,25 +298,28 @@
     });
 
     // ツイートオブジェクト
-    async.forEachSeries(Object.keys(TweetMaps), function(tweetPoint, callback_each) {
-      for (var i in TweetMaps[tweetPoint].locations) { 
-        var tweetItem = new TweetItem("", TweetMaps[tweetPoint].locations[i][0], TweetMaps[tweetPoint].locations[i][1] ,TweetMaps[tweetPoint].description);
-        mapGroup.addChild(tweetItem);
-        tweetItem.addEventListener('enterframe', function() { 
-          if (player.intersect(this)) {
-            if(!this.touched) {
-              this.touched = true;
-            }
-          } else {
-            this.touched = false;
-          } 
-        });
-      }
+    function createTweetItems () {
+      
+      async.forEachSeries(Object.keys(TweetMaps), function(tweetPoint, callback_each) {
+        for (var i in TweetMaps[tweetPoint].locations) { 
+          var tweetItem = new TweetItem("", TweetMaps[tweetPoint].locations[i][0], TweetMaps[tweetPoint].locations[i][1] ,TweetMaps[tweetPoint].description);
+          mapGroup.addChild(tweetItem);
+          tweetItem.addEventListener('enterframe', function() { 
+            if (player.intersect(this)) {
+              if(!this.touched) {
+                this.touched = true;
+              }
+            } else {
+              this.touched = false;
+            } 
+          });
+        }
 
-      callback_each();
-    }, function(err) {
-    });
-
+        callback_each();
+      }, function(err) {
+      });
+    }
+    
 
     // 他のユーザーリストの取得
     socket.emit("get_user_list");
@@ -489,7 +492,8 @@
       lenderNPC();
       toLenderingStart(renderer);
       isAdmin(name);
-      createTweetObject();
+      if (adminFlag) createTweetObjects();
+      if (adminFlag) createTweetItems();
     });
 
     // オリジナル作成
@@ -550,7 +554,8 @@
     });
 
     // ツイートオブジェクトまわり
-    function createTweetObject () {
+  
+    function createTweetObjects () {
       var tweetObject;
       var tweetModelMaterial;
 
@@ -837,9 +842,11 @@
   })
 
   /*------------------- デバグ系 -----------------*/
+  var adminFlag;
   function isAdmin (name) {
     if( name.indexOf('admin') != -1 ) {
       document.getElementById("chat-area").style.visibility = "visible";
+      adminFlag = true;
     }
   }
 
