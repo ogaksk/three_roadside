@@ -202,12 +202,14 @@
 
     var TweetItem = Class.create(Sprite, {
       isMove: false,
-      initialize: function (image, x, y, log_name) {
+      initialize: function (image, x, y, desc) {
         Sprite.call(this, CHARA_SIZE, CHARA_SIZE);
         this.x = x * 10;
         this.y = y * 10;
         this.image = image;
         this.rotation = 90;
+        this.touched = false;
+        this.description = desc;
         // this.addEventListener(enchant.Event.ENTER_FRAME, this.onEnterFrame);
       }
     })
@@ -262,7 +264,7 @@
     /* ---------- ゲームアクション ---------- */
 
     // シーン
-    var mapGroup = new Group();
+    mapGroup = new Group();
     mapGroup.x = 10;
     mapGroup.y = 10;
     game.rootScene.addChild(mapGroup);
@@ -298,25 +300,23 @@
     // ツイートオブジェクト
     async.forEachSeries(Object.keys(TweetMaps), function(tweetPoint, callback_each) {
       for (var i in TweetMaps[tweetPoint].locations) { 
-        var tweetItem = new TweetItem("", TweetMaps[tweetPoint].locations[i][0], TweetMaps[tweetPoint].locations[i][1]);
+        var tweetItem = new TweetItem("", TweetMaps[tweetPoint].locations[i][0], TweetMaps[tweetPoint].locations[i][1] ,TweetMaps[tweetPoint].description);
         mapGroup.addChild(tweetItem);
         tweetItem.addEventListener('enterframe', function() { 
           if (player.intersect(this)) {
-            console.log("aa")
-            window.open("http://twitter.com/share?url=[http://roadside3d.herokuapp.com/]&text=["+TweetMaps[tweetPoint].description+"]&related=[Tuxu_Records]&hashtags=[ロードサイドオンライン]", "", "width=500,height=250");
-            // window.open("./tweet?desc=" + TweetMaps[tweetPoint].description, "", "width=500,height=400");
-            // this.x += Math.floor(Math.random()*200);
-            // this.y += Math.floor(Math.random()*200);
-            // itemObject.position.set(this.x * 10, 50, this.y * 10);
-            this.parentNode.removeChild(this);
-            // scene.remove(tweetItem); #TODO : これを消そうとするとsessionのid管理をしなければならない
-          }
+            if(!this.touched) {
+              this.touched = true;
+            }
+          } else {
+            this.touched = false;
+          } 
         });
       }
 
       callback_each();
     }, function(err) {
     });
+
 
     // 他のユーザーリストの取得
     socket.emit("get_user_list");
@@ -842,6 +842,23 @@
       document.getElementById("chat-area").style.visibility = "visible";
     }
   }
+
+  document.addEventListener("keypress", function (e) {
+    if(109 === e.keyCode) {
+      viamusic.pause();
+    }
+  })
+  document.addEventListener("keypress", function (e) {
+    if (13 === e.keyCode) {
+      for (var i = 0; i < mapGroup.childNodes.length; i++) {
+        if (mapGroup.childNodes[i].touched) {
+          window.open("http://twitter.com/share?url=[http://roadside3d.herokuapp.com/]&text=["+mapGroup.childNodes[i].description+"]&related=[Tuxu_Records]&hashtags=[ロードサイドオンライン]", '',  'width=400, height=250')
+        }
+      }
+      
+    }
+  })
+  
 
   game.start();
 
