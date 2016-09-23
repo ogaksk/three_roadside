@@ -3,6 +3,16 @@
   var name = prompt("ニックネームを入れてください:");
   var socket = io.connect();
   
+  window.ee = {
+    listeners: {},
+    on: function(evname, evaction){
+      this.listeners[evname] = evaction
+    },
+    emit: function(evname /*, evargs */){
+      this.listeners[evname] && this.listeners[evname].apply(null, [].slice.call(arguments, 1))
+    }
+  }
+  
 
   socket.on("connect", function() {
     socket.emit("name", name);
@@ -687,13 +697,8 @@
     function cameraUpdate() {
       if (airCamera == true) {
         camera.position.y = 1400;
-        // camera.rotation.x = -(-90 * Math.PI / 180)
-        // camera.rotation.y = -(-120 * Math.PI / 180)
-        // camera.rotation.z = -(90 * Math.PI / 180)
         cycleAroundWorld(camera, "rota");
-
       } else {
-
         camera.rotation.y = -((player.rotation + 90) * Math.PI / 180);
         camera.position.z = player.y * (BLOCK_SIZE / CHARA_SIZE);
         camera.position.x = player.x * (BLOCK_SIZE / CHARA_SIZE);
@@ -702,6 +707,14 @@
         light.position.x = player.x * (BLOCK_SIZE / CHARA_SIZE);
       }
     }
+
+    ee.on("aircamera", function (airCamera) {
+      console.log("socketair")
+      if (!airCamera) {
+        camera.position.y = BLOCK_SIZE / 4;
+      }
+    });
+      
 
     var npcGroup = new Group();
     function npcCreate () {
@@ -896,9 +909,10 @@
     if (109 === e.keyCode) {
       viamusic.pause();
     } 
-    if (97 === e.keyCode) {
+    if (97 === e.keyCode && adminFlag) {
       console.log("air camera")
-      airCamera = true;
+      airCamera = !airCamera;
+      ee.emit("aircamera", airCamera);
     }
   })
   document.addEventListener("keypress", function (e) {

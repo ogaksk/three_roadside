@@ -57,6 +57,7 @@ io.sockets.on("connection", function(socket) {
 
   console.log("connect new client.");
 
+
   // ログイン名を送ってきた時は新規ログインの処理
   socket.on("name", function(text) {
     console.log("name: " + text);
