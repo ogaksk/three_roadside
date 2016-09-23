@@ -504,6 +504,7 @@
       isAdmin(name);
       if (adminFlag) createTweetObjects();
       if (adminFlag) createTweetItems();
+      if (adminFlag) createTestObjects();
     });
 
     // オリジナル作成
@@ -565,18 +566,20 @@
 
     // 遊覧船
     var testObject;
-    jsonLoader.load("./javascripts/json_objects/mp3.js", function(geometry, materials) { 
-      var faceMaterial = new THREE.MeshFaceMaterial( materials );
-      testObject = new THREE.Mesh( geometry, faceMaterial );
-      testObject.position.set(1000, 3000, 10000); 
-      testObject.scale.set( 70, 70, 70);      
-      for (var l = 0; l < testObject.material.materials.length; l++) {
-        testObject.material.materials[l].ambient = testObject.material.materials[l].color;
-      }
+    function createTestObjects () {
+      jsonLoader.load("./javascripts/json_objects/mp3.js", function(geometry, materials) { 
+        var faceMaterial = new THREE.MeshFaceMaterial( materials );
+        testObject = new THREE.Mesh( geometry, faceMaterial );
+        testObject.position.set(1000, 3000, 10000); 
+        testObject.scale.set( 70, 70, 70);      
+        for (var l = 0; l < testObject.material.materials.length; l++) {
+          testObject.material.materials[l].ambient = testObject.material.materials[l].color;
+        }
 
-      scene.add(testObject);
-    });
-
+        scene.add(testObject);
+      });
+    }
+    
     // ツイートオブジェクトまわり
   
     function createTweetObjects () {
