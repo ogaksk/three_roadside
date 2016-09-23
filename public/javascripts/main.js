@@ -453,6 +453,7 @@
       lenderNPC();
       toLenderingStart(renderer);
       isAdmin(name);
+      createTweetObject();
     });
 
     // オリジナル作成
@@ -512,6 +513,49 @@
       scene.add(itemObject);
     });
 
+    // ツイートオブジェクトまわり
+    function createTweetObject () {
+      var tweetObject;
+      var tweetModelMaterial;
+
+      async.waterfall([
+        function (callback) {
+          jsonLoader.load("./javascripts/json_objects/mp3.js", function(geometry, materials) { 
+            tweetModelMaterial = new THREE.MeshFaceMaterial( materials );
+            tweetObject = new THREE.Mesh( geometry, tweetModelMaterial );
+            for (var l = 0; l < tweetObject.material.materials.length; l++) {
+              tweetObject.material.materials[l].ambient = tweetObject.material.materials[l].color;
+            }
+            callback();
+          });
+          
+        }, function (callback) {
+          async.forEachSeries(Object.keys(TweetMaps), function(tweetPoint, callback_each) {
+            for (var i in TweetMaps[tweetPoint].locations) {
+              var tweet = tweetObject.clone();
+              tweet.material = tweetModelMaterial.clone();
+              tweet.position.set(TweetMaps[tweetPoint].locations[i][0] * BLOCK_SIZE, 10, TweetMaps[tweetPoint].locations[i][1] * BLOCK_SIZE); 
+              tweet.scale.set( TweetMaps[tweetPoint].scale , TweetMaps[tweetPoint].scale , TweetMaps[tweetPoint].scale );
+
+              tweet.rotation.set(0, -((TweetMaps[tweetPoint].rotation - 90) * Math.PI / 180), 0)
+              
+              // for (var l = 0; l < tweet.material.materials.length; l++) {
+              //   tweet.material.materials[l].ambient = tweet.material.materials[l].color;
+              // }
+              scene.add(tweet);
+            }
+            callback_each();
+          }, function(err) {
+          });
+        callback();
+        }
+      ], 
+      function(err) { 
+        if (err) {
+          throw err;
+        }
+      });
+    }
 
     // 床
     var pGeometry = new THREE.PlaneGeometry(MAP_BLOCK_SIZE*10000, MAP_BLOCK_SIZE*10000);
