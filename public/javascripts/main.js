@@ -264,7 +264,7 @@
     /* ---------- ゲームアクション ---------- */
 
     // シーン
-    mapGroup = new Group();
+    mapGroup = new Group(); //CHECK: global. super bad
     mapGroup.x = 10;
     mapGroup.y = 10;
     game.rootScene.addChild(mapGroup);
@@ -553,6 +553,20 @@
       scene.add(itemObject);
     });
 
+    // 遊覧船
+    var testObject;
+    jsonLoader.load("./javascripts/json_objects/mp3.js", function(geometry, materials) { 
+      var faceMaterial = new THREE.MeshFaceMaterial( materials );
+      testObject = new THREE.Mesh( geometry, faceMaterial );
+      testObject.position.set(1000, 3000, 10000); 
+      testObject.scale.set( 70, 70, 70);      
+      for (var l = 0; l < testObject.material.materials.length; l++) {
+        testObject.material.materials[l].ambient = testObject.material.materials[l].color;
+      }
+
+      scene.add(testObject);
+    });
+
     // ツイートオブジェクトまわり
   
     function createTweetObjects () {
@@ -645,15 +659,48 @@
     renderer.autoClear = false;
     renderer.shadowMapEnabled = true;
 
+    airCamera = false; // global. bad.
+
+    var aroundCount = 0;
+    function cycleAroundWorld(object, atr) {
+      aroundCount += 0.0005;
+      object.position.z = (Math.sin(aroundCount) * 5000) + 5000;
+      object.position.x = (Math.cos(aroundCount) * 5000) + 5000;
+      if (atr == "rota") {
+        camera.rotation.y = (( (-aroundCount * 57.25) + 90) * Math.PI / 180);
+          // console.log(Math.sin(aroundCount)* Math.PI / 180 )
+        // object.rotation.y = -((Math.sin(aroundCount) * 90) * Math.PI / 180)
+      }
+    }
+
     function bgUpdate() {
       skyBox.rotation.y += 0.0002;
       if (itemObject != undefined) {
         itemObject.rotation.y += 0.01;
       }
-      
-      // if (loadsideObject) {
-      //   loadsideObject.rotation.y += 0.003;
-      // }
+
+      if (testObject != undefined) {
+        cycleAroundWorld(testObject);
+      }
+    }
+
+    function cameraUpdate() {
+      if (airCamera == true) {
+        camera.position.y = 2000;
+        // camera.rotation.x = -(-90 * Math.PI / 180)
+        // camera.rotation.y = -(-120 * Math.PI / 180)
+        // camera.rotation.z = -(90 * Math.PI / 180)
+        cycleAroundWorld(camera, "rota");
+
+      } else {
+
+        camera.rotation.y = -((player.rotation + 90) * Math.PI / 180);
+        camera.position.z = player.y * (BLOCK_SIZE / CHARA_SIZE);
+        camera.position.x = player.x * (BLOCK_SIZE / CHARA_SIZE);
+        light.rotation.y = -((player.rotation + 90) * Math.PI / 180);
+        light.position.z = player.y * (BLOCK_SIZE / CHARA_SIZE);
+        light.position.x = player.x * (BLOCK_SIZE / CHARA_SIZE);
+      }
     }
 
     var npcGroup = new Group();
@@ -701,12 +748,7 @@
     /* ---------- ゲームイベント ---------- */
 
     game.rootScene.addEventListener(enchant.Event.ENTER_FRAME, function() {
-      camera.rotation.y = -((player.rotation + 90) * Math.PI / 180);
-      camera.position.z = player.y * (BLOCK_SIZE / CHARA_SIZE);
-      camera.position.x = player.x * (BLOCK_SIZE / CHARA_SIZE);
-      light.rotation.y = -((player.rotation + 90) * Math.PI / 180);
-      light.position.z = player.y * (BLOCK_SIZE / CHARA_SIZE);
-      light.position.x = player.x * (BLOCK_SIZE / CHARA_SIZE);
+      cameraUpdate();
       bgUpdate();
       if (npcSets.length < 11) {
         randomNpcCreate();
@@ -851,8 +893,12 @@
   }
 
   document.addEventListener("keypress", function (e) {
-    if(109 === e.keyCode) {
+    if (109 === e.keyCode) {
       viamusic.pause();
+    } 
+    if (97 === e.keyCode) {
+      console.log("air camera")
+      airCamera = true;
     }
   })
   document.addEventListener("keypress", function (e) {
@@ -862,7 +908,6 @@
           window.open("http://twitter.com/share?url=[http://roadside3d.herokuapp.com/]&text=["+mapGroup.childNodes[i].description+"]&related=[Tuxu_Records]&hashtags=[ロードサイドオンライン]", '',  'width=400, height=250')
         }
       }
-      
     }
   })
   
