@@ -4,16 +4,16 @@ var TweetMaps = {
     scale: 30,
     rotation: 0,
     locations: [
-      [20, 48]
+      [12, 46]
     ]
   },
 
   suzuki: {
-    description: "鈴木にいます",
+    description: "県境にいます",
     scale: 30,
     rotation: 0,
     locations: [
-      [99, 40], [99, 60], 
+      [98, 50] 
     ]
   },
 
@@ -22,7 +22,7 @@ var TweetMaps = {
     scale: 30,
     rotation: 90,
     locations: [
-      [80, 24], [80, 78]
+      [80, 20], [80, 82]
     ]
   }, 
   videoa: { 
@@ -30,7 +30,7 @@ var TweetMaps = {
     scale: 30,
     rotation: 90,
     locations: [
-      [20, 34], [20, 68]
+      [20, 31], [20, 71]
 
     ]
   }, 
@@ -40,7 +40,7 @@ var TweetMaps = {
     scale: 30,
     rotation: 180,
     locations: [
-      [63, 23]
+      [60, 20]
     ]
   },
 
@@ -49,7 +49,7 @@ var TweetMaps = {
     scale: 30,
     rotation: 0,
     locations: [
-      [57, 77]
+      [60, 80]
     ]
   },
 
@@ -58,7 +58,7 @@ var TweetMaps = {
     scale: 30,
     rotation: 90,
     locations: [
-      [37, 23], [37, 77]
+      [37, 19], [37, 81]
     ]
   },
 
@@ -84,11 +84,11 @@ var TweetMaps = {
   // },
 
   cosmo: {
-      description: "コスモにいます",
+      description: "コスモ石油にいます",
       scale: 30,
       rotation: 90,
       locations: [
-        [50, 20], [50, 80]
+        [48.5, 20], [48.5, 80]
       ]
   },
 
@@ -102,20 +102,20 @@ var TweetMaps = {
   // },
 
   korochan_l: { 
-    description: "コロちゃんにいます", 
+    description: "コロちゃんコロッケにいます", 
     scale: 30,
     rotation: 180,
     locations: [
-      [30, 21]
+      [30, 20]
     ]
   },
 
     korochan_r: { 
-    description: "コロちゃんにいます", 
+    description: "コロちゃんコロッケにいます", 
     scale: 30,
     rotation: 0,
     locations: [
-      [30, 79]
+      [30, 80]
     ]
   },
 
@@ -124,7 +124,7 @@ var TweetMaps = {
     scale: 30,
     rotation: 270,
     locations: [
-      [70, 22]
+      [70, 20]
     ]
   },
 
@@ -133,7 +133,7 @@ var TweetMaps = {
     scale: 30,
     rotation: 90,
     locations: [
-      [70, 78]
+      [70, 80]
     ]
   },
 
@@ -142,7 +142,7 @@ var TweetMaps = {
     scale: 30,
     rotation: 90,
     locations: [
-      [23, 25], [25, 80]
+      [20, 20], [20, 80]
     ]
   },
 

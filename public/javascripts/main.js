@@ -555,8 +555,8 @@
     jsonLoader.load("./javascripts/json_objects/mp3.js", function(geometry, materials) { 
       var faceMaterial = new THREE.MeshFaceMaterial( materials );
       itemObject = new THREE.Mesh( geometry, faceMaterial );
-      itemObject.position.set(item.x * 10, 100, item.y * 10); 
-      itemObject.scale.set( 30, 30, 30);      
+      itemObject.position.set(item.x * 10, 50, item.y * 10); 
+      itemObject.scale.set( 25, 25, 25);      
       for (var l = 0; l < itemObject.material.materials.length; l++) {
         itemObject.material.materials[l].ambient = itemObject.material.materials[l].color;
       }
@@ -605,8 +605,8 @@
               var tweet = tweetObject.clone();
               tweet.material = tweetModelMaterial.clone();
               tweet.position.set(
-                TweetMaps[tweetPoint].locations[i][0] * BLOCK_SIZE, 20, TweetMaps[tweetPoint].locations[i][1] * BLOCK_SIZE); 
-              tweet.scale.set( 5, 5, 5);
+                TweetMaps[tweetPoint].locations[i][0] * BLOCK_SIZE, 6, TweetMaps[tweetPoint].locations[i][1] * BLOCK_SIZE); 
+              tweet.scale.set( 4, 4, 4);
 
               tweet.rotation.set(0, -((Math.floor(Math.random() * 360) - 90) * Math.PI / 180), 0)
               
@@ -662,13 +662,13 @@
     /*---  webGL render ---*/
     // light
     var light = new THREE.PointLight(0x0000F0, 1.5, 300);
-    light.position.set(0, BLOCK_SIZE / 4, 0);
+    light.position.set(0, BLOCK_SIZE / 3, 0);
     scene.add(light);
     var ambient = new THREE.AmbientLight(0xFFFFF0);
     scene.add(ambient);
     // camera
     var camera = new THREE.PerspectiveCamera(45, STAGE_WIDTH / STAGE_HEIGHT, 1, 15000);
-    camera.position.set(0, BLOCK_SIZE / 4, 0);
+    camera.position.set(0, BLOCK_SIZE / 3, 0);
     // rendering
     var renderer = new THREE.WebGLRenderer();
     renderer.setSize(STAGE_WIDTH, STAGE_HEIGHT);
@@ -725,7 +725,7 @@
     ee.on("aircamera", function (airCamera) {
       console.log("socketair")
       if (!airCamera) {
-        camera.position.y = BLOCK_SIZE / 4;
+        camera.position.y = BLOCK_SIZE / 3;
       }
     });
       
