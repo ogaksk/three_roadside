@@ -581,14 +581,14 @@
     }
     
     // ツイートオブジェクトまわり
-  
+    var tweetObjects = [];
     function createTweetObjects () {
       var tweetObject;
       var tweetModelMaterial;
 
       async.waterfall([
         function (callback) {
-          jsonLoader.load("./javascripts/json_objects/mp3.js", function(geometry, materials) { 
+          jsonLoader.load("./javascripts/json_objects/twitter.js", function(geometry, materials) { 
             tweetModelMaterial = new THREE.MeshFaceMaterial( materials );
             tweetObject = new THREE.Mesh( geometry, tweetModelMaterial );
             for (var l = 0; l < tweetObject.material.materials.length; l++) {
@@ -602,15 +602,17 @@
             for (var i in TweetMaps[tweetPoint].locations) {
               var tweet = tweetObject.clone();
               tweet.material = tweetModelMaterial.clone();
-              tweet.position.set(TweetMaps[tweetPoint].locations[i][0] * BLOCK_SIZE, 10, TweetMaps[tweetPoint].locations[i][1] * BLOCK_SIZE); 
-              tweet.scale.set( TweetMaps[tweetPoint].scale , TweetMaps[tweetPoint].scale , TweetMaps[tweetPoint].scale );
+              tweet.position.set(
+                TweetMaps[tweetPoint].locations[i][0] * BLOCK_SIZE, 20, TweetMaps[tweetPoint].locations[i][1] * BLOCK_SIZE); 
+              tweet.scale.set( 5, 5, 5);
 
-              tweet.rotation.set(0, -((TweetMaps[tweetPoint].rotation - 90) * Math.PI / 180), 0)
+              tweet.rotation.set(0, -((Math.floor(Math.random() * 360) - 90) * Math.PI / 180), 0)
               
               // for (var l = 0; l < tweet.material.materials.length; l++) {
               //   tweet.material.materials[l].ambient = tweet.material.materials[l].color;
               // }
               scene.add(tweet);
+              tweetObjects.push(tweet)
             }
             callback_each();
           }, function(err) {
@@ -694,6 +696,11 @@
 
       if (testObject != undefined) {
         cycleAroundWorld(testObject);
+      }
+      if (tweetObjects.length != 0) {
+        for (var i =0; i < tweetObjects.length; i ++) {
+          tweetObjects[i].rotation.y += 0.05
+        }
       }
     }
 

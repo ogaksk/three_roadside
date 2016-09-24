@@ -4,7 +4,7 @@ var TweetMaps = {
     scale: 30,
     rotation: 0,
     locations: [
-      [10, 48]
+      [20, 48]
     ]
   },
 
@@ -13,7 +13,7 @@ var TweetMaps = {
     scale: 30,
     rotation: 0,
     locations: [
-      [100, 40], [100, 60], 
+      [99, 40], [99, 60], 
     ]
   },
 
@@ -22,7 +22,7 @@ var TweetMaps = {
     scale: 30,
     rotation: 90,
     locations: [
-      [80, 20], [80, 80]
+      [80, 24], [80, 78]
     ]
   }, 
   videoa: { 
@@ -30,7 +30,7 @@ var TweetMaps = {
     scale: 30,
     rotation: 90,
     locations: [
-      [20, 30], [20, 70]
+      [20, 34], [20, 68]
 
     ]
   }, 
@@ -40,7 +40,7 @@ var TweetMaps = {
     scale: 30,
     rotation: 180,
     locations: [
-      [63, 20]
+      [63, 23]
     ]
   },
 
@@ -49,7 +49,7 @@ var TweetMaps = {
     scale: 30,
     rotation: 0,
     locations: [
-      [57, 80]
+      [57, 77]
     ]
   },
 
@@ -58,7 +58,7 @@ var TweetMaps = {
     scale: 30,
     rotation: 90,
     locations: [
-      [40, 20], [40, 80]
+      [37, 23], [37, 77]
     ]
   },
 
@@ -106,7 +106,7 @@ var TweetMaps = {
     scale: 30,
     rotation: 180,
     locations: [
-      [30, 20]
+      [30, 21]
     ]
   },
 
@@ -115,7 +115,7 @@ var TweetMaps = {
     scale: 30,
     rotation: 0,
     locations: [
-      [30, 80]
+      [30, 79]
     ]
   },
 
@@ -124,7 +124,7 @@ var TweetMaps = {
     scale: 30,
     rotation: 270,
     locations: [
-      [70, 20]
+      [70, 22]
     ]
   },
 
@@ -133,7 +133,7 @@ var TweetMaps = {
     scale: 30,
     rotation: 90,
     locations: [
-      [70, 80]
+      [70, 78]
     ]
   },
 
@@ -142,7 +142,7 @@ var TweetMaps = {
     scale: 30,
     rotation: 90,
     locations: [
-      [20, 20], [20, 80]
+      [23, 25], [25, 80]
     ]
   },
 
