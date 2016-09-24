@@ -88,7 +88,7 @@ var TweetMaps = {
       scale: 30,
       rotation: 90,
       locations: [
-        [48.5, 20], [48.5, 80]
+        [47.5, 20], [47.5, 80]
       ]
   },
 

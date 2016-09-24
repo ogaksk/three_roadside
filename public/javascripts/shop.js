@@ -99,7 +99,7 @@ var Shops = {
 
   cosmo: {
       path: "./javascripts/json_objects/cosmo.js",
-      scale: 50,
+      scale: 75,
       rotation: 90,
       locations: [
         [50, 20], [50, 80]
@@ -108,7 +108,7 @@ var Shops = {
 
   cosmo_kanban: {
       path: "./javascripts/json_objects/cosmo_kanban.js",
-      scale: 62,
+      scale: 77,
       rotation: 90,
       locations: [
         [52, 22], [52, 82]
