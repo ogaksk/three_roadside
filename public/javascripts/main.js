@@ -504,7 +504,6 @@
       isAdmin(name);
       if (adminFlag) createTweetObjects();
       if (adminFlag) createTweetItems();
-      if (adminFlag) createTestObjects();
     });
 
     // オリジナル作成
@@ -528,6 +527,7 @@
           throw err;
         }
         console.log("NPC lender.....done")
+        if (adminFlag) createairCars();
       });
     }
 
@@ -564,20 +564,22 @@
       scene.add(itemObject);
     });
 
-    // 遊覧船
-    var testObject;
-    function createTestObjects () {
-      jsonLoader.load("./javascripts/json_objects/mp3.js", function(geometry, materials) { 
-        var faceMaterial = new THREE.MeshFaceMaterial( materials );
-        testObject = new THREE.Mesh( geometry, faceMaterial );
-        testObject.position.set(1000, 3000, 10000); 
-        testObject.scale.set( 70, 70, 70);      
-        for (var l = 0; l < testObject.material.materials.length; l++) {
-          testObject.material.materials[l].ambient = testObject.material.materials[l].color;
-        }
+    // 空とぶ車
+    var airCar;
+    function createairCars () {
+      airCar = npcModel.clone();
 
-        scene.add(testObject);
-      });
+      airCar.material = npcMaterial.clone();
+      airCar.position.set(1000, 3000, 10000); 
+      airCar.scale.set(200, 200, 200);      
+      for (var i = 0; i < 12; i++) {
+        if (i == 1) {
+          airCar.material.materials[i].ambient = { r: Math.random(), g: Math.random(), b:Math.random()};
+        } else {
+          airCar.material.materials[i].ambient = airCar.material.materials[i].color;
+        }
+      }
+      scene.add(airCar);
     }
     
     // ツイートオブジェクトまわり
@@ -681,6 +683,8 @@
       aroundCount += 0.0001;
       object.position.z = (Math.sin(aroundCount) * 5000) + 5000;
       object.position.x = (Math.cos(aroundCount) * 5000) + 5000;
+      airCar.rotation.y = (( (-aroundCount * 57.25)) * Math.PI / 180);;
+
       if (atr == "rota") {
         camera.rotation.y = (( (-aroundCount * 57.25) + 90) * Math.PI / 180);
           // console.log(Math.sin(aroundCount)* Math.PI / 180 )
@@ -694,8 +698,8 @@
         itemObject.rotation.y += 0.01;
       }
 
-      if (testObject != undefined) {
-        cycleAroundWorld(testObject);
+      if (airCar != undefined) {
+        cycleAroundWorld(airCar);
       }
       if (tweetObjects.length != 0) {
         for (var i =0; i < tweetObjects.length; i ++) {
