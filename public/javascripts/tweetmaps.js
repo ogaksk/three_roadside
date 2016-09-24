@@ -26,7 +26,7 @@ var TweetMaps = {
     ]
   }, 
   videoa: { 
-    description: "VIAにいます", 
+    description: "VideoInAmericaにいます", 
     scale: 30,
     rotation: 90,
     locations: [
