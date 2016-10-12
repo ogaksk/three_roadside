@@ -207,7 +207,7 @@
         this.loginName = name;
         this.image = image;
         this.rotation = 90;
-        this.rotate2 = 0;
+        this.rotateStat = 0;
         this.addEventListener(enchant.Event.ENTER_FRAME, this.onEnterFrame);
       },
       onEnterFrame: function () {
@@ -215,10 +215,10 @@
         var moveY = 0;
         // this.isMove = false;
         if (game.input.left) {
-          this.rotation -= RACER_ROTATION_SPEED;
+          this.rotation -= RACER_ROTATION_SPEED * rotateStat;
         }
         if (game.input.right) {
-          this.rotation += RACER_ROTATION_SPEED;
+          this.rotation += RACER_ROTATION_SPEED * rotateStat;
         }
         if (game.input.up) {
           this.accel = RACER_MOVE_SPEED;
@@ -233,6 +233,7 @@
         var y = this.y;
         var ax = Math.cos(this.rotation * 3.14159/180) * this.accel;
         var ay = Math.sin(this.rotation * 3.14159/180) * this.accel;
+        rotateStat = 1 - ( Math.sqrt(Math.pow(ax, 2) + Math.pow(ay, 2)) * 2);
         this.accel *= 0.994;
         this.vx += ax;
         this.vy += ay;
@@ -254,7 +255,6 @@
           this.y += this.vy;
           // console.log("x=="+ player.x + "Y===" + player.y)
         }
-
         socket.emit("position", { x : this.x, y : this.y , rotation: this.rotation });
       }
     });
