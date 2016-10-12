@@ -29,11 +29,18 @@
       var col = [];
       for (var j = 0; j < 100; j++) {
         if (i == 0 || i == 99) {
-          col.push(1); // 壁用意
+          if (RACING_MODE) {
+            col.push(0); // 壁無し
+          } else {
+            col.push(1); // 壁用意
+          }
           // col.push(0); // 壁無し
         } else if (j == 0 || j == 99) {
-          col.push(1); // 壁用意
-          // col.push(0); // 壁無し
+          if (RACING_MODE) {
+            col.push(0); // 壁無し
+          } else {
+            col.push(1); // 壁用意
+          }
         } else {
           col.push(0);
         }
@@ -56,8 +63,12 @@
   }
   var PLAYER_MOVE_SPEED = 1.0;
   var PLAYER_ROTATION_SPEED = 2;
+  var RACER_MOVE_SPEED = 0.3;
+  var RACER_DOWN_SPEED = 0.0;
+  var RACER_ROTATION_SPEED = 1.0;
   var MAP_BLOCK_SIZE = 10;
   var CHARA_SIZE = 10;
+  var RACING_MODE = true;
 
   /*
   //------------------------------------- ゲーム開始 -------------------------------------------//
@@ -183,6 +194,72 @@
     });
 
 
+    /* レーシングモード用 */
+    var Racer = Class.create(Sprite, {
+      isMove: false,
+      initialize: function (image, x, y) {
+        Sprite.call(this, CHARA_SIZE, CHARA_SIZE);
+        this.x = x;
+        this.y = y;
+        this.accel = 0;
+        this.vx = 0;
+        this.vy = 0;
+        this.loginName = name;
+        this.image = image;
+        this.rotation = 90;
+        this.rotate2 = 0;
+        this.addEventListener(enchant.Event.ENTER_FRAME, this.onEnterFrame);
+      },
+      onEnterFrame: function () {
+        var moveX = 0;
+        var moveY = 0;
+        // this.isMove = false;
+        if (game.input.left) {
+          this.rotation -= RACER_ROTATION_SPEED;
+        }
+        if (game.input.right) {
+          this.rotation += RACER_ROTATION_SPEED;
+        }
+        if (game.input.up) {
+          this.accel = RACER_MOVE_SPEED;
+          this.isMove = true;
+        }
+        if (game.input.down) {
+          this.accel = RACER_DOWN_SPEED;
+          this.isMove = true;
+        }
+        // CHECK: 加速度計算
+        var x = this.x;
+        var y = this.y;
+        var ax = Math.cos(this.rotation * 3.14159/180) * this.accel;
+        var ay = Math.sin(this.rotation * 3.14159/180) * this.accel;
+        this.accel *= 0.994;
+        this.vx += ax;
+        this.vy += ay;
+        var vx = this.vx, vy = this.vy;
+        this.vx *= 0.8;
+        this.vy *= 0.8;
+
+        if (field.hitTest(this.x + moveX + 4, this.y + moveY + 4)) {
+          this.isMove = false;
+        } else if (field.hitTest(this.x + moveX + 6, this.y + moveY + 4)) {
+          this.isMove = false;
+        } else if (field.hitTest(this.x + moveX + 6, this.y + moveY + 6)) {
+          this.isMove = false;
+        } else if (field.hitTest(this.x + moveX + 4, this.y + moveY + 6)) {
+          this.isMove = false;
+        }
+        if (this.isMove) {
+          this.x += this.vx;
+          this.y += this.vy;
+          // console.log("x=="+ player.x + "Y===" + player.y)
+        }
+
+        socket.emit("position", { x : this.x, y : this.y , rotation: this.rotation });
+      }
+    });
+
+
     var OtherPlayer = Class.create(Sprite, {
       isMove: false,
       initialize: function (image, x, y, log_name) {
@@ -283,8 +360,15 @@
     // mapGroup.addChild(field);
     
     // プレーヤー
+    /* check: racingモードとの切り分け */
     // var player = new Player(game.assets["/images/player01.png"], Math.floor( Math.random() * COL_MAX_LENGTH * CHARA_SIZE * 0.9), Math.floor( Math.random() * ROW_MAX_LENGTH * CHARA_SIZE* 0.9));
-    var player = new Player("", Math.floor( Math.random() * COL_MAX_LENGTH * CHARA_SIZE * 0.5) + 100, Math.floor( Math.random() * ROW_MAX_LENGTH * CHARA_SIZE * 0.5) + 100);
+    var player;
+    if(RACING_MODE) {
+      player = new Racer("", Math.floor( Math.random() * COL_MAX_LENGTH * CHARA_SIZE * 0.5) + 100, Math.floor( Math.random() * ROW_MAX_LENGTH * CHARA_SIZE * 0.5) + 100);
+    } else {
+     player = new Player("", Math.floor( Math.random() * COL_MAX_LENGTH * CHARA_SIZE * 0.5) + 100, Math.floor( Math.random() * ROW_MAX_LENGTH * CHARA_SIZE * 0.5) + 100);
+    }
+     
     mapGroup.addChild(player);
 
      
