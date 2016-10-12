@@ -15,5 +15,5 @@ exports.index = function(req, res){
     }
   }
 
-  res.render('index', { title: 'ロードサイドオンライン' });
+  res.render('index', { title: 'ロードサイドオンライン', racingmode: req.query.racingmode });
 };

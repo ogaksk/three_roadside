@@ -68,13 +68,14 @@
   var RACER_ROTATION_SPEED = 1.0;
   var MAP_BLOCK_SIZE = 10;
   var CHARA_SIZE = 10;
-  var RACING_MODE = true;
+  var RACING_MODE = false;
 
   /*
   //------------------------------------- ゲーム開始 -------------------------------------------//
   */
   enchant();
   var game = new Core(STAGE_WIDTH, STAGE_HEIGHT);
+  isRacingMode();
   game.preload([
     "/images/map01.png", "/images/player01.png", "/images/wall01.jpg", "/images/land01.jpg"
   ]);
@@ -125,6 +126,15 @@
     document.getElementById("dummyIntro").removeChild(introScene);
     document.getElementById("enchant-stage").appendChild(renderer.domElement);
 
+  }
+
+  function isRacingMode () {
+    var val = document.getElementById("racingmode").getAttribute("val");
+    if (val ==  "true") {
+      RACING_MODE = true;
+    } else {
+      RACING_MODE = false;
+    }
   }
 
   game.onload = function() {
