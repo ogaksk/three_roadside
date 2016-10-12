@@ -217,7 +217,7 @@
         this.loginName = name;
         this.image = image;
         this.rotation = 90;
-        this.rotateStat = 0;
+        this.absacc = 0;
         this.addEventListener(enchant.Event.ENTER_FRAME, this.onEnterFrame);
       },
       onEnterFrame: function () {
@@ -225,10 +225,10 @@
         var moveY = 0;
         // this.isMove = false;
         if (game.input.left) {
-          this.rotation -= RACER_ROTATION_SPEED * rotateStat;
+          this.rotation -= RACER_ROTATION_SPEED * (1 - (this.absacc * 2));
         }
         if (game.input.right) {
-          this.rotation += RACER_ROTATION_SPEED * rotateStat;
+          this.rotation += RACER_ROTATION_SPEED * (1 - (this.absacc * 2));
         }
         if (game.input.up) {
           this.accel = RACER_MOVE_SPEED;
@@ -243,7 +243,7 @@
         var y = this.y;
         var ax = Math.cos(this.rotation * 3.14159/180) * this.accel;
         var ay = Math.sin(this.rotation * 3.14159/180) * this.accel;
-        rotateStat = 1 - ( Math.sqrt(Math.pow(ax, 2) + Math.pow(ay, 2)) * 2);
+        this.absacc = Math.sqrt(Math.pow(ax, 2) + Math.pow(ay, 2));
         this.accel *= 0.994;
         this.vx += ax;
         this.vy += ay;
@@ -529,7 +529,6 @@
           // gainNode.gain.value = 0.0;
           gainNodes[otherPlayer.soundTrackId % gainNodes.length].gain.value =  (10 / Math.sqrt(Math.pow(player.x - otherPlayer.x, 2) + Math.pow(player.y - otherPlayer.y, 2)) );
         };
-
       });
 
       // 切断が送られてきたら表示とオブジェクトの消去
@@ -879,6 +878,13 @@
         cracshonPlay();
       }
 
+      
+      // -------------RACING_MODEの音操作系-------------- //
+      if (RACING_MODE && carGain.length != 0) {
+        carGain[2].gain.value =  player.absacc;
+      };
+
+
       if(npcSets.length != 0) {
         for (var i = 0; i < npcSets.length; i ++) {
           npcSets[i].model.position.z = npcSets[i].dataset.y * (BLOCK_SIZE / CHARA_SIZE);
@@ -888,7 +894,7 @@
           // }
 
           // -------------音操作系-------------- //
-          if(gainNodes[npcSets[i].soundTrackId] != undefined) {
+          if (gainNodes[npcSets[i].soundTrackId] != undefined) {
             gainNodes[npcSets[i].soundTrackId].gain.value =  (10 / Math.sqrt(Math.pow(player.x - npcSets[i].dataset.x, 2) + Math.pow(player.y - npcSets[i].dataset.y, 2)) );
           }
 
@@ -921,6 +927,24 @@
         source.connect(gainNode);
         gainNode.connect(self.context.destination)
         gainNodes.push(gainNode);
+        source.start();
+      }      
+    });
+
+    /*---racingmodeの車のサウンドパート  ----*/
+    carGain = [];
+    var carSound = new AudioBufferLoader("sounds/car/up.mp3", "sounds/car/down.mp3", "sounds/car/idle.mp3", function() {
+      var source, gainNode;
+      var self = this;
+      for (var i = 0; i < self.urlList.length; i++) {
+        var source = self.context.createBufferSource();
+        source.buffer = self.bufferList[i];
+        source.loop = true;
+        gainNode = self.context.createGain();
+        gainNode.gain.value = 0.0;
+        source.connect(gainNode);
+        gainNode.connect(self.context.destination)
+        carGain.push(gainNode);
         source.start();
       }      
     });
