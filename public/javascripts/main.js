@@ -880,10 +880,9 @@
 
       
       // -------------RACING_MODEの音操作系-------------- //
-      if (RACING_MODE && carGain.length != 0) {
-        carGain[2].gain.value =  player.absacc;
+      if (RACING_MODE && carSounds.length != 0) {
+        carSounds[2].gain.value =  player.absacc + 0.2;
       };
-
 
       if(npcSets.length != 0) {
         for (var i = 0; i < npcSets.length; i ++) {
@@ -932,8 +931,7 @@
     });
 
     /*---racingmodeの車のサウンドパート  ----*/
-    carGain = [];
-    var carSound = new AudioBufferLoader("sounds/car/up.mp3", "sounds/car/down.mp3", "sounds/car/idle.mp3", function() {
+    var carSounds = new AudioBufferLoader("sounds/car/up.mp3", "sounds/car/down.mp3", "sounds/car/idle.mp3", function() {
       var source, gainNode;
       var self = this;
       for (var i = 0; i < self.urlList.length; i++) {
@@ -944,7 +942,7 @@
         gainNode.gain.value = 0.0;
         source.connect(gainNode);
         gainNode.connect(self.context.destination)
-        carGain.push(gainNode);
+        carSounds.push(gainNode);
         source.start();
       }      
     });
