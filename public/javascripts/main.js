@@ -63,7 +63,7 @@
   }
   var PLAYER_MOVE_SPEED = 1.0;
   var PLAYER_ROTATION_SPEED = 2;
-  var RACER_MOVE_SPEED = 0.3;
+  var RACER_MOVE_SPEED = 0.1;
   var RACER_DOWN_SPEED = 0.0;
   var RACER_ROTATION_SPEED = 1.0;
   var MAP_BLOCK_SIZE = 10;
@@ -231,7 +231,7 @@
           this.rotation += RACER_ROTATION_SPEED * (1 - (this.absacc * 2));
         }
         if (game.input.up) {
-          this.accel = RACER_MOVE_SPEED;
+          this.accel += RACER_MOVE_SPEED * 0.023;
           this.isMove = true;
         }
         if (game.input.down) {
@@ -244,9 +244,9 @@
         var ax = Math.cos(this.rotation * 3.14159/180) * this.accel;
         var ay = Math.sin(this.rotation * 3.14159/180) * this.accel;
         this.absacc = Math.sqrt(Math.pow(ax, 2) + Math.pow(ay, 2));
-        this.accel *= 0.994;
-        this.vx += ax;
-        this.vy += ay;
+        this.accel *= 0.993; // 減衰
+        this.vx += ax ;
+        this.vy += ay ;
         var vx = this.vx, vy = this.vy;
         this.vx *= 0.8;
         this.vy *= 0.8;
@@ -881,7 +881,7 @@
       
       // -------------RACING_MODEの音操作系-------------- //
       if (RACING_MODE && carSoundGain != undefined) {
-        carSoundGain.value =  player.absacc;
+        carSoundGain.value =  player.absacc * 0;
         carPitch.pitchRatio = player.absacc * 2.0  + 1.0;
 
       };
