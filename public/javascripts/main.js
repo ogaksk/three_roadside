@@ -13,6 +13,7 @@
     }
   }
   
+  isRacingMode();
 
   socket.on("connect", function() {
     socket.emit("name", name);
@@ -25,6 +26,7 @@
 
   var MAP = [];
   (function() {
+    
     for (var i = 0; i < 100; i++) {
       var col = [];
       for (var j = 0; j < 100; j++) {
@@ -32,6 +34,7 @@
           if (RACING_MODE) {
             col.push(0); // 壁無し
           } else {
+
             col.push(1); // 壁用意
           }
           // col.push(0); // 壁無し
@@ -81,6 +84,8 @@
   ]);
   game.fps = 60;
   game.keybind(' '.charCodeAt(0), 'b');
+  game.keybind(70, 'f');
+  game.keybind(82, 'r');
 
   /*---------- イントロ ---------*/
   var loadScene = new Scene();  
@@ -218,6 +223,7 @@
         this.image = image;
         this.rotation = 90;
         this.absacc = 0;
+        this.backGear = false;
         this.addEventListener(enchant.Event.ENTER_FRAME, this.onEnterFrame);
       },
       onEnterFrame: function () {
@@ -231,13 +237,24 @@
           this.rotation += RACER_ROTATION_SPEED * (1 - (this.absacc * 2));
         }
         if (game.input.up) {
-          this.accel += RACER_MOVE_SPEED * 0.023;
+          if (this.backGear) {
+            this.accel = -0.01;
+          } else {
+            this.accel += RACER_MOVE_SPEED * 0.023;
+          }
           this.isMove = true;
         }
         if (game.input.down) {
           this.accel = RACER_DOWN_SPEED;
           this.isMove = true;
         }
+        if (game.input.f) {
+          this.backGear = false;
+        }
+        if (game.input.r) {
+          this.backGear = true;
+        }
+
         // CHECK: 加速度計算
         var x = this.x;
         var y = this.y;
