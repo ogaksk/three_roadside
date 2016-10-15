@@ -881,7 +881,8 @@
       
       // -------------RACING_MODEの音操作系-------------- //
       if (RACING_MODE && carSoundGain != undefined) {
-        carSoundGain.value =  player.absacc * 0;
+        carSoundGain.gain.value =  player.absacc + 0.22;
+        
         carPitch.pitchRatio = player.absacc * 2.0  + 1.0;
 
       };
@@ -948,7 +949,7 @@
           carSoundGain = self.context.createGain();
           carSoundGain.gain.value = 0.0;
           
-          carPitch.audioSources[0].connect(carSoundGain);
+          carPitch.pitchShifterProcessor.connect(carSoundGain);
           carSoundGain.connect(self.context.destination)
           carSound.start();
         }      

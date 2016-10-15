@@ -144,7 +144,7 @@ var pitchShifter = (function () {
     
     this.pitchShifterProcessor.connect(this.spectrumAudioAnalyser);
     this.pitchShifterProcessor.connect(this.sonogramAudioAnalyser);
-    this.pitchShifterProcessor.connect(this.audioContext.destination);
+    // this.pitchShifterProcessor.connect(this.audioContext.destination);
   };
 
   p.initSliders = function () {
