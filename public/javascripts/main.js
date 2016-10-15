@@ -882,7 +882,7 @@
       // -------------RACING_MODEの音操作系-------------- //
       if (RACING_MODE && carSoundGain != undefined) {
         carSoundGain.value =  player.absacc;
-        carPitch.pitchRatio = player.absacc*2.0  + 1.0;
+        carPitch.pitchRatio = player.absacc * 2.0  + 1.0;
 
       };
 
@@ -933,25 +933,29 @@
     });
 
     /*---racingmodeの車のサウンドパート  ----*/
-    var carSound;
-    var carSoundGain;
-    var carPitch;
-    var audio = new AudioBufferLoader("sounds/car/idle.mp3", function() {
-      var self = this;
-      for (var i = 0; i < self.urlList.length; i++) {
-        carSound = self.context.createBufferSource();
-        carSound.buffer = self.bufferList[i];
-        carSound.loop = true;
-        carPitch = new pitchShifter(self.context, carSound)
+    if (RACING_MODE) {
+      var carSound;
+      var carSoundGain;
+      var carPitch;
+      var audio = new AudioBufferLoader("sounds/car/idle.mp3", function() {
+        var self = this;
+        for (var i = 0; i < self.urlList.length; i++) {
+          carSound = self.context.createBufferSource();
+          carSound.buffer = self.bufferList[i];
+          carSound.loop = true;
+          carPitch = new pitchShifter(self.context, carSound)
 
-        carSoundGain = self.context.createGain();
-        carSoundGain.gain.value = 0.0;
-        
-        carPitch.audioSources[0].connect(carSoundGain);
-        carSoundGain.connect(self.context.destination)
-        carSound.start();
-      }      
-    });
+          carSoundGain = self.context.createGain();
+          carSoundGain.gain.value = 0.0;
+          
+          carPitch.audioSources[0].connect(carSoundGain);
+          carSoundGain.connect(self.context.destination)
+          carSound.start();
+        }      
+      });
+
+    }
+
   }
 
   var audioctx;
