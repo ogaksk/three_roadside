@@ -611,9 +611,10 @@
       // CHECK 超バッド
       lenderNPC();
       toLenderingStart(renderer);
-      isAdmin(name);
-      if (adminFlag) createTweetObjects();
-      if (adminFlag) createTweetItems();
+      document.getElementById("chat-area").style.visibility = "visible";
+      // isAdmin(name);
+      createTweetObjects();
+      createTweetItems();
     });
 
     // オリジナル作成
@@ -637,7 +638,7 @@
           throw err;
         }
         console.log("NPC lender.....done")
-        if (adminFlag) createairCars();
+        createairCars();
       });
     }
 
@@ -1058,7 +1059,6 @@
   var adminFlag;
   function isAdmin (name) {
     if( name.indexOf('admin') != -1 ) {
-      document.getElementById("chat-area").style.visibility = "visible";
       adminFlag = true;
     }
   }
@@ -1067,7 +1067,7 @@
     if (109 === e.keyCode) {
       viamusic.pause();
     } 
-    if (97 === e.keyCode && adminFlag) {
+    if (97 === e.keyCode) {
       console.log("air camera")
       airCamera = !airCamera;
       ee.emit("aircamera", airCamera);
