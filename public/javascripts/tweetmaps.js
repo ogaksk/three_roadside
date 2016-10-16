@@ -1,6 +1,6 @@
 var TweetMaps = {
   aeon: { 
-    description: "I'm at AEON #ロードサイドオンライン https://roadside3d.herokuapp.com/", 
+    description: "I'm at AEON", 
     scale: 30,
     rotation: 0,
     locations: [
@@ -9,7 +9,7 @@ var TweetMaps = {
   },
 
   suzuki: {
-    description: "I'm at SUZUKI #ロードサイドオンライン https://roadside3d.herokuapp.com/",
+    description: "I'm at SUZUKI",
     scale: 30,
     rotation: 0,
     locations: [
@@ -18,7 +18,7 @@ var TweetMaps = {
   },
 
   alpen: { 
-    description: "I'm at Alpen #ロードサイドオンライン https://roadside3d.herokuapp.com/", 
+    description: "I'm at Alpen", 
     scale: 30,
     rotation: 90,
     locations: [
@@ -26,7 +26,7 @@ var TweetMaps = {
     ]
   }, 
   videoa: { 
-    description: "I'm at Video in America #ロードサイドオンライン https://roadside3d.herokuapp.com/", 
+    description: "I'm at Video in America", 
     scale: 30,
     rotation: 90,
     locations: [
@@ -36,7 +36,7 @@ var TweetMaps = {
   }, 
 
   haruyama_l: { 
-    description: "I'm at Haruyama #ロードサイドオンライン https://roadside3d.herokuapp.com/", 
+    description: "I'm at Haruyama", 
     scale: 30,
     rotation: 180,
     locations: [
@@ -45,7 +45,7 @@ var TweetMaps = {
   },
 
   haruyama_r: { 
-    description: "I'm at Haruyama #ロードサイドオンライン https://roadside3d.herokuapp.com/", 
+    description: "I'm at Haruyama", 
     scale: 30,
     rotation: 0,
     locations: [
@@ -54,7 +54,7 @@ var TweetMaps = {
   },
 
   kutsuryu: {
-    description: "I'm at Kutsuryutsu  #ロードサイドオンライン https://roadside3d.herokuapp.com/", 
+    description: "I'm at Kutsuryutsu", 
     scale: 30,
     rotation: 90,
     locations: [
@@ -84,7 +84,7 @@ var TweetMaps = {
   // },
 
   cosmo: {
-      description: "I'm at Kutsuryutsu  #ロードサイドオンライン https://roadside3d.herokuapp.com/",
+      description: "I'm at Kutsuryutsu",
       scale: 30,
       rotation: 90,
       locations: [
@@ -102,7 +102,7 @@ var TweetMaps = {
   // },
 
   korochan_l: { 
-    description: "I'm at コロちゃんコロッケ #ロードサイドオンライン https://roadside3d.herokuapp.com/", 
+    description: "I'm at コロちゃんコロッケ", 
     scale: 30,
     rotation: 180,
     locations: [
@@ -111,7 +111,7 @@ var TweetMaps = {
   },
 
     korochan_r: { 
-    description: "I'm at コロちゃんコロッケ #ロードサイドオンライン https://roadside3d.herokuapp.com/", 
+    description: "I'm at コロちゃんコロッケ", 
     scale: 30,
     rotation: 0,
     locations: [
@@ -120,7 +120,7 @@ var TweetMaps = {
   },
 
   ramenshop_l: { 
-    description: "I'm at Ramenshop #ロードサイドオンライン https://roadside3d.herokuapp.com/", 
+    description: "I'm at Ramenshop", 
     scale: 30,
     rotation: 270,
     locations: [
@@ -129,7 +129,7 @@ var TweetMaps = {
   },
 
   ramenshop_r: { 
-    description: "I'm at Ramenshop #ロードサイドオンライン https://roadside3d.herokuapp.com/", 
+    description: "I'm at Ramenshop", 
     scale: 30,
     rotation: 90,
     locations: [
@@ -138,7 +138,7 @@ var TweetMaps = {
   },
 
   yellowhat: { 
-    description: "I'm at Yellowhat #ロードサイドオンライン https://roadside3d.herokuapp.com/", 
+    description: "I'm at Yellowhat", 
     scale: 30,
     rotation: 90,
     locations: [

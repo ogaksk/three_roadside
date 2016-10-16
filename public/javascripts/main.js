@@ -1077,7 +1077,7 @@
     if (13 === e.keyCode) {
       for (var i = 0; i < mapGroup.childNodes.length; i++) {
         if (mapGroup.childNodes[i].touched) {
-          window.open("http://twitter.com/share?url=[http://roadside3d.herokuapp.com/]&text=["+mapGroup.childNodes[i].description+"]&related=[Tuxu_Records]&hashtags=[ロードサイドオンライン]", '',  'width=400, height=250')
+          window.open("http://twitter.com/share?url=http://roadside3d.herokuapp.com/&text="+mapGroup.childNodes[i].description+"&related=Tuxu_Records&hashtags=ロードサイドオンライン", '',  'width=400, height=250')
         }
       }
     }
