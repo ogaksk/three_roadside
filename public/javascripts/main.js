@@ -238,7 +238,7 @@
         }
         if (game.input.up) {
           if (this.backGear) {
-            this.accel = -0.01;
+            this.accel = -0.08;
           } else {
             this.accel += RACER_MOVE_SPEED * 0.023;
           }
